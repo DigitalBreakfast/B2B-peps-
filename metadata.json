@@ -1,0 +1,8 @@
+{
+  "name": "B2B Peps",
+  "description": "Redefining global pharmaceutical and biotech peptide supply with verified quality, HPLC-tested purity, and elite B2B partnership solutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
