@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import HomeView from "./components/HomeView";
 import ProductCatalog from "./components/ProductCatalog";
 import AboutUs from "./components/AboutUs";
+import PartnerWithUs from "./components/PartnerWithUs";
 import Services from "./components/Services";
 import FAQs from "./components/FAQs";
 import ProductDetails from "./components/ProductDetails";
@@ -21,9 +22,11 @@ import QualityConsole from "./components/QualityConsole";
 import EditorialResources from "./components/EditorialResources";
 import PartnerInquiryForm from "./components/PartnerInquiryForm";
 import ResearchCategoryDetail from "./components/ResearchCategoryDetail";
+import ResearchCategoriesPage from "./components/ResearchCategoriesPage";
 import LegalModal, { LegalModalType } from "./components/LegalModal";
+import AgeVerificationModal from "./components/AgeVerificationModal";
 import { ArrowUp } from "lucide-react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { PEPTIDES_CATALOG } from "./data";
 import { Peptide } from "./types";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
@@ -40,8 +43,13 @@ function MainApp() {
     }
     if (
       path === "products" ||
+      path === "research-categories" ||
+      path === "categories" ||
+      path === "research" ||
       path === "services" ||
       path === "why-partner" ||
+      path === "partner" ||
+      path === "partner-with-us" ||
       path === "quality" ||
       path === "science" ||
       path === "faqs" ||
@@ -97,26 +105,6 @@ function MainApp() {
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
-
-  // Scroll driven top-to-bottom product reveal in the background
-  const { scrollYProgress } = useScroll();
-
-  // Reveals the product image from top to bottom (clipPath inset bottom goes from 80% down to 0% as user scrolls)
-  const revealClipPath = useTransform(
-    scrollYProgress,
-    [0, 0.8],
-    ["inset(0% 0% 80% 0%)", "inset(0% 0% 0% 0%)"]
-  );
-
-  // Subtle Y movement for smooth organic parallax
-  const bgImageY = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
-
-  // Dynamic opacity overlay that adjusts with scroll to keep background product image completely unblocked at top
-  const bgOverlayOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.8],
-    [0, isDark ? 0.70 : 0.65]
-  );
 
   // Monitor scroll height to show/hide Back to Top button
   useEffect(() => {
@@ -221,6 +209,7 @@ function MainApp() {
           onInitiateInquiry={handleInitiateInquiry}
           onAddToRFQ={handleAddToRFQ}
           isInRFQ={rfqPeptides.includes(selectedProduct?.name || "")}
+          onSelectRelated={handleSelectProduct}
         />
       );
     }
@@ -245,12 +234,13 @@ function MainApp() {
           />
         );
       case "products":
+      case "research-categories":
+      case "categories":
+      case "research":
         return (
-          <ProductCatalog
-            onSelectPeptideForCoA={handleSelectPeptideForCoA}
-            onInitiateInquiry={handleInitiateInquiry}
-            onSelectProduct={handleSelectProduct}
-            initialCategoryFilter={categoryFilter}
+          <ResearchCategoriesPage
+            onNavigate={handleNavClick}
+            onContactClick={handleInitiateInquiry}
           />
         );
       case "services":
@@ -264,10 +254,12 @@ function MainApp() {
           window.history.pushState(null, "", "/contact");
         }} />;
       case "why-partner":
-        return <AboutUs onContactClick={() => {
+      case "partner":
+      case "partner-with-us":
+        return <PartnerWithUs onContactClick={() => {
           setActivePage("contact");
           window.history.pushState(null, "", "/contact");
-        }} onNavigate={handleNavClick} initialTab="partner" />;
+        }} onNavigate={handleNavClick} />;
       case "quality":
         return <QualityConsole preselectedPeptideId={selectedPeptideIdForCoA} />;
       case "science":
@@ -292,40 +284,11 @@ function MainApp() {
   };
 
   return (
-    <div className={`min-h-screen antialiased font-sans flex flex-col justify-between transition-colors duration-500 relative bg-transparent ${
+    <div className={`min-h-screen antialiased font-sans flex flex-col justify-between transition-colors duration-500 relative ${
       isDark 
-        ? "text-white selection:bg-emerald-500/30 selection:text-emerald-300" 
-        : "text-slate-900 selection:bg-teal-500/20 selection:text-teal-800"
+        ? "bg-neutral-950 text-white selection:bg-emerald-500/30 selection:text-emerald-300" 
+        : "bg-[#FAFBFC] text-slate-900 selection:bg-teal-500/20 selection:text-teal-800"
     }`}>
-      {/* Back Background Image Layer with Top-to-Bottom Scroll Reveal */}
-      <motion.div 
-        style={{ 
-          clipPath: revealClipPath,
-          y: bgImageY
-        }}
-        className="fixed inset-0 pointer-events-none z-[-30] overflow-hidden select-none"
-      >
-        <img 
-          src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1784852719/d97d522f-99d0-435b-9236-ae23ec55e0f4.png" 
-          alt="Molecular Background Graphic" 
-          className={`w-full h-full object-cover object-center transition-opacity duration-700 ${
-            isDark ? "opacity-55 mix-blend-luminosity" : "opacity-45 mix-blend-multiply"
-          }`}
-        />
-        {/* Animated edge reveal laser / glow line at the reveal boundary */}
-        <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-emerald-400/60 to-transparent blur-xs opacity-75 pointer-events-none" />
-      </motion.div>
-
-      {/* Overlay Layer over Background Image with dynamic scroll opacity */}
-      <motion.div 
-        style={{ opacity: bgOverlayOpacity }}
-        className={`fixed inset-0 pointer-events-none z-[-20] transition-colors duration-700 ${
-          isDark 
-            ? "bg-gradient-to-b from-neutral-950 via-neutral-950/90 to-neutral-950/95" 
-            : "bg-gradient-to-b from-[#FAFBFC] via-[#FAFBFC]/90 to-[#FAFBFC]/95"
-        }`} 
-      />
-
       <div className="relative z-10 flex-1">
         {/* Premium Header Menu */}
         <Header onNavClick={handleNavClick} activePage={activePage} />
@@ -346,6 +309,9 @@ function MainApp() {
         onClose={() => setLegalModal(null)}
         onSwitchType={(type) => setLegalModal(type)}
       />
+
+      {/* Immediate On-Load 21+ Age Verification Popup Modal */}
+      <AgeVerificationModal />
 
       {/* Floating Back to Top Anchor */}
       {showScrollTop && (

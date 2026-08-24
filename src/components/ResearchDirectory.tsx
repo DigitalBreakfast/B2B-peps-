@@ -188,7 +188,7 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
     <section 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className={`relative w-full py-16 sm:py-20 px-4 sm:px-8 lg:px-12 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
+      className={`relative w-full py-10 sm:py-14 px-4 sm:px-8 lg:px-12 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
         isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
@@ -240,7 +240,7 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
       {/* =========================================================
           TOP AREA: EDITORIAL HEADER
           ========================================================= */}
-      <div className="mx-auto w-full max-w-7xl relative z-10 mb-8 sm:mb-10">
+      <div className="mx-auto w-full max-w-7xl relative z-10 mb-6 sm:mb-8">
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           
           {/* LEFT: Eyebrow + Heading + Description */}

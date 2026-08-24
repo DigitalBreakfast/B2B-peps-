@@ -6,14 +6,25 @@
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { motion } from "motion/react";
-import { ArrowDown, FileText } from "lucide-react";
-import CategoryHeroVisual from "./CategoryHeroVisual";
+import { ArrowDown, FileText, CheckCircle2, Shield, Activity, Beaker } from "lucide-react";
 
 interface ResearchCategoryDetailProps {
   categoryId: string;
   onNavigate: (pageId: string, filterCategory?: string) => void;
   onContactClick?: (subject?: string) => void;
 }
+
+// Background images mapping per research category
+const CATEGORY_BACKGROUND_IMAGES: Record<string, string> = {
+  "weight-management": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Adipose_cells_glowing_microscopi__202608221913_stedur.jpg",
+  "recovery-regeneration": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Regenerating_muscle_fibres_repai__202608221913_p9mg4g.jpg",
+  "longevity": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406360/Mitochondria_and_DNA_cellular_ag__202608221915_plb22x.jpg",
+  "aesthetics": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
+  "growth-hormone": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Molecules_interacting_with_hormo__202608221914_g8apqb.jpg",
+  "hormonal-health": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
+  "cognitive-health": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
+  "research-support": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Red_blood_cells_flowing_vessel_202608221914_zu9htw.jpg",
+};
 
 interface PeptideEntry {
   name: string;
@@ -28,7 +39,7 @@ interface CategoryCatalogueContent {
 }
 
 const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Product Catalogue – Weight Management & Metabolic Research",
+  pageTitle: "Weight Management & Metabolic Research",
   introParagraphs: [
     "The field of metabolic research has evolved rapidly in recent years, driven by growing scientific interest in the biological mechanisms that regulate appetite, energy balance, glucose metabolism and body composition. This has led to the development of several investigational peptides targeting complementary metabolic pathways, making this one of the most active areas of peptide research today.",
     "Our portfolio includes a range of research peptides currently being investigated for their potential roles in metabolic signalling, appetite regulation, fat metabolism and energy homeostasis. Together, they provide researchers, clinics and commercial partners with access to a comprehensive suite of products supporting a broad spectrum of metabolic research applications."
@@ -137,7 +148,7 @@ const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
 };
 
 const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Product Catalogue – Recovery & Regenerative Research",
+  pageTitle: "Recovery & Regenerative Research",
   introParagraphs: [
     "The field of regenerative research focuses on understanding the biological processes involved in tissue repair, wound healing, inflammation and cellular regeneration. Peptides in this category are being investigated for their potential roles in supporting these complex biological pathways and continue to attract significant scientific interest across regenerative medicine, sports science and translational research.",
     "Our regenerative portfolio brings together well-established investigational peptides and innovative combination formulations that are widely studied for tissue repair, recovery biology and cellular resilience. Together they provide clinics, researchers and commercial partners with a comprehensive selection of products supporting a broad range of regenerative research applications."
@@ -235,7 +246,7 @@ const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
 };
 
 const LONGEVITY_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Product Catalogue – Longevity & Cellular Health",
+  pageTitle: "Longevity & Cellular Health",
   introParagraphs: [
     "The science of healthy ageing has become one of the fastest-growing areas of biomedical research. Investigational peptides and related molecules in this category are being studied for their potential roles in cellular resilience, mitochondrial function, oxidative stress, DNA integrity and the biological pathways associated with ageing.",
     "Our Longevity & Cellular Health portfolio brings together a carefully selected range of compounds that are widely researched by longevity clinics, functional medicine practitioners and research organisations. These products support investigations into cellular optimisation, healthy ageing and overall biological performance."
@@ -699,6 +710,44 @@ export default function ResearchCategoryDetail({
     content = COGNITIVE_HEALTH_CONTENT;
   }
 
+  let normalizedKey = "weight-management";
+  if (categoryId === "recovery-regeneration") {
+    normalizedKey = "recovery-regeneration";
+  } else if (categoryId === "longevity") {
+    normalizedKey = "longevity";
+  } else if (categoryId === "aesthetics" || categoryId === "aesthetics-skin-hair") {
+    normalizedKey = "aesthetics";
+  } else if (
+    categoryId === "growth-hormone" ||
+    categoryId === "growth-hormone-performance" ||
+    categoryId === "growth-hormone-secretagogues" ||
+    categoryId === "gh"
+  ) {
+    normalizedKey = "growth-hormone";
+  } else if (
+    categoryId === "hormonal-health" ||
+    categoryId === "hormonal-sexual-health" ||
+    categoryId === "hormone" ||
+    categoryId === "hormonal" ||
+    categoryId === "hormones"
+  ) {
+    normalizedKey = "hormonal-health";
+  } else if (
+    categoryId === "cognitive-health" ||
+    categoryId === "cognitive" ||
+    categoryId === "cognition" ||
+    categoryId === "neurobiology" ||
+    categoryId === "cognitive-health-neurobiology"
+  ) {
+    normalizedKey = "cognitive-health";
+  } else if (categoryId === "research-support") {
+    normalizedKey = "research-support";
+  }
+
+  const heroBgImage =
+    CATEGORY_BACKGROUND_IMAGES[normalizedKey] ||
+    CATEGORY_BACKGROUND_IMAGES["weight-management"];
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const scrollToCatalogue = () => {
@@ -710,7 +759,7 @@ export default function ResearchCategoryDetail({
 
   const handleRequestCatalogue = () => {
     if (onContactClick) {
-      onContactClick(`Catalogue Request: ${content.pageTitle.replace("Product Catalogue – ", "")}`);
+      onContactClick(`Catalogue Request: ${content.pageTitle}`);
     } else if (onNavigate) {
       onNavigate("contact");
     }
@@ -826,21 +875,73 @@ export default function ResearchCategoryDetail({
       />
 
       {/* -------------------------------------------------------------
-       * HERO SECTION: Full-Width 70–90vh Split Layout
+       * HERO SECTION: Full-Width Atmospheric Hero Slide with Visible Background Imagery
        * ------------------------------------------------------------- */}
-      <section className="relative z-10 w-full min-h-[75vh] lg:min-h-[85vh] flex items-center py-16 sm:py-20 lg:py-24 px-6 sm:px-8 lg:px-14 border-b border-slate-200/60 dark:border-white/5">
-        <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <section className="relative z-10 w-full min-h-[50vh] lg:min-h-[60vh] flex items-center py-10 sm:py-14 lg:py-16 px-5 sm:px-8 lg:px-14 border-b border-slate-200/60 dark:border-white/10 overflow-hidden">
+        
+        {/* Background Image Layer with Cinematic Grain & Lighting Overlays */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
+          {/* Category Scientific Specimen Image - Right aligned and clear on the right side */}
+          <img
+            src={heroBgImage}
+            alt=""
+            aria-hidden="true"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-cover object-right md:object-center filter contrast-[1.08] brightness-[0.88] dark:brightness-[0.72] saturate-[0.9] scale-100 transition-transform duration-1000"
+          />
+
+          {/* Grainy Noise Overlay Texture */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-30 dark:opacity-40 mix-blend-overlay"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
+            }}
+          />
+
+          {/* Directional Horizontal Mask: High opacity on left for readability, clear/transparent on the right so background image is distinctly visible */}
+          <div
+            className={`absolute inset-0 ${
+              isDark
+                ? "bg-gradient-to-r from-[#080c14] via-[#080c14]/85 via-45% md:via-50% to-transparent"
+                : "bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/90 via-45% md:via-50% to-transparent"
+            }`}
+          />
+
+          {/* Vertical Transitions to Seamlessly Blend into Surrounding Canvas */}
+          <div
+            className={`absolute inset-0 ${
+              isDark
+                ? "bg-gradient-to-b from-[#080c14]/70 via-transparent to-[#080c14]/90"
+                : "bg-gradient-to-b from-[#f8fafc]/70 via-transparent to-[#f8fafc]/90"
+            }`}
+          />
+        </div>
+
+        {/* Foreground Content Container */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full">
           
-          {/* Left Column: Page Title, Intro Description & CTAs */}
+          {/* Main Content Column: Page Title, Intro Description & CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col justify-center"
+            className="max-w-2xl lg:max-w-3xl flex flex-col justify-center"
           >
+            {/* Category Breadcrumb / Telemetry Pill */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border backdrop-blur-md mb-5 w-fit border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold">
+                Research Portfolio Monograph Series
+              </span>
+            </div>
+
             {/* Page Title (H1) */}
             <h1
-              className={`text-3xl sm:text-4xl lg:text-[2.85rem] xl:text-[3.25rem] font-serif font-medium tracking-[-0.025em] leading-[1.12] mb-6 sm:mb-8 ${
+              className={`text-3xl sm:text-4xl lg:text-[2.85rem] xl:text-[3.25rem] font-serif font-medium tracking-[-0.025em] leading-[1.15] mb-5 sm:mb-7 drop-shadow-xs ${
                 isDark ? "text-slate-50" : "text-slate-900"
               }`}
             >
@@ -848,11 +949,11 @@ export default function ResearchCategoryDetail({
             </h1>
 
             {/* Introductory Paragraphs (Verbatim copy preserved) */}
-            <div className="space-y-5 max-w-[65ch] mb-8 sm:mb-10 text-[1.0625rem] sm:text-[1.125rem] leading-[1.8] font-sans font-normal">
+            <div className="space-y-4 sm:space-y-5 max-w-[65ch] mb-8 sm:mb-10 text-[0.95rem] sm:text-[1.125rem] leading-[1.75] sm:leading-[1.85] font-sans font-normal">
               {content.introParagraphs.map((para, idx) => (
                 <p
                   key={idx}
-                  className={isDark ? "text-slate-300/90" : "text-slate-600"}
+                  className={isDark ? "text-slate-200/90" : "text-slate-700"}
                 >
                   {para}
                 </p>
@@ -860,10 +961,10 @@ export default function ResearchCategoryDetail({
             </div>
 
             {/* CTAs: Primary & Secondary Actions */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
               <button
                 onClick={scrollToCatalogue}
-                className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-medium text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 active:translate-y-0"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-medium text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 active:translate-y-0 min-h-[44px]"
               >
                 <span>Explore Products</span>
                 <ArrowDown className="w-4 h-4" />
@@ -871,90 +972,87 @@ export default function ResearchCategoryDetail({
 
               <button
                 onClick={handleRequestCatalogue}
-                className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-medium text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-2.5 border border-slate-300 dark:border-white/15 bg-slate-100/80 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-md shadow-xs"
+                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-medium text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-2.5 border border-slate-300 dark:border-white/15 bg-white/70 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-md shadow-xs min-h-[44px]"
               >
                 <FileText className="w-4 h-4 opacity-75" />
                 <span>Request Product Catalogue</span>
               </button>
             </div>
           </motion.div>
-
-          {/* Right Column: Category-Specific Scientific Visual */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 flex items-center justify-center"
-          >
-            <CategoryHeroVisual categoryId={categoryId} />
-          </motion.div>
         </div>
       </section>
 
       {/* -------------------------------------------------------------
-       * CATALOGUE COMPENDIUM: Product Containers List
+       * CATALOGUE COMPENDIUM: Product Containers List (Horizontal & Compact Layout)
        * ------------------------------------------------------------- */}
       <section
         id="products-catalogue-list"
-        className="relative z-10 max-w-[840px] mx-auto py-16 sm:py-24 px-6 sm:px-8"
+        className="relative z-10 max-w-7xl mx-auto py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8"
       >
-        {/* Peptides List - High-Craft Visual Product Containers */}
-        <div className="space-y-12 sm:space-y-16">
+        {/* Section Header */}
+        <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-white/10 pb-4 mb-6 sm:mb-8">
+          <div className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em]">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-bold text-emerald-500">Compound Monographs</span>
+            <span className="opacity-40">•</span>
+            <span className="opacity-60">{content.peptides.length} Available Formulations</span>
+          </div>
+        </div>
+
+        {/* Peptides List - Compact Horizontal Two-Column / Split Layout */}
+        <div className="space-y-4 sm:space-y-5">
           {content.peptides.map((peptide, index) => (
             <motion.section
               key={peptide.name}
               id={`compound-${peptide.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: Math.min(index * 0.04, 0.2), ease: [0.16, 1, 0.3, 1] }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.15), ease: [0.16, 1, 0.3, 1] }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-              className={`group relative rounded-2xl sm:rounded-3xl p-7 sm:p-9 lg:p-10 border backdrop-blur-xl transition-all duration-500 overflow-hidden ${
+              className={`group relative rounded-2xl p-5 sm:p-6 lg:p-7 border backdrop-blur-xl transition-all duration-300 overflow-hidden ${
                 isDark
-                  ? "bg-gradient-to-br from-slate-900/60 via-slate-900/40 to-slate-950/60 border-white/10 hover:border-emerald-500/35 hover:shadow-2xl hover:shadow-emerald-950/30"
-                  : "bg-gradient-to-br from-white/95 via-white/80 to-slate-50/70 border-slate-200/90 hover:border-teal-500/40 hover:shadow-xl hover:shadow-slate-200/60"
+                  ? "bg-gradient-to-r from-slate-900/70 via-slate-900/50 to-slate-950/70 border-white/10 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-950/20"
+                  : "bg-gradient-to-r from-white/95 via-white/85 to-slate-50/80 border-slate-200/90 hover:border-teal-500/40 hover:shadow-lg hover:shadow-slate-200/50"
               }`}
             >
               {/* Scientific Accent Vector Motif */}
               {renderScientificMotif(index)}
 
-              {/* Corner Scientific Micro-Ticks */}
-              <div className="absolute top-3.5 right-3.5 font-mono text-[9px] opacity-30 select-none">
-                +
-              </div>
-              <div className="absolute top-3.5 left-3.5 font-mono text-[9px] opacity-30 select-none">
-                +
-              </div>
-
-              {/* Card Header Row: Section Metadata & Category Index */}
-              <div className="relative z-10 flex items-center justify-between gap-4 mb-4 sm:mb-5">
-                <div className="flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] opacity-60">
-                  <span className="text-emerald-500 font-semibold">§ 0{index + 1}</span>
-                  <span>•</span>
-                  <span>Compound Monograph</span>
+              {/* Horizontal Layout Container: Left column metadata & title, Right column description */}
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-baseline">
+                
+                {/* Left Column (md: 4.5 cols): Monograph Index, Tag & Compound Name */}
+                <div className="md:col-span-4 lg:col-span-4 space-y-1.5 shrink-0">
+                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] opacity-60">
+                    <span className="text-emerald-500 font-bold">§ {String(index + 1).padStart(2, "0")}</span>
+                    <span>•</span>
+                    <span>Monograph</span>
+                  </div>
+                  <h2
+                    className={`text-lg sm:text-xl lg:text-[1.35rem] font-serif font-semibold tracking-[-0.015em] leading-snug transition-colors ${
+                      isDark
+                        ? "text-slate-100 group-hover:text-emerald-300"
+                        : "text-slate-900 group-hover:text-teal-900"
+                    }`}
+                  >
+                    {peptide.name}
+                  </h2>
                 </div>
+
+                {/* Right Column (md: 7.5-8 cols): Description Editorial Copy (Preserved Verbatim) */}
+                <div className="md:col-span-8 lg:col-span-8">
+                  <p
+                    className={`text-[0.925rem] sm:text-[0.98rem] leading-[1.65] font-sans font-normal transition-colors ${
+                      isDark ? "text-slate-300/90 group-hover:text-slate-200" : "text-slate-600/95 group-hover:text-slate-800"
+                    }`}
+                  >
+                    {peptide.description}
+                  </p>
+                </div>
+
               </div>
-
-              {/* Product Name (H2) */}
-              <h2
-                className={`relative z-10 text-2xl sm:text-[1.85rem] font-serif font-medium tracking-[-0.015em] leading-snug mb-4 sm:mb-5 transition-colors ${
-                  isDark
-                    ? "text-slate-100 group-hover:text-white"
-                    : "text-slate-900 group-hover:text-slate-950"
-                }`}
-              >
-                {peptide.name}
-              </h2>
-
-              {/* Product Description - Editorial Copy (Preserved Verbatim) */}
-              <p
-                className={`relative z-10 text-[1.025rem] sm:text-[1.08rem] leading-[1.75] font-sans font-normal max-w-[68ch] transition-colors ${
-                  isDark ? "text-slate-300/85" : "text-slate-600/95"
-                }`}
-              >
-                {peptide.description}
-              </p>
             </motion.section>
           ))}
         </div>

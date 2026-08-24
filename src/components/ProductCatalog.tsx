@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { PEPTIDES_CATALOG } from "../data";
 import { ResearchCategory, Peptide } from "../types";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   FlaskConical, ChevronDown, ChevronUp, Check, FileSpreadsheet, ArrowRight, 
   Sparkles, Microscope, BookOpen, ShieldCheck, Search, X, Star, Layers, 
-  ArrowLeftRight, CheckCircle, Trash2, ShoppingCart, Info, Copy
+  ArrowLeftRight, CheckCircle, Trash2, ShoppingCart, Info, Copy,
+  Dna, Cpu, SlidersHorizontal, ArrowUpRight, Zap, RefreshCw, Filter
 } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 interface ProductCatalogProps {
   onSelectPeptideForCoA: (peptideId: string) => void;
@@ -21,12 +23,12 @@ interface ProductCatalogProps {
 }
 
 const PEPTIDE_IMAGES: Record<string, string> = {
-  "AP-3304": "https://images.unsplash.com/photo-1579154204601-01588f351167?q=80&w=600&auto=format&fit=crop", // Luxury laboratory pipette
-  "AP-1571": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop", // Clinical premium equipment
-  "AP-8820": "https://images.unsplash.com/photo-1628595351029-c2bf17511435?q=80&w=600&auto=format&fit=crop", // Glass prismatic refraction
-  "AP-4071": "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=600&auto=format&fit=crop", // Deep cobalt formulation vial
-  "AP-5510": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600&auto=format&fit=crop", // High-tech clean white-teal vial
-  "AP-7022": "https://images.unsplash.com/photo-1532187643603-ba119ca4109e?q=80&w=600&auto=format&fit=crop", // Laser-aligned spectrum
+  "AP-3304": "https://images.unsplash.com/photo-1579154204601-01588f351167?q=80&w=800&auto=format&fit=crop", // Laboratory pipette & formulation
+  "AP-1571": "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop", // Clinical premium equipment
+  "AP-8820": "https://images.unsplash.com/photo-1628595351029-c2bf17511435?q=80&w=800&auto=format&fit=crop", // Glass prismatic refraction
+  "AP-4071": "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=800&auto=format&fit=crop", // Deep cobalt formulation vial
+  "AP-5510": "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800&auto=format&fit=crop", // High-tech clean vial
+  "AP-7022": "https://images.unsplash.com/photo-1532187643603-ba119ca4109e?q=80&w=800&auto=format&fit=crop", // Laser-aligned spectrum
 };
 
 export default function ProductCatalog({ 
@@ -35,16 +37,20 @@ export default function ProductCatalog({
   onSelectProduct,
   initialCategoryFilter = "All"
 }: ProductCatalogProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategoryFilter);
   const [expandedPeptide, setExpandedPeptide] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<"default" | "purity" | "mw" | "name">("default");
   
   // Tab control inside the specifications block (per peptide ID)
   const [activeDetailTabs, setActiveDetailTabs] = useState<Record<string, "overview" | "specs" | "apps" | "docs">>({});
 
   // B2B Comparison & Inquiry List States
-  const [savedPeptides, setSavedPeptides] = useState<string[]>([]); // Saved peptide names/IDs
-  const [comparedPeptides, setComparedPeptides] = useState<string[]>([]); // Compared peptide IDs
+  const [savedPeptides, setSavedPeptides] = useState<string[]>([]);
+  const [comparedPeptides, setComparedPeptides] = useState<string[]>([]);
   const [showCompareModal, setShowCompareModal] = useState(false);
   const [showSavedDrawer, setShowSavedDrawer] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -56,20 +62,43 @@ export default function ProductCatalog({
 
   const categories = ["All", ...Object.values(ResearchCategory)];
 
-  // Filter logic integrating category selection and text search query
-  const filteredPeptides = PEPTIDES_CATALOG.filter((p) => {
-    const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
-    const matchesSearch = searchQuery === "" || 
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.chemicalName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.casNumber.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Category counts calculation
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: PEPTIDES_CATALOG.length };
+    PEPTIDES_CATALOG.forEach(p => {
+      counts[p.category] = (counts[p.category] || 0) + 1;
+    });
+    return counts;
+  }, []);
+
+  // Filter & Sort logic
+  const filteredPeptides = useMemo(() => {
+    let list = PEPTIDES_CATALOG.filter((p) => {
+      const matchesCategory = selectedCategory === "All" || p.category === selectedCategory;
+      const q = searchQuery.toLowerCase().trim();
+      const matchesSearch = q === "" || 
+        p.name.toLowerCase().includes(q) ||
+        p.id.toLowerCase().includes(q) ||
+        p.chemicalName.toLowerCase().includes(q) ||
+        p.casNumber.toLowerCase().includes(q) ||
+        p.sequence.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q);
+      return matchesCategory && matchesSearch;
+    });
+
+    if (sortBy === "name") {
+      list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === "mw") {
+      list = [...list].sort((a, b) => a.molecularWeight - b.molecularWeight);
+    } else if (sortBy === "purity") {
+      list = [...list].sort((a, b) => b.purity.localeCompare(a.purity));
+    }
+
+    return list;
+  }, [selectedCategory, searchQuery, sortBy]);
 
   const toggleExpand = (id: string) => {
     setExpandedPeptide(expandedPeptide === id ? null : id);
-    // Initialize tab as 'overview' if not set
     if (!activeDetailTabs[id]) {
       setActiveDetailTabs(prev => ({ ...prev, [id]: "overview" }));
     }
@@ -98,7 +127,6 @@ export default function ProductCatalog({
       setSavedPeptides(savedPeptides.filter(p => p !== name));
     } else {
       setSavedPeptides([...savedPeptides, name]);
-      // Brief visual indicator/drawer alert
     }
   };
 
@@ -109,7 +137,6 @@ export default function ProductCatalog({
       setComparedPeptides(comparedPeptides.filter(p => p !== id));
     } else {
       if (comparedPeptides.length >= 3) {
-        // Limit to 3 items
         alert("You can compare up to 3 compounds simultaneously.");
         return;
       }
@@ -122,13 +149,13 @@ export default function ProductCatalog({
     setShowCompareModal(false);
   };
 
-  const handleCopySequence = (seq: string, id: string) => {
+  const handleCopySequence = (seq: string, id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
     navigator.clipboard.writeText(seq);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  // Transfer all saved list items directly to the Sourcing Portal Inquiry Form
   const handleBulkEnquirySubmit = () => {
     if (savedPeptides.length === 0) return;
     const bulkListString = savedPeptides.join(", ");
@@ -137,252 +164,389 @@ export default function ProductCatalog({
   };
 
   return (
-    <section id="products" className="relative bg-neutral-950 px-6 sm:px-8 lg:px-12 py-32 border-t border-white/5">
-      {/* Background elegant gradient glows */}
-      <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-emerald-500/[0.03] blur-[120px] pointer-events-none" />
-      <div className="absolute left-10 bottom-10 h-96 w-96 rounded-full bg-teal-500/[0.03] blur-[120px] pointer-events-none" />
+    <div className={`min-h-screen pt-24 pb-12 sm:pt-28 sm:pb-16 px-5 sm:px-8 lg:px-12 relative overflow-hidden transition-colors duration-500 ${
+      isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
+    }`}>
+      {/* Ambient background glows */}
+      <div className="absolute right-0 top-1/4 h-[500px] w-[500px] rounded-full bg-emerald-500/[0.03] blur-[150px] pointer-events-none" />
+      <div className="absolute left-0 bottom-1/3 h-[500px] w-[500px] rounded-full bg-teal-500/[0.03] blur-[150px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full max-w-7xl relative z-10 space-y-8 sm:space-y-12">
         
-        {/* Section Header with Luxurious Spacing */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-          <div className="max-w-xl">
-            <div className="font-mono text-[9px] uppercase tracking-[0.3em] text-emerald-400 mb-4">
-              <span>Compendium Sourcing</span>
-            </div>
-            <h2 className="font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Precision Molecules
-            </h2>
-            <p className="mt-4 font-sans text-xs text-neutral-400 leading-relaxed font-light">
-              We help businesses build reliable peptide programs. Explore certified compound profiles engineered for critical clinical models and enterprise-scale B2B supply.
-            </p>
-          </div>
-          
-          <div className="shrink-0 font-mono text-[9px] tracking-[0.25em] text-neutral-400 flex items-center gap-2 border border-white/5 bg-neutral-900/10 px-4 py-2 rounded-full backdrop-blur-sm">
+        {/* ========================================================
+            HERO INTRO SECTION
+            ======================================================== */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6 max-w-4xl"
+        >
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-md">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>HPLC & MS ACCREDITED BATCHES</span>
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-emerald-400 font-bold">
+              B2B RESEARCH COMPENDIUM
+            </span>
           </div>
-        </div>
 
-        {/* Categories & Search Console Grid */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-16 border-b border-white/5 pb-8" id="product-search-console">
-          {/* Categories Tab Bar with Smooth Micro-interactions */}
-          <div className="no-scrollbar flex overflow-x-auto pb-2 -mx-6 px-6 lg:mx-0 lg:px-0">
-            <div className="flex space-x-2">
-              {categories.map((category) => {
-                const isSelected = selectedCategory === category;
-                return (
-                  <button
-                    key={category}
-                    onClick={() => {
-                      setSelectedCategory(category);
-                      setExpandedPeptide(null);
-                    }}
-                    className={`relative whitespace-nowrap rounded-full px-5 py-3 font-sans text-[10px] font-semibold tracking-[0.18em] transition-all border duration-300 uppercase ${
-                      isSelected
-                        ? "bg-white border-white text-neutral-950 font-bold"
-                        : "bg-neutral-950/40 border-white/5 text-neutral-400 hover:border-white/10 hover:text-white"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                );
-              })}
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.15]">
+            Precision Research Peptides. <br className="hidden sm:inline" />
+            <span className={isDark ? "text-emerald-400" : "text-teal-700"}>
+              Verified Quality & Direct Supply.
+            </span>
+          </h1>
+
+          <p className="text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-3xl opacity-85">
+            Explore our analytical-grade peptide catalogue engineered for rigorous laboratory research, institutional studies, and enterprise-scale B2B supply. Every batch includes full HPLC chromatograms and Mass Spectrometry validation.
+          </p>
+
+          {/* Quick Quality Metrics Bar */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            {[
+              { label: "Purity Threshold", value: "≥ 99.0% Certified" },
+              { label: "Batch Traceability", value: "HPLC & MS Verified" },
+              { label: "Physical Form", value: "Lyophilized Powder" },
+              { label: "Supply Formats", value: "Vials & Bulk Custom" },
+            ].map((stat, i) => (
+              <div 
+                key={i} 
+                className={`p-3.5 rounded-2xl border backdrop-blur-sm ${
+                  isDark ? "bg-white/[0.02] border-white/10" : "bg-white border-slate-200 shadow-sm"
+                }`}
+              >
+                <span className="font-mono text-[9px] uppercase tracking-wider block opacity-60">{stat.label}</span>
+                <span className={`font-sans text-xs sm:text-sm font-semibold mt-0.5 block ${isDark ? "text-emerald-400" : "text-teal-700"}`}>
+                  {stat.value}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ========================================================
+            CATEGORY FILTER & SEARCH TOOLBAR
+            ======================================================== */}
+        <div className={`p-4 sm:p-6 rounded-3xl border backdrop-blur-xl space-y-4 ${
+          isDark ? "bg-neutral-900/40 border-white/10" : "bg-white border-slate-200 shadow-md"
+        }`}>
+          {/* Top Row: Search input & Sort Controls */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Search Input */}
+            <div className="relative w-full sm:max-w-md">
+              <Search className="absolute left-4 top-3.5 h-4 w-4 opacity-50" />
+              <input
+                type="text"
+                placeholder="Search compound name, CAS number, formula, or ID..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={`w-full py-3 pl-11 pr-10 rounded-2xl text-xs sm:text-sm border outline-none transition-all ${
+                  isDark 
+                    ? "bg-neutral-950/80 border-white/10 focus:border-emerald-400 text-white placeholder-neutral-500" 
+                    : "bg-slate-50 border-slate-200 focus:border-teal-600 text-slate-900 placeholder-slate-400"
+                }`}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3.5 top-3.5 opacity-50 hover:opacity-100 transition-opacity"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Sort Dropdown & Quick Actions */}
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="h-4 w-4 opacity-60 shrink-0" />
+                <span className="font-mono text-xs uppercase tracking-wider opacity-60 hidden sm:inline">Sort:</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  className={`py-2.5 px-3 rounded-xl text-xs font-medium border outline-none cursor-pointer ${
+                    isDark 
+                      ? "bg-neutral-950 border-white/10 text-neutral-200" 
+                      : "bg-slate-50 border-slate-200 text-slate-800"
+                  }`}
+                >
+                  <option value="default">Default Order</option>
+                  <option value="name">Name (A-Z)</option>
+                  <option value="purity">Highest Purity</option>
+                  <option value="mw">Molecular Mass</option>
+                </select>
+              </div>
+
+              {/* Reset filter button if active */}
+              {(selectedCategory !== "All" || searchQuery !== "" || sortBy !== "default") && (
+                <button
+                  onClick={() => {
+                    setSelectedCategory("All");
+                    setSearchQuery("");
+                    setSortBy("default");
+                  }}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono font-medium border transition-colors ${
+                    isDark 
+                      ? "border-white/10 hover:bg-white/5 text-neutral-400 hover:text-white" 
+                      : "border-slate-200 hover:bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  <RefreshCw className="h-3 w-3" />
+                  <span>Reset</span>
+                </button>
+              )}
             </div>
           </div>
 
-          {/* Elegant Search Input */}
-          <div className="relative w-full lg:max-w-xs shrink-0">
-            <Search className="absolute left-4 top-3.5 h-3.5 w-3.5 text-neutral-500" strokeWidth={1.5} />
-            <input
-              type="text"
-              placeholder="Search by Name, CAS, or ID..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-neutral-900/40 border border-white/5 hover:border-white/10 rounded-full py-3 pl-10 pr-4 text-xs text-white placeholder-neutral-500 focus:border-white/20 focus:bg-neutral-900/60 outline-none transition-all font-sans"
-              aria-label="Search Peptide Catalogue"
-            />
-            {searchQuery && (
-              <button 
-                onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-3.5 text-neutral-500 hover:text-white"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
+          {/* Bottom Row: Category Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-2">
+            {categories.map((category) => {
+              const isSelected = selectedCategory === category;
+              const count = categoryCounts[category] || 0;
+              return (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-200 cursor-pointer border ${
+                    isSelected
+                      ? isDark
+                        ? "bg-emerald-400 text-neutral-950 border-emerald-400 font-bold shadow-[0_0_15px_rgba(52,211,153,0.3)]"
+                        : "bg-teal-700 text-white border-teal-700 font-bold shadow-md"
+                      : isDark
+                        ? "bg-neutral-950/50 border-white/10 text-neutral-400 hover:text-white hover:border-white/20"
+                        : "bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900 hover:border-slate-300"
+                  }`}
+                >
+                  <span>{category}</span>
+                  <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                    isSelected
+                      ? isDark ? "bg-neutral-950/20 text-neutral-950 font-bold" : "bg-white/20 text-white font-bold"
+                      : isDark ? "bg-white/10 text-neutral-400" : "bg-slate-200 text-slate-600"
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Dynamic Empty State */}
+        {/* Results summary counter */}
+        <div className="flex items-center justify-between px-1">
+          <span className="font-mono text-xs uppercase tracking-widest opacity-60">
+            Showing {filteredPeptides.length} {filteredPeptides.length === 1 ? "Compound" : "Compounds"}
+          </span>
+          {comparedPeptides.length > 0 && (
+            <button
+              onClick={() => setShowCompareModal(true)}
+              className="inline-flex items-center gap-2 font-mono text-xs text-emerald-400 font-bold hover:underline"
+            >
+              <ArrowLeftRight className="h-3.5 w-3.5" />
+              <span>Compare Selected ({comparedPeptides.length})</span>
+            </button>
+          )}
+        </div>
+
+        {/* ========================================================
+            EMPTY STATE
+            ======================================================== */}
         {filteredPeptides.length === 0 && (
-          <div className="text-center py-20 bg-neutral-900/5 border border-white/5 rounded-3xl p-8 max-w-md mx-auto">
-            <FlaskConical className="h-10 w-10 text-neutral-600 mx-auto mb-4" strokeWidth={1} />
-            <h4 className="font-sans text-sm font-semibold text-white">No compound matches found</h4>
-            <p className="font-sans text-xs text-neutral-400 mt-2 font-light">
-              Refine your search query or select another category. For custom sequences, contact our PhD chemists directly.
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className={`p-12 text-center rounded-3xl border ${
+              isDark ? "bg-neutral-900/30 border-white/10" : "bg-white border-slate-200"
+            }`}
+          >
+            <FlaskConical className="h-12 w-12 mx-auto mb-4 opacity-40 text-emerald-400" />
+            <h3 className="text-xl font-semibold mb-2">No research compounds matched your filter</h3>
+            <p className="text-sm opacity-70 max-w-md mx-auto mb-6">
+              Try adjusting your search query or reset your category filters to view all available products.
             </p>
             <button
-              onClick={() => { setSelectedCategory("All"); setSearchQuery(""); }}
-              className="mt-6 rounded-full border border-white/10 px-5 py-2 text-[10px] uppercase font-mono tracking-wider text-neutral-300 hover:bg-white/5"
+              onClick={() => {
+                setSelectedCategory("All");
+                setSearchQuery("");
+                setSortBy("default");
+              }}
+              className="px-6 py-3 rounded-full bg-emerald-400 text-neutral-950 font-mono text-xs font-bold uppercase tracking-wider"
             >
-              Reset Filters
+              Show All Products
             </button>
-          </div>
+          </motion.div>
         )}
 
-        {/* Interactive Peptide Grid with Apple-Style Easing */}
-        <motion.div 
-          layout
-          className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3"
-          id="product-grid"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredPeptides.map((peptide) => {
-              const isExpanded = expandedPeptide === peptide.id;
-              const isSaved = savedPeptides.includes(peptide.name);
-              const isComparing = comparedPeptides.includes(peptide.id);
-              const activeDetailTab = activeDetailTabs[peptide.id] || "overview";
+        {/* ========================================================
+            PRODUCT GRID (HIGH CRAFTSMANSHIP CARDS)
+            ======================================================== */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredPeptides.map((peptide, index) => {
+            const isExpanded = expandedPeptide === peptide.id;
+            const isSaved = savedPeptides.includes(peptide.name);
+            const isComparing = comparedPeptides.includes(peptide.id);
+            const activeDetailTab = activeDetailTabs[peptide.id] || "overview";
 
-              const setDetailTab = (tab: "overview" | "specs" | "apps" | "docs") => {
-                setActiveDetailTabs(prev => ({ ...prev, [peptide.id]: tab }));
-              };
-              
-              return (
-                <motion.div
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  key={peptide.id}
-                  id={`product-card-${peptide.id}`}
-                  className="group relative flex flex-col justify-between rounded-[32px] border border-white/5 bg-neutral-900/10 p-7 backdrop-blur-sm hover:border-white/10 hover:bg-neutral-900/25 transition-all duration-700 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden"
-                >
-                  {/* Subtle interior ambient glow */}
-                  <div className="absolute top-0 right-0 h-40 w-40 rounded-full bg-emerald-500/[0.01] blur-3xl group-hover:bg-emerald-500/[0.02] transition-all duration-700 pointer-events-none" />
+            const setDetailTab = (tab: "overview" | "specs" | "apps" | "docs") => {
+              setActiveDetailTabs(prev => ({ ...prev, [peptide.id]: tab }));
+            };
 
-                  <div>
-                    {/* Premium Product Image Cover - Large and Bold */}
-                    <div className="relative h-72 w-full overflow-hidden bg-neutral-950 rounded-[24px] mb-8 shadow-inner">
-                      <img 
-                        src={PEPTIDE_IMAGES[peptide.id]} 
-                        alt={peptide.name} 
-                        className="h-full w-full object-cover opacity-65 group-hover:opacity-80 group-hover:scale-[1.03] transition-transform duration-1000 ease-out" 
-                        referrerPolicy="no-referrer"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent opacity-95" />
-                      
-                      {/* Floating metadata badges */}
-                      <div className="absolute top-5 left-5">
-                        <span className="font-mono text-[8px] tracking-[0.2em] text-emerald-400 bg-neutral-950/80 backdrop-blur px-3 py-1.5 rounded-full border border-emerald-500/10 font-bold uppercase">
-                          {peptide.id}
-                        </span>
-                      </div>
-                      
-                      <div className="absolute top-5 right-5">
-                        <span className="font-sans text-[8px] uppercase font-bold tracking-[0.25em] text-neutral-300 bg-neutral-950/70 backdrop-blur px-3 py-1.5 rounded-full border border-white/5">
-                          {peptide.category}
-                        </span>
-                      </div>
+            return (
+              <motion.div
+                key={peptide.id}
+                id={`product-card-${peptide.id}`}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.05 }}
+                className={`rounded-[32px] border flex flex-col justify-between overflow-hidden transition-all duration-300 group ${
+                  isDark
+                    ? "bg-neutral-900/40 border-white/10 hover:border-emerald-500/30 hover:bg-neutral-900/60 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+                    : "bg-white border-slate-200/90 hover:border-teal-500/40 hover:shadow-xl shadow-sm text-slate-900"
+                }`}
+              >
+                <div>
+                  {/* Card Image Cover with Floating Badges */}
+                  <div className="relative h-64 w-full overflow-hidden bg-neutral-950">
+                    <img 
+                      src={PEPTIDE_IMAGES[peptide.id] || PEPTIDE_IMAGES["AP-3304"]} 
+                      alt={peptide.name} 
+                      className="h-full w-full object-cover opacity-75 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" 
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent" />
+                    
+                    {/* Top Floating Badges */}
+                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
+                      <span className="font-mono text-[9px] uppercase tracking-widest text-emerald-400 bg-neutral-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-emerald-500/20 font-bold">
+                        {peptide.id}
+                      </span>
+                      <span className="font-sans text-[10px] uppercase font-bold tracking-wider text-neutral-200 bg-neutral-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                        {peptide.category}
+                      </span>
+                    </div>
 
-                      {/* Floating Quick Action Buttons on Image */}
-                      <div className="absolute bottom-5 right-5 flex items-center gap-2">
-                        {/* Save to enquiry list */}
+                    {/* Bottom Image Overlay Badges & Quick Action Icons */}
+                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                      <span className="font-mono text-[10px] font-bold text-emerald-300 bg-emerald-950/80 backdrop-blur-md px-2.5 py-1 rounded-lg border border-emerald-500/30 flex items-center gap-1.5">
+                        <Check className="h-3 w-3 text-emerald-400" />
+                        <span>{peptide.purity}</span>
+                      </span>
+
+                      <div className="flex items-center gap-1.5">
+                        {/* Save to inquiry list button */}
                         <button
                           onClick={(e) => toggleSaveForEnquiry(peptide.name, e)}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full backdrop-blur border transition-all ${
+                          title={isSaved ? "Remove from inquiry list" : "Add to inquiry list"}
+                          className={`h-8 w-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all cursor-pointer ${
                             isSaved 
-                              ? "bg-emerald-400 border-emerald-400 text-neutral-950" 
-                              : "bg-neutral-950/70 border-white/10 text-neutral-300 hover:bg-neutral-950 hover:text-white"
+                              ? "bg-emerald-400 border-emerald-400 text-neutral-950 shadow-md" 
+                              : "bg-neutral-950/80 border-white/20 text-neutral-300 hover:bg-neutral-900 hover:text-white"
                           }`}
-                          title={isSaved ? "Saved in your enquiry list" : "Save for bulk sourcing enquiry"}
                         >
-                          <Star className={`h-3.5 w-3.5 ${isSaved ? "fill-current" : ""}`} strokeWidth={1.5} />
+                          <Star className={`h-3.5 w-3.5 ${isSaved ? "fill-current" : ""}`} />
                         </button>
 
-                        {/* Toggle Compare */}
+                        {/* Compare button */}
                         <button
                           onClick={(e) => toggleCompare(peptide.id, e)}
-                          className={`flex h-8 w-8 items-center justify-center rounded-full backdrop-blur border transition-all ${
+                          title={isComparing ? "Remove from comparison" : "Add to comparison"}
+                          className={`h-8 w-8 rounded-full flex items-center justify-center backdrop-blur-md border transition-all cursor-pointer ${
                             isComparing 
-                              ? "bg-teal-400 border-teal-400 text-neutral-950" 
-                              : "bg-neutral-950/70 border-white/10 text-neutral-300 hover:bg-neutral-950 hover:text-white"
+                              ? "bg-teal-400 border-teal-400 text-neutral-950 shadow-md" 
+                              : "bg-neutral-950/80 border-white/20 text-neutral-300 hover:bg-neutral-900 hover:text-white"
                           }`}
-                          title={isComparing ? "Remove from comparison" : "Add to comparison panel"}
                         >
-                          <ArrowLeftRight className="h-3.5 w-3.5" strokeWidth={1.5} />
+                          <ArrowLeftRight className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Meta Row */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="font-mono text-[9px] tracking-wider text-neutral-500">
-                        CAS {peptide.casNumber}
+                  {/* Product Card Body */}
+                  <div className="p-6 sm:p-7 space-y-5">
+                    {/* Header Info */}
+                    <div>
+                      <div className="flex items-center justify-between text-xs font-mono opacity-60 mb-1">
+                        <span>CAS {peptide.casNumber}</span>
+                        <span>{peptide.form}</span>
                       </div>
-                      <div className="font-mono text-[9px] tracking-widest text-emerald-400 font-semibold bg-emerald-500/5 px-2.5 py-0.5 rounded-full border border-emerald-500/10">
-                        {peptide.purity}
-                      </div>
+                      <h3 
+                        onClick={() => onSelectProduct(peptide.id)}
+                        className={`text-xl sm:text-2xl font-semibold tracking-tight cursor-pointer hover:underline ${
+                          isDark ? "text-white" : "text-slate-900"
+                        }`}
+                      >
+                        {peptide.name}
+                      </h3>
+                      <p className="text-xs font-mono italic opacity-70 truncate mt-0.5">
+                        {peptide.chemicalName}
+                      </p>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="font-sans text-2xl font-semibold tracking-tight text-white mb-2 transition-colors duration-300">
-                      {peptide.name}
-                    </h3>
-                    <p className="font-mono text-[10px] text-neutral-400 italic mb-4 truncate tracking-wider">
-                      {peptide.chemicalName}
-                    </p>
-
-                    {/* Brief description */}
-                    <p className="font-sans text-xs text-neutral-400 leading-relaxed mb-8 font-light">
+                    {/* Brief Description */}
+                    <p className="text-xs sm:text-sm font-light leading-relaxed opacity-85 line-clamp-3">
                       {peptide.description}
                     </p>
 
-                    {/* Quick Specs Summary Grid */}
-                    <div className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-white/5 pt-6 mb-8 text-[10px] font-mono">
+                    {/* Key Molecular Metrics Grid */}
+                    <div className={`grid grid-cols-2 gap-3 p-3.5 rounded-2xl border text-xs font-mono ${
+                      isDark ? "bg-white/[0.02] border-white/5" : "bg-slate-50 border-slate-200/80"
+                    }`}>
                       <div>
-                        <div className="text-neutral-500 uppercase tracking-[0.2em] text-[8px]">Empirical Formula</div>
-                        <div className="text-neutral-300 mt-0.5 truncate font-light">{peptide.formula}</div>
+                        <span className="text-[9px] uppercase tracking-wider block opacity-60">Formula</span>
+                        <span className="font-medium truncate block mt-0.5">{peptide.formula}</span>
                       </div>
                       <div>
-                        <div className="text-neutral-500 uppercase tracking-[0.2em] text-[8px]">Molecular Mass</div>
-                        <div className="text-neutral-300 mt-0.5 font-light">{peptide.molecularWeight.toFixed(1)} g/mol</div>
-                      </div>
-                      <div>
-                        <div className="text-neutral-500 uppercase tracking-[0.2em] text-[8px]">Physical Format</div>
-                        <div className="text-neutral-300 mt-0.5 font-light">{peptide.form}</div>
-                      </div>
-                      <div>
-                        <div className="text-neutral-500 uppercase tracking-[0.2em] text-[8px]">Purity Standard</div>
-                        <div className="text-emerald-400 font-semibold mt-0.5">HPLC Verified</div>
+                        <span className="text-[9px] uppercase tracking-wider block opacity-60">Mol. Mass</span>
+                        <span className="font-medium block mt-0.5">{peptide.molecularWeight.toFixed(1)} g/mol</span>
                       </div>
                     </div>
 
-                    {/* PREMIUM SPECIFICATION LAYOUT: Dynamic Tabbed Specifications */}
+                    {/* Single-Click Copy Amino Acid Sequence */}
+                    <div className={`p-3 rounded-xl border flex items-center justify-between gap-2 text-xs font-mono ${
+                      isDark ? "bg-neutral-950/60 border-white/5" : "bg-slate-100/80 border-slate-200"
+                    }`}>
+                      <div className="flex items-center gap-2 overflow-hidden">
+                        <Dna className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                        <span className="truncate opacity-80 text-[11px] select-all font-light">{peptide.sequence}</span>
+                      </div>
+                      <button
+                        onClick={(e) => handleCopySequence(peptide.sequence, peptide.id, e)}
+                        className={`p-1 rounded hover:bg-white/10 transition-colors shrink-0 ${
+                          copiedId === peptide.id ? "text-emerald-400" : "opacity-60 hover:opacity-100"
+                        }`}
+                        title="Copy Sequence"
+                      >
+                        {copiedId === peptide.id ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      </button>
+                    </div>
+
+                    {/* Expandable Deep Specs Sheet */}
                     <AnimatePresence>
                       {isExpanded && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: "auto" }}
                           exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                          className="overflow-hidden border-t border-white/5 pt-6 mb-8 space-y-6 text-left"
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden pt-2 space-y-4 border-t border-white/10"
                         >
-                          {/* Section Tabs */}
-                          <div className="flex border-b border-white/5 pb-2 overflow-x-auto gap-1 no-scrollbar">
+                          {/* Inner Tabs */}
+                          <div className="flex border-b border-white/10 pb-2 gap-1 overflow-x-auto no-scrollbar">
                             {[
                               { id: "overview", label: "Overview" },
-                              { id: "specs", label: "Specifications" },
+                              { id: "specs", label: "Specs" },
                               { id: "apps", label: "Applications" },
-                              { id: "docs", label: "Documentation" },
+                              { id: "docs", label: "Traceability" },
                             ].map((tab) => (
                               <button
                                 key={tab.id}
                                 onClick={() => setDetailTab(tab.id as any)}
-                                className={`px-3.5 py-2 rounded-xl text-[9px] font-mono uppercase tracking-wider whitespace-nowrap transition-all ${
+                                className={`px-2.5 py-1 rounded-lg text-[10px] font-mono uppercase tracking-wider transition-all ${
                                   activeDetailTab === tab.id
-                                    ? "bg-emerald-500/10 border border-emerald-500/15 text-emerald-400 font-bold"
-                                    : "bg-transparent text-neutral-500 hover:text-white border border-transparent"
+                                    ? isDark
+                                      ? "bg-emerald-500/15 text-emerald-300 font-bold border border-emerald-500/30"
+                                      : "bg-teal-100 text-teal-900 font-bold border border-teal-300"
+                                    : "opacity-60 hover:opacity-100"
                                 }`}
                               >
                                 {tab.label}
@@ -390,521 +554,322 @@ export default function ProductCatalog({
                             ))}
                           </div>
 
-                          {/* Tab Content 1: Overview */}
-                          {activeDetailTab === "overview" && (
-                            <motion.div 
-                              initial={{ opacity: 0, y: 5 }} 
-                              animate={{ opacity: 1, y: 0 }} 
-                              className="space-y-4"
-                            >
-                              {peptide.scientificBackground && (
-                                <div>
-                                  <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-neutral-500 mb-1.5 flex items-center gap-1.5">
-                                    <Microscope className="h-3 w-3 text-emerald-400" strokeWidth={1.2} />
-                                    <span>Scientific Background</span>
-                                  </div>
-                                  <p className="font-sans text-xs text-neutral-300 leading-relaxed font-light bg-neutral-950/40 p-4 rounded-2xl border border-white/5">
-                                    {peptide.scientificBackground}
-                                  </p>
-                                </div>
-                              )}
-                              <div>
-                                <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-neutral-500 mb-1.5 flex items-center gap-1.5">
-                                  <FlaskConical className="h-3 w-3 text-emerald-400" strokeWidth={1.2} />
-                                  <span>Active Amino Acid Sequence</span>
-                                </div>
-                                <div className="flex items-center justify-between bg-neutral-950/80 p-3.5 rounded-2xl border border-white/5 font-mono text-[9px] text-neutral-300 select-all font-light">
-                                  <span className="break-all leading-relaxed mr-2">{peptide.sequence}</span>
-                                  <button
-                                    onClick={() => handleCopySequence(peptide.sequence, peptide.id)}
-                                    className="p-1.5 rounded-lg hover:bg-white/5 text-neutral-500 hover:text-emerald-400 shrink-0 transition-colors"
-                                    title="Copy sequence to clipboard"
-                                  >
-                                    {copiedId === peptide.id ? (
-                                      <Check className="h-3.5 w-3.5 text-emerald-400" />
-                                    ) : (
-                                      <Copy className="h-3.5 w-3.5" />
-                                    )}
-                                  </button>
-                                </div>
-                              </div>
-                            </motion.div>
+                          {/* Tab: Overview */}
+                          {activeDetailTab === "overview" && peptide.scientificBackground && (
+                            <div className="text-xs font-light leading-relaxed opacity-90 space-y-2">
+                              <span className="font-mono text-[9px] uppercase tracking-wider block opacity-60">
+                                Scientific Mechanism
+                              </span>
+                              <p>{peptide.scientificBackground}</p>
+                            </div>
                           )}
 
-                          {/* Tab Content 2: Chemical Specs */}
+                          {/* Tab: Specs */}
                           {activeDetailTab === "specs" && (
-                            <motion.div 
-                              initial={{ opacity: 0, y: 5 }} 
-                              animate={{ opacity: 1, y: 0 }} 
-                              className="space-y-4"
-                            >
-                              <div className="grid grid-cols-2 gap-4 bg-neutral-950/40 p-4 rounded-2xl border border-white/5 text-[11px]">
-                                <div>
-                                  <div className="font-mono text-[8px] text-neutral-500 uppercase tracking-widest">Empirical Formula</div>
-                                  <div className="text-neutral-200 mt-1 font-mono font-light">{peptide.formula}</div>
-                                </div>
-                                <div>
-                                  <div className="font-mono text-[8px] text-neutral-500 uppercase tracking-widest">Molecular Mass</div>
-                                  <div className="text-neutral-200 mt-1 font-mono font-light">{peptide.molecularWeight.toFixed(2)} g/mol</div>
-                                </div>
-                                <div>
-                                  <div className="font-mono text-[8px] text-neutral-500 uppercase tracking-widest">Purity Threshold</div>
-                                  <div className="text-emerald-400 mt-1 font-mono font-semibold">{peptide.purity}</div>
-                                </div>
-                                <div>
-                                  <div className="font-mono text-[8px] text-neutral-500 uppercase tracking-widest">Format Type</div>
-                                  <div className="text-neutral-200 mt-1 font-sans font-light">{peptide.form}</div>
-                                </div>
-                              </div>
-                              
-                              <div>
-                                <div className="font-sans text-[8px] uppercase font-bold text-neutral-500 mb-2 tracking-[0.2em]">
-                                  Quality Attributes & Purity
-                                </div>
-                                <ul className="space-y-1.5">
-                                  {peptide.benefits.map((benefit, bIndex) => (
-                                    <li key={bIndex} className="flex items-start gap-2 text-xs text-neutral-300 font-light">
-                                      <span className="h-1 w-1 rounded-full bg-emerald-400 mt-2 shrink-0" />
-                                      <span>{benefit}</span>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            </motion.div>
+                            <div className="space-y-2 text-xs">
+                              <span className="font-mono text-[9px] uppercase tracking-wider block opacity-60">
+                                Verified Benefits & Properties
+                              </span>
+                              <ul className="space-y-1.5 opacity-85 font-light">
+                                {peptide.benefits.map((b, bIdx) => (
+                                  <li key={bIdx} className="flex items-start gap-2">
+                                    <CheckCircle className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                                    <span>{b}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           )}
 
-                          {/* Tab Content 3: Applications */}
-                          {activeDetailTab === "apps" && (
-                            <motion.div 
-                              initial={{ opacity: 0, y: 5 }} 
-                              animate={{ opacity: 1, y: 0 }} 
-                              className="space-y-4"
-                            >
-                              {peptide.researchApplications && (
-                                <div>
-                                  <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-neutral-500 mb-2 flex items-center gap-1.5">
-                                    <BookOpen className="h-3 w-3 text-emerald-400" strokeWidth={1.2} />
-                                    <span>Validated Research Applications</span>
-                                  </div>
-                                  <ul className="space-y-2 bg-neutral-950/40 p-4 rounded-2xl border border-white/5">
-                                    {peptide.researchApplications.map((app, appIdx) => (
-                                      <li key={appIdx} className="flex items-start gap-2.5 text-xs text-neutral-300 font-light">
-                                        <span className="h-1 w-1 rounded-full bg-emerald-400 mt-2 shrink-0" />
-                                        <span>{app}</span>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-                            </motion.div>
+                          {/* Tab: Applications */}
+                          {activeDetailTab === "apps" && peptide.researchApplications && (
+                            <div className="space-y-2 text-xs">
+                              <span className="font-mono text-[9px] uppercase tracking-wider block opacity-60">
+                                Research Study Pathways
+                              </span>
+                              <ul className="space-y-1.5 opacity-85 font-light">
+                                {peptide.researchApplications.map((app, aIdx) => (
+                                  <li key={aIdx} className="flex items-start gap-2">
+                                    <Microscope className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                                    <span>{app}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
                           )}
 
-                          {/* Tab Content 4: Documentation & Packaging */}
+                          {/* Tab: Docs */}
                           {activeDetailTab === "docs" && (
-                            <motion.div 
-                              initial={{ opacity: 0, y: 5 }} 
-                              animate={{ opacity: 1, y: 0 }} 
-                              className="space-y-4"
-                            >
-                              {peptide.documentationAvailable && (
-                                <div>
-                                  <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-neutral-500 mb-2 flex items-center gap-1.5">
-                                    <ShieldCheck className="h-3 w-3 text-emerald-400" strokeWidth={1.2} />
-                                    <span>Traceability Documents Issued</span>
+                            <div className="space-y-2 text-xs">
+                              <span className="font-mono text-[9px] uppercase tracking-wider block opacity-60">
+                                Documentation Issued
+                              </span>
+                              <div className="grid grid-cols-1 gap-1.5">
+                                {peptide.documentationAvailable?.map((doc, dIdx) => (
+                                  <div key={dIdx} className="flex items-center gap-2 opacity-80">
+                                    <FileSpreadsheet className="h-3 w-3 text-emerald-400 shrink-0" />
+                                    <span className="text-[11px] font-mono truncate">{doc}</span>
                                   </div>
-                                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    {peptide.documentationAvailable.map((doc, docIdx) => (
-                                      <div key={docIdx} className="flex items-center gap-2 bg-neutral-950/50 p-2.5 rounded-xl border border-white/5">
-                                        <FileSpreadsheet className="h-3.5 w-3.5 text-neutral-500 shrink-0" strokeWidth={1.2} />
-                                        <span className="font-sans text-[10px] text-neutral-300 font-light truncate">{doc}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-
-                              <div className="grid grid-cols-2 gap-4 text-xs bg-white/[0.02] p-4 rounded-2xl border border-white/5">
-                                <div>
-                                  <div className="font-sans font-semibold text-neutral-400 mb-0.5 text-[11px]">Storage Spec</div>
-                                  <p className="text-neutral-300 font-light text-[11px] leading-snug">{peptide.recommendedStorage}</p>
-                                </div>
-                                <div>
-                                  <div className="font-sans font-semibold text-neutral-400 mb-0.5 text-[11px]">Available Vials</div>
-                                  <div className="flex flex-wrap gap-1 mt-1">
-                                    {peptide.vialSizes.map((size) => (
-                                      <span key={size} className="bg-neutral-950 px-2 py-0.5 rounded text-[9px] font-mono border border-white/5 text-neutral-400">
-                                        {size}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-                              </div>
-                            </motion.div>
-                          )}
-
-                          {/* Related Products */}
-                          {peptide.relatedProducts && (
-                            <div className="border-t border-white/5 pt-4">
-                              <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-neutral-500 mb-2">
-                                <span>Related Compounds</span>
-                              </div>
-                              <div className="flex flex-wrap gap-2">
-                                {peptide.relatedProducts.map((relId) => {
-                                  const relProduct = PEPTIDES_CATALOG.find(p => p.id === relId);
-                                  return (
-                                    <button
-                                      key={relId}
-                                      onClick={() => handleSelectRelated(relId)}
-                                      className="flex items-center gap-1.5 bg-neutral-950/75 hover:bg-neutral-900 px-3 py-2 rounded-xl border border-white/5 hover:border-white/15 transition-all text-left text-[10px] font-sans"
-                                    >
-                                      <span className="font-mono font-bold text-emerald-400">{relId}</span>
-                                      <span className="text-neutral-400 font-light truncate max-w-[100px]">{relProduct?.name || "View"}</span>
-                                    </button>
-                                  );
-                                })}
+                                ))}
                               </div>
                             </div>
                           )}
 
-                          {/* Request Pricing inside specifications */}
-                          <div className="pt-2">
-                            <button
-                              onClick={() => onInitiateInquiry(peptide.name)}
-                              className="flex items-center justify-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/15 text-emerald-400 hover:text-emerald-300 border border-emerald-500/20 py-3 rounded-2xl font-sans text-[10px] font-bold tracking-[0.15em] uppercase transition-all w-full"
-                            >
-                              <span>Request Custom Buffer Quote</span>
-                              <ArrowRight className="h-3 w-3" strokeWidth={1.2} />
-                            </button>
-                          </div>
+                          {/* Related links */}
+                          {peptide.relatedProducts && (
+                            <div className="pt-2 border-t border-white/5 flex items-center gap-1.5 flex-wrap">
+                              <span className="font-mono text-[9px] uppercase opacity-60">Related:</span>
+                              {peptide.relatedProducts.map(rId => (
+                                <button
+                                  key={rId}
+                                  onClick={() => handleSelectRelated(rId)}
+                                  className="font-mono text-[10px] text-emerald-400 hover:underline"
+                                >
+                                  {rId}
+                                </button>
+                              ))}
+                            </div>
+                          )}
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
 
-                  {/* Actions footer */}
-                  <div className="border-t border-white/5 pt-6 flex flex-col gap-4">
+                    {/* Toggle quick specs button */}
                     <button
-                      onClick={() => onSelectProduct(peptide.id)}
-                      className="flex items-center justify-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/10 py-3.5 rounded-full font-sans text-[10px] font-bold tracking-[0.15em] uppercase transition-all w-full"
+                      onClick={() => toggleExpand(peptide.id)}
+                      className="w-full flex items-center justify-center gap-1.5 font-mono text-[10px] uppercase tracking-widest opacity-70 hover:opacity-100 transition-opacity py-1 cursor-pointer"
                     >
-                      <span>View Technical Dossier</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
+                      <span>{isExpanded ? "Hide Details" : "Quick Specifications"}</span>
+                      {isExpanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Card Actions Footer */}
+                <div className={`p-6 sm:p-7 pt-0 space-y-3`}>
+                  {/* Primary CTA: Full Product Page */}
+                  <button
+                    onClick={() => onSelectProduct(peptide.id)}
+                    className={`w-full flex items-center justify-center gap-2 py-3.5 rounded-full font-mono text-xs uppercase tracking-widest font-bold transition-all duration-300 cursor-pointer shadow-md hover:scale-[1.02] active:scale-[0.98] ${
+                      isDark
+                        ? "bg-emerald-400 hover:bg-emerald-300 text-neutral-950 shadow-[0_0_20px_rgba(52,211,153,0.25)]"
+                        : "bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/20"
+                    }`}
+                  >
+                    <span>View Technical Dossier</span>
+                    <ArrowRight className="h-3.5 w-3.5" />
+                  </button>
+
+                  {/* Secondary Quick Action Row */}
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <button
+                      onClick={() => onInitiateInquiry(peptide.name)}
+                      className={`py-2.5 px-3 rounded-full font-mono text-[10px] uppercase tracking-wider font-bold border transition-colors cursor-pointer text-center truncate ${
+                        isDark
+                          ? "border-white/10 hover:bg-white/5 text-neutral-300 hover:text-white"
+                          : "border-slate-300 hover:bg-slate-100 text-slate-700"
+                      }`}
+                    >
+                      Request Rates
                     </button>
 
-                    <div className="grid grid-cols-2 gap-4">
-                      <button
-                        onClick={() => onSelectPeptideForCoA(peptide.id)}
-                        className="flex items-center justify-center gap-1.5 bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/5 py-3 rounded-full font-sans text-[10px] font-bold tracking-[0.15em] uppercase transition-all"
-                        title="Inspect chromatograms, purities, and mass spectrogram reports."
-                      >
-                        <span>Verify CoA</span>
-                      </button>
-
-                      <button
-                        onClick={() => onInitiateInquiry(peptide.name)}
-                        className="flex items-center justify-center gap-1.5 bg-white hover:bg-neutral-200 text-neutral-950 py-3 rounded-full font-sans text-[10px] font-bold tracking-[0.15em] uppercase transition-all"
-                      >
-                        <span>Inquire</span>
-                      </button>
-                    </div>
+                    <button
+                      onClick={() => onSelectPeptideForCoA(peptide.id)}
+                      className={`py-2.5 px-3 rounded-full font-mono text-[10px] uppercase tracking-wider font-bold border transition-colors cursor-pointer text-center truncate ${
+                        isDark
+                          ? "border-emerald-500/20 bg-emerald-500/5 hover:bg-emerald-500/10 text-emerald-400"
+                          : "border-teal-200 bg-teal-50 hover:bg-teal-100 text-teal-800"
+                      }`}
+                    >
+                      Verify CoA
+                    </button>
                   </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
-        </motion.div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
 
       </div>
 
-      {/* FLOATING ACTION PANELS (ENQUIRY LIST & COMPARISON CHANNELS) */}
-      
-      {/* 1. Saved Enquiry List Float Tray */}
-      {savedPeptides.length > 0 && (
-        <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3">
-          <button
-            onClick={() => setShowSavedDrawer(true)}
-            className="flex items-center gap-2.5 rounded-full bg-emerald-400 hover:bg-emerald-300 text-neutral-950 px-6 py-4 shadow-3xl transition-all duration-300 hover:scale-[1.02] border border-emerald-400"
-            id="floating-enquiry-cart"
-          >
-            <ShoppingCart className="h-4.5 w-4.5" />
-            <span className="font-sans text-[10px] font-bold tracking-[0.15em] uppercase">
-              Active RFQ ({savedPeptides.length})
-            </span>
-          </button>
-        </div>
-      )}
-
-      {/* 2. Floating Compare Bar */}
-      {comparedPeptides.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 bg-neutral-900 border border-white/10 p-3.5 rounded-full shadow-3xl backdrop-blur-md max-w-sm sm:max-w-md w-11/12 animate-fade-in-up">
-          <div className="flex -space-x-2.5 overflow-hidden pl-2">
-            {comparedPeptides.map(id => {
-              const p = PEPTIDES_CATALOG.find(x => x.id === id);
-              return (
-                <div key={id} className="h-7 w-7 rounded-full border border-neutral-900 bg-neutral-950 flex items-center justify-center text-[8px] font-mono font-bold text-emerald-400">
-                  {id.replace("AP-", "")}
+      {/* ========================================================
+          FLOATING BOTTOM BAR FOR SAVED & COMPARED PEPTIDES
+          ======================================================== */}
+      {(savedPeptides.length > 0 || comparedPeptides.length > 0) && (
+        <motion.div
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 80, opacity: 0 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-11/12 max-w-xl"
+        >
+          <div className={`p-3.5 sm:p-4 rounded-full border backdrop-blur-2xl shadow-2xl flex items-center justify-between gap-3 ${
+            isDark ? "bg-neutral-900/90 border-emerald-500/30 text-white" : "bg-white/95 border-teal-500/30 text-slate-900"
+          }`}>
+            <div className="flex items-center gap-3 pl-2 truncate">
+              {savedPeptides.length > 0 && (
+                <div className="flex items-center gap-1.5 text-xs font-mono">
+                  <Star className="h-4 w-4 text-emerald-400 fill-current" />
+                  <span className="font-bold">{savedPeptides.length}</span>
+                  <span className="opacity-70 hidden sm:inline">Saved in Inquiry</span>
                 </div>
-              );
-            })}
+              )}
+              {comparedPeptides.length > 0 && (
+                <div className="flex items-center gap-1.5 text-xs font-mono border-l border-white/20 pl-3">
+                  <ArrowLeftRight className="h-4 w-4 text-teal-400" />
+                  <span className="font-bold">{comparedPeptides.length}/3</span>
+                  <span className="opacity-70 hidden sm:inline">Comparing</span>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {comparedPeptides.length > 0 && (
+                <button
+                  onClick={() => setShowCompareModal(true)}
+                  className="px-4 py-2 rounded-full font-mono text-[11px] uppercase font-bold bg-white/10 hover:bg-white/20 transition-colors"
+                >
+                  Compare
+                </button>
+              )}
+              {savedPeptides.length > 0 && (
+                <button
+                  onClick={handleBulkEnquirySubmit}
+                  className="px-5 py-2 rounded-full font-mono text-[11px] uppercase font-bold bg-emerald-400 text-neutral-950 hover:bg-emerald-300 transition-colors shadow-md"
+                >
+                  Inquire ({savedPeptides.length})
+                </button>
+              )}
+            </div>
           </div>
-          <div className="flex-1 text-[10px] font-sans text-neutral-300 pl-1 font-light">
-            Compare <span className="text-white font-bold">{comparedPeptides.length}</span> compounds
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={clearCompare}
-              className="font-sans text-[9px] uppercase tracking-wider text-neutral-500 hover:text-neutral-300 py-1.5 px-3 rounded-full hover:bg-white/5 transition-all"
-            >
-              Clear
-            </button>
-            <button
-              onClick={() => setShowCompareModal(true)}
-              className="flex items-center gap-1.5 rounded-full bg-white hover:bg-neutral-200 text-neutral-950 py-1.5 px-4 font-sans text-[9px] font-bold uppercase tracking-wider transition-all"
-            >
-              <span>Compare</span>
-              <ArrowLeftRight className="h-3 w-3" />
-            </button>
-          </div>
-        </div>
+        </motion.div>
       )}
 
-      {/* MULTI-PRODUCT COMPARISON OVERLAY MODAL */}
+      {/* ========================================================
+          SIDE-BY-SIDE COMPARISON MODAL
+          ======================================================== */}
       <AnimatePresence>
         {showCompareModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-950/90 p-4 md:p-8 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.4 }}
-              className="relative w-full max-w-5xl rounded-[32px] border border-white/10 bg-neutral-950/95 p-6 md:p-10 shadow-3xl overflow-hidden max-h-[90vh] flex flex-col"
-              id="compare-modal-panel"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className={`w-full max-w-4xl max-h-[85vh] overflow-y-auto p-6 sm:p-8 rounded-3xl border shadow-2xl space-y-6 ${
+                isDark ? "bg-neutral-900 border-white/10 text-white" : "bg-white border-slate-200 text-slate-900"
+              }`}
             >
-              <div className="flex items-center justify-between border-b border-white/5 pb-6 mb-6">
-                <div>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400">Side-By-Side Assay Alignment</span>
-                  <h3 className="font-sans text-xl font-semibold text-white mt-1">Sourcing Spec Comparison</h3>
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div className="flex items-center gap-2">
+                  <ArrowLeftRight className="h-5 w-5 text-emerald-400" />
+                  <h3 className="text-xl font-bold font-display">Compound Comparison</h3>
                 </div>
-                <button
-                  onClick={() => setShowCompareModal(false)}
-                  className="p-2 rounded-full border border-white/5 hover:border-white/10 text-neutral-400 hover:text-white transition-all bg-neutral-900/40"
-                  aria-label="Close comparison panel"
-                >
-                  <X className="h-4.5 w-4.5" />
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={clearCompare}
+                    className="text-xs font-mono text-neutral-400 hover:text-white px-2 py-1"
+                  >
+                    Clear All
+                  </button>
+                  <button
+                    onClick={() => setShowCompareModal(false)}
+                    className="p-1 rounded-full hover:bg-white/10"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
               </div>
 
-              {/* Table wrapper */}
-              <div className="overflow-x-auto flex-1 pb-4 no-scrollbar">
-                <table className="w-full text-left border-collapse min-w-[700px]">
+              {/* Comparison Table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs text-left border-collapse">
                   <thead>
-                    <tr className="border-b border-white/5 text-[9px] font-mono uppercase tracking-[0.2em] text-neutral-500">
-                      <th className="py-4 pr-6 font-semibold w-1/4">Specification</th>
+                    <tr className="border-b border-white/10">
+                      <th className="p-3 font-mono text-[10px] uppercase opacity-60">Metric</th>
                       {comparedPeptides.map(id => {
                         const p = PEPTIDES_CATALOG.find(x => x.id === id);
                         return (
-                          <th key={id} className="py-4 px-6 font-bold text-white w-1/4">
+                          <th key={id} className="p-3 font-semibold text-sm min-w-[200px]">
                             <div className="flex items-center justify-between">
                               <span>{p?.name}</span>
-                              <span className="text-[8px] text-emerald-400 bg-emerald-500/5 border border-emerald-500/15 px-2 py-0.5 rounded-full font-bold">{id}</span>
+                              <button
+                                onClick={(e) => toggleCompare(id, e)}
+                                className="text-neutral-400 hover:text-red-400"
+                                title="Remove"
+                              >
+                                <X className="h-3.5 w-3.5" />
+                              </button>
                             </div>
+                            <span className="font-mono text-[10px] text-emerald-400 font-normal">{p?.id}</span>
                           </th>
                         );
                       })}
                     </tr>
                   </thead>
-                  <tbody className="font-sans text-xs text-neutral-300 divide-y divide-white/5">
+                  <tbody className="divide-y divide-white/5 font-light">
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Research Class</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return <td key={id} className="py-4 px-6 text-neutral-200">{p?.category}</td>;
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Category</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3">{PEPTIDES_CATALOG.find(x => x.id === id)?.category}</td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Molecular Formula</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return <td key={id} className="py-4 px-6 font-mono text-[11px] text-neutral-300 font-light">{p?.formula}</td>;
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Purity</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3 font-mono text-emerald-400 font-semibold">{PEPTIDES_CATALOG.find(x => x.id === id)?.purity}</td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Molecular Weight</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return <td key={id} className="py-4 px-6 font-mono text-[11px] text-neutral-300 font-light">{p?.molecularWeight.toFixed(2)} g/mol</td>;
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Formula</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3 font-mono">{PEPTIDES_CATALOG.find(x => x.id === id)?.formula}</td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Active Sequence</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return (
-                          <td key={id} className="py-4 px-6 font-mono text-[9px] break-all max-w-[200px] leading-relaxed select-all">
-                            <div className="bg-neutral-950 p-2.5 rounded-xl border border-white/5 flex items-center justify-between">
-                              <span className="truncate">{p?.sequence}</span>
-                              <button
-                                onClick={() => handleCopySequence(p?.sequence || "", id)}
-                                className="p-1 rounded hover:bg-white/5 text-neutral-500 hover:text-emerald-400 ml-2"
-                                title="Copy sequence"
-                              >
-                                {copiedId === id ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
-                              </button>
-                            </div>
-                          </td>
-                        );
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Molecular Mass</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3 font-mono">{PEPTIDES_CATALOG.find(x => x.id === id)?.molecularWeight.toFixed(1)} g/mol</td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Purity Standard</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return (
-                          <td key={id} className="py-4 px-6">
-                            <span className="font-mono text-emerald-400 bg-emerald-500/5 px-2.5 py-1 rounded-full border border-emerald-500/10 font-bold">
-                              {p?.purity}
-                            </span>
-                          </td>
-                        );
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">CAS Registry</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3 font-mono">{PEPTIDES_CATALOG.find(x => x.id === id)?.casNumber}</td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Storage Protocol</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return <td key={id} className="py-4 px-6 text-neutral-400 leading-snug font-light">{p?.recommendedStorage}</td>;
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Sequence</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3 font-mono text-[10px] select-all break-all">{PEPTIDES_CATALOG.find(x => x.id === id)?.sequence}</td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Packaging Sizes</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return (
-                          <td key={id} className="py-4 px-6">
-                            <div className="flex flex-wrap gap-1.5">
-                              {p?.vialSizes.map(size => (
-                                <span key={size} className="bg-neutral-900 border border-white/5 px-2 py-0.5 rounded font-mono text-[10px] text-neutral-400 font-semibold">{size}</span>
-                              ))}
-                            </div>
-                          </td>
-                        );
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Vial Sizes</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3">
+                          <div className="flex flex-wrap gap-1">
+                            {PEPTIDES_CATALOG.find(x => x.id === id)?.vialSizes.map(s => (
+                              <span key={s} className="px-1.5 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-[9px]">{s}</span>
+                            ))}
+                          </div>
+                        </td>
+                      ))}
                     </tr>
                     <tr>
-                      <td className="py-4 pr-6 text-neutral-500 font-mono text-[9px] uppercase tracking-wider">Sourcing Actions</td>
-                      {comparedPeptides.map(id => {
-                        const p = PEPTIDES_CATALOG.find(x => x.id === id);
-                        return (
-                          <td key={id} className="py-4 px-6">
-                            <div className="flex items-center gap-2">
-                              <button
-                                onClick={() => { onInitiateInquiry(p?.name || ""); setShowCompareModal(false); }}
-                                className="bg-white hover:bg-neutral-200 text-neutral-950 font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-wider transition-all"
-                              >
-                                Enquire
-                              </button>
-                              <button
-                                onClick={() => onSelectPeptideForCoA(id)}
-                                className="border border-white/5 hover:border-white/10 hover:bg-white/5 text-neutral-300 font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-wider transition-all"
-                              >
-                                CoA Data
-                              </button>
-                            </div>
-                          </td>
-                        );
-                      })}
+                      <td className="p-3 font-mono text-[10px] uppercase opacity-60">Storage</td>
+                      {comparedPeptides.map(id => (
+                        <td key={id} className="p-3 text-[11px]">{PEPTIDES_CATALOG.find(x => x.id === id)?.recommendedStorage}</td>
+                      ))}
                     </tr>
                   </tbody>
                 </table>
               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
-      {/* SAVED ENQUIRY LIST SIDE DRAWER */}
-      <AnimatePresence>
-        {showSavedDrawer && (
-          <div className="fixed inset-0 z-50 flex justify-end bg-neutral-950/80 backdrop-blur-xs">
-            {/* Click outside to close */}
-            <div className="absolute inset-0" onClick={() => setShowSavedDrawer(false)} />
-            
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 32, stiffness: 280 }}
-              className="relative w-full max-w-md bg-neutral-950 border-l border-white/10 h-full p-8 flex flex-col justify-between shadow-3xl z-10"
-              id="saved-enquiry-drawer"
-            >
-              <div>
-                <div className="flex items-center justify-between border-b border-white/5 pb-5 mb-6">
-                  <div>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400">Direct Sourcing Queue</span>
-                    <h3 className="font-sans text-lg font-semibold text-white mt-1">Sourcing Workspace</h3>
-                  </div>
-                  <button
-                    onClick={() => setShowSavedDrawer(false)}
-                    className="p-1.5 rounded-full border border-white/5 hover:border-white/10 text-neutral-400 hover:text-white transition-all bg-neutral-900/40"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-
-                <div className="space-y-3 overflow-y-auto max-h-[60vh] no-scrollbar">
-                  {savedPeptides.map((name) => {
-                    const matched = PEPTIDES_CATALOG.find(p => p.name === name);
-                    return (
-                      <div
-                        key={name}
-                        className="flex items-center justify-between bg-neutral-900/30 border border-white/5 p-4 rounded-2xl"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="h-9 w-9 rounded-xl bg-emerald-500/5 border border-emerald-500/10 flex items-center justify-center text-emerald-400">
-                            <FlaskConical className="h-4.5 w-4.5" strokeWidth={1.2} />
-                          </div>
-                          <div>
-                            <h4 className="font-sans text-sm font-semibold text-white">{name}</h4>
-                            <span className="font-mono text-[8px] text-neutral-500 font-bold uppercase">{matched?.id} | CAS {matched?.casNumber}</span>
-                          </div>
-                        </div>
-
-                        <button
-                          onClick={(e) => toggleSaveForEnquiry(name, e)}
-                          className="p-1.5 rounded-lg text-neutral-500 hover:text-white hover:bg-neutral-900 transition-all"
-                          title="Remove compound"
-                        >
-                          <Trash2 className="h-4.5 w-4.5 text-neutral-500 hover:text-red-400" strokeWidth={1.2} />
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="border-t border-white/5 pt-6 space-y-4">
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-neutral-500 uppercase">Compounds Selected</span>
-                  <span className="text-white font-bold">{savedPeptides.length} Items</span>
-                </div>
-                
-                <p className="font-sans text-[11px] text-neutral-400 leading-normal font-light">
-                  Transfer these saved compounds into our secure procurement portal. Our PhD advisors will formulate bespoke pricing matrices based on these parameters.
-                </p>
-
+              <div className="flex justify-end gap-3 pt-4 border-t border-white/10">
                 <button
-                  onClick={handleBulkEnquirySubmit}
-                  className="w-full py-4 bg-white hover:bg-neutral-200 text-neutral-950 font-sans text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 flex items-center justify-center gap-2"
+                  onClick={() => setShowCompareModal(false)}
+                  className="px-6 py-2.5 rounded-full border border-white/20 text-xs font-mono uppercase"
                 >
-                  <span>Request Specs & Pricing Dossier</span>
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-
-                <button
-                  onClick={() => setSavedPeptides([])}
-                  className="w-full text-center font-mono text-[9px] uppercase tracking-widest text-neutral-500 hover:text-white transition-all py-1"
-                >
-                  Clear Sourcing Queue
+                  Close
                 </button>
               </div>
             </motion.div>
@@ -912,6 +877,6 @@ export default function ProductCatalog({
         )}
       </AnimatePresence>
 
-    </section>
+    </div>
   );
 }

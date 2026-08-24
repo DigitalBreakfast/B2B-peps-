@@ -117,7 +117,7 @@ export default function WhyPartner({ onContactClick, onNavigate }: WhyPartnerPro
       id: "quality",
       title: "Inconsistent Product Quality",
       subtitle: "The cytotoxic TFA risk",
-      description: "Peptides synthesis relies on highly corrosive acids (Trifluoroacetic acid). Standard wholesale compounds bypass secondary chromatography steps, resulting in toxic residual concentrations that trigger assay failures.",
+      description: "Peptide synthesis relies on highly corrosive acids (Trifluoroacetic acid). Standard wholesale compounds bypass secondary chromatography steps, resulting in toxic residual concentrations that trigger assay failures.",
       resolution: "Sovereign Pure Matrix",
       protocol: "Every batch of B2B Peps undergoes targeted TFA salt exchange chromatography, reducing residual TFA ions below clinical detection thresholds, delivering guaranteed purity profiles of ≥99.0%."
     },

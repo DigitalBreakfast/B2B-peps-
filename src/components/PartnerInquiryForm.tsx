@@ -239,7 +239,7 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
                       Transmission Confirmed
                     </span>
                     <h3 className="font-sans text-2xl font-bold text-white mt-2">
-                      Inquiry Logged successfully.
+                      Inquiry logged successfully.
                     </h3>
                     
                     <div className="mt-6 bg-neutral-950 p-5 rounded-xl border border-white/5 font-mono text-[11px] text-left text-neutral-400 w-full max-w-md space-y-2.5">

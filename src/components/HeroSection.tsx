@@ -126,7 +126,18 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
     };
   }, [isDark]);
 
-  // Scroll parallax effects
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Scroll parallax effects (applied only on desktop to allow natural flow on mobile)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -142,7 +153,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative min-h-[110vh] lg:min-h-[120vh] w-full pt-28 pb-20 px-6 sm:px-8 lg:px-12 overflow-hidden flex flex-col justify-between transition-colors duration-700 ${
+      className={`relative w-full h-auto min-h-0 pt-20 pb-8 md:pt-24 md:pb-10 px-6 sm:px-8 lg:px-12 flex flex-col justify-between transition-colors duration-700 ${
         isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
@@ -223,26 +234,40 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
       {/* =========================================================
           MAIN ASYMMETRICAL EDITORIAL COMPOSITION (40% / 60%)
           ========================================================= */}
-      <motion.div style={{ y: heroY, opacity: opacityFade }} className="relative z-10 my-auto w-full max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-[640px]">
+      <motion.div 
+        style={isMobile ? undefined : { y: heroY, opacity: opacityFade }} 
+        className="relative z-10 my-auto w-full max-w-7xl mx-auto"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-0 lg:min-h-[640px]">
           
           {/* =========================================================
               LEFT COLUMN (40% Width): Editorial Typography & CTAs
               ========================================================= */}
           <div className="lg:col-span-5 space-y-8 text-left">
             
-            {/* BADGE (Liquid Glass Capsule) */}
+            {/* BADGE (Liquid Glass Capsule - Enhanced Visibility & Contrast) */}
             <motion.div 
+              id="hero-eyebrow-badge"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border backdrop-blur-2xl bg-emerald-500/10 border-emerald-500/25 text-emerald-400 shadow-[0_0_20px_rgba(52,211,153,0.15)]"
+              className={`inline-flex items-center gap-2.5 px-4.5 py-2.5 rounded-full border backdrop-blur-2xl transition-all duration-300 ${
+                isDark 
+                  ? "bg-emerald-950/70 border-emerald-400/50 text-emerald-300 shadow-[0_0_25px_rgba(52,211,153,0.3)] ring-1 ring-emerald-400/30" 
+                  : "bg-teal-50/95 border-teal-600/40 text-teal-900 shadow-[0_4px_16px_rgba(13,148,136,0.18)] ring-1 ring-teal-600/20"
+              }`}
             >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,1)]" />
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                  isDark ? "bg-emerald-400" : "bg-teal-600"
+                }`} />
+                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
+                  isDark ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]" : "bg-teal-600 shadow-[0_0_8px_rgba(13,148,136,0.8)]"
+                }`} />
               </span>
-              <span className="font-mono text-[10px] font-extrabold uppercase tracking-[0.25em]">
+              <span className={`font-mono text-[11px] sm:text-[11.5px] font-extrabold uppercase tracking-[0.22em] ${
+                isDark ? "text-emerald-300" : "text-teal-950"
+              }`}>
                 Premium Peptide Solutions
               </span>
             </motion.div>
@@ -257,7 +282,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
               <h1 className={`font-sans text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.08] ${
                 isDark ? "text-white" : "text-slate-900"
               }`}>
-                for Global Research & Commercial Partnerships
+                For Global Research & Commercial Partnerships
               </h1>
             </motion.div>
 
@@ -282,44 +307,28 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
             >
               {/* PRIMARY CTA */}
               <button
-                onClick={() => onNavigate("catalog")}
+                onClick={() => onNavigate("contact")}
                 className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-full font-mono text-[10px] uppercase tracking-[0.22em] font-extrabold transition-all duration-300 cursor-pointer shadow-2xl hover:scale-[1.03] active:scale-[0.98] ${
                   isDark 
                     ? "bg-emerald-400 hover:bg-emerald-300 text-neutral-950 shadow-[0_0_35px_rgba(52,211,153,0.35)]" 
                     : "bg-teal-600 hover:bg-teal-700 text-white shadow-[0_8px_30px_rgba(13,148,136,0.3)]"
                 }`}
               >
-                <span>Request Product Catalogue</span>
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5" />
+                <span>Speak With Our Team</span>
+                <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
 
               {/* SECONDARY CTA */}
               <button
-                onClick={() => onNavigate("contact")}
-                className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-full font-mono text-[10px] uppercase tracking-[0.22em] font-extrabold border backdrop-blur-2xl transition-all duration-300 cursor-pointer hover:scale-[1.03] active:scale-[0.98] ${
-                  isDark 
-                    ? "border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/30 text-white" 
-                    : "border-slate-300 bg-white/80 hover:bg-white text-slate-800 shadow-sm"
+                onClick={() => onNavigate("products")}
+                className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-full font-mono text-[10px] uppercase tracking-[0.22em] font-extrabold border transition-all duration-300 cursor-pointer hover:scale-[1.03] active:scale-[0.98] ${
+                  isDark
+                    ? "border-white/20 bg-white/[0.05] hover:bg-white/[0.1] text-white hover:border-emerald-400/50"
+                    : "border-slate-300 bg-white/90 hover:bg-white text-slate-800 shadow-sm hover:border-teal-500/50"
                 }`}
               >
-                <span>Speak With Our Team</span>
-                <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 text-emerald-400" />
-              </button>
-            </motion.div>
-
-            {/* OPTIONAL TEXT LINK */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="pt-2"
-            >
-              <button 
-                onClick={() => onNavigate("platform")}
-                className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest font-bold text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
-              >
-                <span>Explore Platform</span>
-                <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                <span>Explore Products</span>
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
             </motion.div>
 
@@ -328,7 +337,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
           {/* =========================================================
               RIGHT COLUMN (60% Width): Futuristic Biotechnology Visual Stage
               ========================================================= */}
-          <div className="lg:col-span-7 relative min-h-[520px] lg:min-h-[620px] flex items-center justify-center">
+          <div className="lg:col-span-7 relative min-h-0 sm:min-h-[460px] lg:min-h-[620px] flex flex-col items-center justify-center gap-4 sm:gap-6 lg:gap-0">
             
             {/* Parallax Container reacting to Mouse Movement */}
             <motion.div 
@@ -338,29 +347,27 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                 transformStyle: "preserve-3d"
               }}
               transition={{ type: "spring", stiffness: 150, damping: 20 }}
-              className="w-full h-full relative flex items-center justify-center"
+              className="w-full relative flex items-center justify-center"
             >
               
               {/* -------------------------------------------------------------
                   LAYER 2: CENTRAL HERO BIOTECHNOLOGY OBJECT (Render & Glass Stage)
+                  Hidden on mobile (< md), rendered on desktop (md+)
                   ------------------------------------------------------------- */}
-              <div className="relative w-full max-w-lg aspect-square rounded-[36px] border backdrop-blur-3xl p-8 flex flex-col justify-between overflow-hidden shadow-2xl transition-all duration-500 border-white/10 bg-gradient-to-br from-white/[0.08] via-emerald-500/[0.03] to-transparent shadow-[0_30px_70px_rgba(0,0,0,0.5)]">
+              <div className="hidden md:flex relative w-full max-w-lg aspect-[4/3] sm:aspect-square rounded-3xl sm:rounded-[36px] border backdrop-blur-3xl p-5 sm:p-8 flex-col justify-between overflow-hidden shadow-2xl transition-all duration-500 border-white/10 bg-gradient-to-br from-white/[0.08] via-emerald-500/[0.03] to-transparent shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                 
-                {/* Background Video & Laboratory Peptide Visual Layer */}
+                {/* Background Artwork & Laboratory Peptide Visual Layer */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                  <video 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    className="w-full h-full object-cover object-center filter brightness-105 contrast-115 opacity-65 scale-105 transition-transform duration-1000 hover:scale-110"
-                  >
-                    <source src="https://res.cloudinary.com/ds5s7shuo/video/upload/v1787407540/Change_bottle_to_Clevver_Peps_202608060237_n6vexp__.mp4" type="video/mp4" />
-                  </video>
+                  <img 
+                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787600572/Replace_bottle_with_peps_bottle_202608250112_z6buhk.jpg"
+                    alt="B2B Peps Pharmaceutical Grade Peptide Bottle"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover object-center filter brightness-105 contrast-110 opacity-90 scale-105 transition-transform duration-1000 hover:scale-110"
+                  />
                   <div className={`absolute inset-0 ${
                     isDark 
-                      ? "bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" 
-                      : "bg-gradient-to-t from-slate-50 via-slate-50/40 to-transparent"
+                      ? "bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-transparent" 
+                      : "bg-gradient-to-t from-slate-50/80 via-slate-50/20 to-transparent"
                   }`} />
                 </div>
 
@@ -369,7 +376,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
 
                 {/* Top Badge Overlay */}
                 <div className="relative z-10 flex justify-between items-center">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border backdrop-blur-xl bg-black/40 border-emerald-500/30 text-emerald-400 font-mono text-[9px] uppercase tracking-widest font-extrabold">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border backdrop-blur-xl bg-black/50 border-emerald-500/30 text-emerald-400 font-mono text-[9px] uppercase tracking-widest font-extrabold">
                     <Dna className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: "12s" }} />
                     <span>B2B-SYNTHESIS v4.2</span>
                   </div>
@@ -378,14 +385,14 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
               </div>
 
               {/* -------------------------------------------------------------
-                  LAYER 3: FLOATING SCIENTIFIC LIQUID GLASS WIDGETS
+                  LAYER 3: DESKTOP FLOATING SCIENTIFIC LIQUID GLASS WIDGETS (Hidden on mobile)
                   ------------------------------------------------------------- */}
 
-              {/* Widget 1: Top Right - HPLC Verified */}
+              {/* Widget 1: Top Right - HPLC Verified (Desktop) */}
               <motion.div 
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className={`absolute -top-6 -right-4 sm:right-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 flex items-center gap-3.5 max-w-xs ${
+                className={`hidden md:flex absolute -top-6 -right-4 sm:right-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 items-center gap-3.5 max-w-xs ${
                   isDark ? "bg-neutral-900/90 border-emerald-500/30 text-white" : "bg-white/95 border-teal-500/40 text-slate-900"
                 }`}
               >
@@ -398,11 +405,11 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                 </div>
               </motion.div>
 
-              {/* Widget 2: Bottom Left - Global Cold Chain */}
+              {/* Widget 2: Bottom Left - Global Cold Chain (Desktop) */}
               <motion.div 
                 animate={{ y: [0, 10, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className={`absolute -bottom-6 -left-4 sm:left-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 flex items-center gap-3.5 max-w-xs ${
+                className={`hidden md:flex absolute -bottom-6 -left-4 sm:left-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 items-center gap-3.5 max-w-xs ${
                   isDark ? "bg-neutral-900/90 border-teal-500/30 text-white" : "bg-white/95 border-slate-300 text-slate-900"
                 }`}
               >
@@ -415,7 +422,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                 </div>
               </motion.div>
 
-              {/* Widget 3: Floating Micro Panel - LC-MS Spectrometry */}
+              {/* Widget 3: Floating Micro Panel - LC-MS Spectrometry (Desktop) */}
               <motion.div 
                 animate={{ x: [0, 8, 0] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
@@ -426,44 +433,130 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
               </motion.div>
 
             </motion.div>
+
+            {/* Mobile Stacked Verification Cards (Visible strictly on mobile < 768px) */}
+            <div className="flex md:hidden flex-col w-full gap-3 pt-2">
+              <div 
+                className={`p-3.5 rounded-2xl border backdrop-blur-xl flex items-center gap-3.5 w-full ${
+                  isDark ? "bg-neutral-900/80 border-emerald-500/25 text-white" : "bg-white border-teal-500/30 text-slate-900 shadow-sm"
+                }`}
+              >
+                <div className="h-9 w-9 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="h-4.5 w-4.5 text-emerald-400" />
+                </div>
+                <div>
+                  <div className="font-mono text-xs font-bold text-emerald-400">HPLC VERIFIED</div>
+                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Research-Grade Quality</div>
+                </div>
+              </div>
+
+              <div 
+                className={`p-3.5 rounded-2xl border backdrop-blur-xl flex items-center gap-3.5 w-full ${
+                  isDark ? "bg-neutral-900/80 border-teal-500/25 text-white" : "bg-white border-slate-300 text-slate-900 shadow-sm"
+                }`}
+              >
+                <div className="h-9 w-9 rounded-xl bg-teal-500/20 border border-teal-500/30 flex items-center justify-center shrink-0">
+                  <Globe className="h-4.5 w-4.5 text-teal-400" />
+                </div>
+                <div>
+                  <div className="font-mono text-xs font-bold text-teal-400">GLOBAL SUPPLY</div>
+                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Express Cold-Chain Logistics</div>
+                </div>
+              </div>
+
+              {/* Mobile Dedicated "Trusted By" Glass Container */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className={`w-full mt-6 p-5 pb-6 rounded-3xl border backdrop-blur-xl transition-colors ${
+                  isDark
+                    ? "bg-neutral-900/60 border-white/10"
+                    : "bg-white/70 border-slate-200/80"
+                }`}
+              >
+                <div className="flex flex-col items-center text-center space-y-1.5 mb-5">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.25em] font-extrabold text-emerald-400">
+                    TRUSTED BY
+                  </span>
+                  <h3 className={`font-sans text-base font-semibold tracking-tight ${
+                    isDark ? "text-white" : "text-slate-900"
+                  }`}>
+                    Global Partners & Institutions
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 w-full">
+                  {TRUST_PARTNERS.map((partner) => (
+                    <motion.div
+                      key={partner}
+                      whileTap={{ scale: 0.98 }}
+                      className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-2xl border backdrop-blur-md transition-colors min-h-[44px] ${
+                        isDark
+                          ? "bg-white/[0.04] border-white/10 text-neutral-200"
+                          : "bg-white/90 border-slate-200 text-slate-800"
+                      }`}
+                    >
+                      <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${isDark ? "bg-emerald-400" : "bg-teal-500"}`} />
+                      <span className="font-sans text-[11px] font-medium leading-tight text-left">
+                        {partner}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+
+            </div>
+
           </div>
 
         </div>
       </motion.div>
 
       {/* =========================================================
-          TRUST STRIP (Continuous Marquee Capsules of Partner Segments)
+          DESKTOP TRUST STRIP (Continuous Marquee Capsules of Partner Segments)
+          Hidden on mobile (< md), pristine and untouched on desktop
           ========================================================= */}
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="relative z-10 w-full max-w-7xl mx-auto pt-10 border-t border-white/[0.08]"
+        transition={{ duration: 0.8, delay: 0.4 }}
+        className={`hidden md:block relative z-10 w-full max-w-7xl mx-auto mt-6 sm:mt-8 pt-4 sm:pt-6 pb-2 border-t transition-colors ${
+          isDark ? "border-white/[0.08]" : "border-slate-200/80"
+        }`}
       >
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-5 lg:gap-8">
           
-          <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-neutral-400 font-extrabold shrink-0">
-            TRUSTED BY LEADING GLOBAL INSTITUTIONS & PARTNERS
+          {/* Section Indicator Label */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <div className={`h-2 w-2 rounded-full ${isDark ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" : "bg-teal-600 shadow-[0_0_8px_rgba(13,148,136,0.5)]"}`} />
+            <span className={`font-mono text-[9.5px] sm:text-[10.5px] uppercase tracking-[0.18em] sm:tracking-[0.2em] font-bold text-center sm:text-left ${
+              isDark ? "text-neutral-300" : "text-slate-600"
+            }`}>
+              Trusted By Global Partners & Institutions
+            </span>
           </div>
 
-          {/* Marquee Pill Capsules */}
-          <div className="w-full md:w-auto overflow-hidden">
-            <div className="flex flex-wrap items-center justify-center md:justify-end gap-2.5">
-              {TRUST_PARTNERS.map((partner, idx) => (
-                <motion.div
-                  key={partner}
-                  whileHover={{ scale: 1.05 }}
-                  className={`px-3.5 py-1.5 rounded-full border backdrop-blur-xl font-mono text-[9.5px] uppercase tracking-wider transition-all duration-300 ${
-                    isDark 
-                      ? "bg-white/[0.03] border-white/10 hover:border-emerald-500/40 text-neutral-300 hover:text-emerald-300" 
-                      : "bg-white/80 border-slate-200 hover:border-teal-500/40 text-slate-700 hover:text-teal-700 shadow-sm"
-                  }`}
-                >
-                  <span className="text-emerald-400 font-bold mr-1.5">•</span>
+          {/* Partner Capsules Grid / Row */}
+          <div className="flex flex-wrap items-center justify-center lg:justify-end gap-1.5 sm:gap-2 w-full lg:w-auto">
+            {TRUST_PARTNERS.map((partner) => (
+              <motion.div
+                key={partner}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+                className={`inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full border backdrop-blur-md transition-all duration-200 cursor-default select-none ${
+                  isDark 
+                    ? "bg-white/[0.04] border-white/10 hover:border-emerald-400/40 text-neutral-300 hover:text-white hover:bg-white/[0.08]" 
+                    : "bg-white/80 border-slate-200 hover:border-teal-500/40 text-slate-700 hover:text-slate-900 hover:bg-white shadow-xs"
+                }`}
+              >
+                <span className={`h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full shrink-0 ${isDark ? "bg-emerald-400" : "bg-teal-600"}`} />
+                <span className="font-sans text-[10.5px] sm:text-xs font-medium tracking-tight whitespace-nowrap">
                   {partner}
-                </motion.div>
-              ))}
-            </div>
+                </span>
+              </motion.div>
+            ))}
           </div>
 
         </div>

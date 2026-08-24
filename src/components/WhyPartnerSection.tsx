@@ -7,7 +7,8 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowRight, ShieldCheck, FileCheck2, Globe2, PackageCheck, 
-  Atom, Handshake, Sparkles, Activity, Dna, Layers, CheckCircle2 
+  Atom, Handshake, Sparkles, Activity, Dna, Layers, CheckCircle2,
+  ChevronLeft, ChevronRight
 } from "lucide-react";
 
 interface WhyPartnerSectionProps {
@@ -22,59 +23,59 @@ const PILLARS = [
     title: "Research-Grade Quality",
     description: "Products sourced to high manufacturing standards with an emphasis on purity, consistency, and reliability.",
     icon: ShieldCheck,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1785967321/16e78cb7c1a52631906f2fe4b952bd6d.jpg_202608060238_dlsjjl.jpg",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg",
     spec: "PURITY ASSAY ≥ 99.5%",
     badge: "ISO 9001:2015 STANDARDS"
   },
   {
     number: "02",
-    id: "documentation",
-    title: "Quality Documentation",
-    description: "Batch-specific analytical documentation, including HPLC analysis, LC-MS identity confirmation, and Certificates of Analysis, where available.",
-    icon: FileCheck2,
-    image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?q=80&w=1000&auto=format&fit=crop",
-    spec: "HPLC & LC-MS SPECTRUM",
-    badge: "COA VERIFIED BATCHES"
-  },
-  {
-    number: "03",
     id: "supply",
     title: "Global Supply",
     description: "Supporting commercial partners through dependable international sourcing, fulfilment, and logistics.",
     icon: Globe2,
-    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1000&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Professionals_inspecting_pharmac__202608231645_fhynxm.jpg",
     spec: "70+ COUNTRIES COVERAGE",
     badge: "COLD-CHAIN FULFILMENT"
   },
   {
-    number: "04",
-    id: "commercial",
-    title: "Commercial Solutions",
-    description: "Private label programmes, branding, packaging, and scalable supply solutions designed for research-focused businesses.",
-    icon: PackageCheck,
-    image: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?q=80&w=1000&auto=format&fit=crop",
-    spec: "PRIVATE LABEL & BULK",
-    badge: "CUSTOM PACKAGING"
-  },
-  {
-    number: "05",
+    number: "03",
     id: "expertise",
     title: "Scientific Expertise",
     description: "A technically informed approach to peptide sourcing, documentation, and product support.",
     icon: Atom,
-    image: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?q=80&w=1000&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Engineers_inspecting_pharmaceuti__202608231646_xjish6.jpg",
     spec: "PHD PHARMA CONSULTANTS",
     badge: "ANALYTICAL SUPPORT"
   },
   {
-    number: "06",
+    number: "04",
     id: "partnership",
     title: "Long-Term Partnership",
     description: "Focused on building lasting commercial relationships through responsiveness, transparency, and dependable service.",
     icon: Handshake,
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Researchers_reviewing_technical___202608231645_kpdre3.jpg",
     spec: "DEDICATED B2B DESK",
     badge: "CONTRACT GUARANTEE"
+  },
+  {
+    number: "05",
+    id: "commercial",
+    title: "Commercial Solutions",
+    description: "Private label programmes, branding, packaging, and scalable supply solutions designed for research-focused businesses.",
+    icon: PackageCheck,
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Clever_Peps_peptide_manufacturin__202608231645_ut6wmc.jpg",
+    spec: "PRIVATE LABEL & BULK",
+    badge: "CUSTOM PACKAGING"
+  },
+  {
+    number: "06",
+    id: "documentation",
+    title: "Quality Documentation",
+    description: "Batch-specific analytical documentation, including HPLC analysis, LC-MS identity confirmation, and Certificates of Analysis, where available.",
+    icon: FileCheck2,
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Pharmaceutical_quality_control_d__202608231645_pritv6.jpg",
+    spec: "HPLC & LC-MS SPECTRUM",
+    badge: "COA VERIFIED BATCHES"
   }
 ];
 
@@ -82,6 +83,16 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
   const isDark = theme === "dark";
   const sectionRef = useRef<HTMLDivElement>(null);
   const [activePillarIndex, setActivePillarIndex] = useState(0);
+
+  const handlePrevPillar = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActivePillarIndex((prev) => (prev === 0 ? PILLARS.length - 1 : prev - 1));
+  };
+
+  const handleNextPillar = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setActivePillarIndex((prev) => (prev === PILLARS.length - 1 ? 0 : prev + 1));
+  };
 
   // Mouse Cursor Tracking
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
@@ -101,7 +112,7 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
     <section 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className={`relative min-h-[100vh] w-full py-16 sm:py-24 lg:py-28 px-4 sm:px-10 lg:px-16 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
+      className={`relative w-full py-12 sm:py-16 lg:py-18 px-4 sm:px-10 lg:px-16 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
         isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
@@ -150,15 +161,15 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
         />
       </div>
 
-      <div className="mx-auto w-full max-w-7xl relative z-10 space-y-20">
+      <div className="mx-auto w-full max-w-7xl relative z-10 space-y-12 sm:space-y-16">
 
         {/* =========================================================
             TOP EXPERIENCE: EDITORIAL INTRO & BIOTECHNOLOGY VISUAL ANCHOR
             ========================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* LEFT SIDE: Copy & Primary CTA */}
-          <div className="lg:col-span-6 space-y-8">
+          <div className="lg:col-span-6 space-y-6">
             {/* EYEBROW */}
             <motion.div 
               initial={{ opacity: 0, x: -15 }}
@@ -261,9 +272,9 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
         </div>
 
         {/* =========================================================
-            BOTTOM EXPERIENCE: INTERACTIVE MOLECULAR HEXAGONAL CAPABILITY GRID
+            BOTTOM EXPERIENCE: INTERACTIVE MOLECULAR HEXAGONAL CAPABILITY GRID / MOBILE INTERACTIVE LIST
             ========================================================= */}
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
           
           <div className="text-center space-y-3">
             <span className="font-mono text-xs font-extrabold text-emerald-400 uppercase tracking-[0.25em]">
@@ -276,10 +287,45 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
-            {/* LEFT 6 COLUMNS: HEXAGONAL MOLECULAR GRID */}
-            <div className="lg:col-span-7 relative flex flex-col items-center justify-center py-6">
+            {/* MOBILE INTERACTIVE HORIZONTAL/VERTICAL PILL SELECTOR (Shown strictly on md and down) */}
+            <div className="lg:hidden flex flex-col gap-2.5 w-full">
+              <div className="grid grid-cols-2 min-[480px]:grid-cols-3 gap-2.5">
+                {PILLARS.map((pillar, idx) => {
+                  const Icon = pillar.icon;
+                  const isSelected = activePillarIndex === idx;
+                  return (
+                    <button
+                      key={pillar.id}
+                      onClick={() => setActivePillarIndex(idx)}
+                      className={`p-3 rounded-2xl border flex flex-col items-start gap-1.5 transition-all text-left cursor-pointer min-h-[64px] ${
+                        isSelected
+                          ? isDark
+                            ? "bg-emerald-500/20 border-emerald-400 text-white shadow-[0_0_20px_rgba(52,211,153,0.3)]"
+                            : "bg-teal-50 border-teal-500 text-slate-900 shadow-sm"
+                          : isDark
+                            ? "bg-neutral-900/60 border-white/10 text-neutral-400 hover:text-white"
+                            : "bg-white border-slate-200 text-slate-700 hover:text-slate-900 shadow-xs"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span className={`font-mono text-[9px] font-bold ${isSelected ? "text-emerald-400 font-extrabold" : "opacity-60"}`}>
+                          {pillar.number}
+                        </span>
+                        <Icon className={`h-3.5 w-3.5 ${isSelected ? "text-emerald-400" : "opacity-50"}`} />
+                      </div>
+                      <span className="font-sans text-[11px] font-semibold leading-tight line-clamp-1">
+                        {pillar.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* DESKTOP 7 COLUMNS: HEXAGONAL MOLECULAR GRID (Hidden on mobile) */}
+            <div className="hidden lg:flex lg:col-span-7 relative flex-col items-center justify-center py-6">
               
               {/* SVG Connecting Molecular Lines */}
               <svg className="absolute inset-0 w-full h-full stroke-emerald-500/30 fill-none pointer-events-none z-0" viewBox="0 0 600 500">
@@ -294,7 +340,7 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
               {/* MOLECULAR ARRANGEMENT LAYOUT */}
               <div className="relative z-10 w-full max-w-lg space-y-6 sm:space-y-8">
                 
-                {/* ROW 1: TOP NODE (PILLAR 01) */}
+                {/* ROW 1: TOP NODE (01 - TOP APEX) */}
                 <div className="flex justify-center">
                   <HexNode 
                     pillar={PILLARS[0]} 
@@ -305,13 +351,13 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                   />
                 </div>
 
-                {/* ROW 2: MID-TOP NODES (PILLAR 02, CORE, PILLAR 03) */}
+                {/* ROW 2: MID-TOP NODES (06 - TOP LEFT, CORE, 02 - TOP RIGHT) */}
                 <div className="flex items-center justify-between sm:justify-around px-1 sm:px-6">
                   <HexNode 
-                    pillar={PILLARS[1]} 
-                    index={1} 
-                    isActive={activePillarIndex === 1} 
-                    onClick={() => setActivePillarIndex(1)} 
+                    pillar={PILLARS[5]} 
+                    index={5} 
+                    isActive={activePillarIndex === 5} 
+                    onClick={() => setActivePillarIndex(5)} 
                     isDark={isDark} 
                   />
 
@@ -329,6 +375,25 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                   </div>
 
                   <HexNode 
+                    pillar={PILLARS[1]} 
+                    index={1} 
+                    isActive={activePillarIndex === 1} 
+                    onClick={() => setActivePillarIndex(1)} 
+                    isDark={isDark} 
+                  />
+                </div>
+
+                {/* ROW 3: MID-BOTTOM NODES (05 - BOTTOM LEFT, 03 - BOTTOM RIGHT) */}
+                <div className="flex items-center justify-between sm:justify-around px-1 sm:px-6">
+                  <HexNode 
+                    pillar={PILLARS[4]} 
+                    index={4} 
+                    isActive={activePillarIndex === 4} 
+                    onClick={() => setActivePillarIndex(4)} 
+                    isDark={isDark} 
+                  />
+
+                  <HexNode 
                     pillar={PILLARS[2]} 
                     index={2} 
                     isActive={activePillarIndex === 2} 
@@ -337,32 +402,13 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                   />
                 </div>
 
-                {/* ROW 3: MID-BOTTOM NODES (PILLAR 04, PILLAR 05) */}
-                <div className="flex items-center justify-between sm:justify-around px-1 sm:px-6">
+                {/* ROW 4: BOTTOM NODE (04 - BOTTOM APEX) */}
+                <div className="flex justify-center">
                   <HexNode 
                     pillar={PILLARS[3]} 
                     index={3} 
                     isActive={activePillarIndex === 3} 
                     onClick={() => setActivePillarIndex(3)} 
-                    isDark={isDark} 
-                  />
-
-                  <HexNode 
-                    pillar={PILLARS[4]} 
-                    index={4} 
-                    isActive={activePillarIndex === 4} 
-                    onClick={() => setActivePillarIndex(4)} 
-                    isDark={isDark} 
-                  />
-                </div>
-
-                {/* ROW 4: BOTTOM NODE (PILLAR 06) */}
-                <div className="flex justify-center">
-                  <HexNode 
-                    pillar={PILLARS[5]} 
-                    index={5} 
-                    isActive={activePillarIndex === 5} 
-                    onClick={() => setActivePillarIndex(5)} 
                     isDark={isDark} 
                   />
                 </div>
@@ -371,7 +417,7 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
             </div>
 
             {/* RIGHT 5 COLUMNS: DYNAMIC LIQUID GLASS INFO PANEL */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5 w-full">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activePillar.id}
@@ -385,34 +431,116 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                       : "border-teal-500/30 bg-white/95 text-slate-900 shadow-[0_25px_50px_rgba(0,0,0,0.15)]"
                   }`}
                 >
-                  {/* Background Artwork Image */}
-                  <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-white/10 group">
+                  {/* Background Artwork Image with Grainy Layer & Color Reveal on Hover */}
+                  <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden border border-white/10 group cursor-pointer">
+                    {/* The Artwork Image with Grayscale & Contrast in default state, transitioning to Original Color on hover */}
                     <img 
+                      id="pillar-artwork-img"
                       src={activePillar.image} 
                       alt={activePillar.title}
-                      className="w-full h-full object-cover filter contrast-110 brightness-90 group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover filter grayscale contrast-125 brightness-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:brightness-100 group-hover:scale-105 transition-all duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent opacity-80" />
 
-                    <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md border border-white/10 font-mono text-[9px] font-bold text-emerald-400 uppercase tracking-widest">
-                      {activePillar.badge}
-                    </div>
+                    {/* Grainy Texture Layer Overlay (fades gracefully on hover to reveal true color) */}
+                    <div 
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none z-10 opacity-70 mix-blend-overlay transition-opacity duration-700 group-hover:opacity-20"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grainNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grainNoise)' opacity='0.75'/%3E%3C/svg%3E")`,
+                        backgroundSize: "140px 140px"
+                      }}
+                    />
 
-                    <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md border border-white/10 font-mono text-[9px] text-neutral-300 uppercase tracking-widest">
-                      {activePillar.spec}
+                    {/* Gradient shade overlays for arrow visibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-black/30 pointer-events-none z-10" />
+
+                    {/* Carousel Left Arrow */}
+                    <button
+                      id="carousel-prev-btn"
+                      onClick={handlePrevPillar}
+                      aria-label="Previous capability"
+                      className={`absolute left-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full backdrop-blur-md border transition-all duration-300 cursor-pointer shadow-lg active:scale-90 hover:scale-110 ${
+                        isDark
+                          ? "bg-neutral-950/80 hover:bg-neutral-900 border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400"
+                          : "bg-white/90 hover:bg-white border-slate-300 hover:border-teal-500 text-slate-800 hover:text-teal-700 shadow-md"
+                      }`}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                    </button>
+
+                    {/* Carousel Right Arrow */}
+                    <button
+                      id="carousel-next-btn"
+                      onClick={handleNextPillar}
+                      aria-label="Next capability"
+                      className={`absolute right-3 top-1/2 -translate-y-1/2 z-20 p-2.5 rounded-full backdrop-blur-md border transition-all duration-300 cursor-pointer shadow-lg active:scale-90 hover:scale-110 ${
+                        isDark
+                          ? "bg-neutral-950/80 hover:bg-neutral-900 border-white/20 hover:border-emerald-400 text-white hover:text-emerald-400"
+                          : "bg-white/90 hover:bg-white border-slate-300 hover:border-teal-500 text-slate-800 hover:text-teal-700 shadow-md"
+                      }`}
+                    >
+                      <ChevronRight className="h-4 w-4" />
+                    </button>
+
+                    {/* Carousel Dots on Image Bottom */}
+                    <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-md bg-black/50 border border-white/15">
+                      {PILLARS.map((p, idx) => (
+                        <button
+                          key={p.id}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActivePillarIndex(idx);
+                          }}
+                          aria-label={`Go to capability ${idx + 1}`}
+                          className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                            activePillarIndex === idx 
+                              ? "w-5 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" 
+                              : "w-1.5 bg-white/40 hover:bg-white/70"
+                          }`}
+                        />
+                      ))}
                     </div>
                   </div>
 
                   {/* Copy Content */}
                   <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-2xl font-extrabold text-emerald-400">
-                        {activePillar.number}
-                      </span>
-                      <div className="h-4 w-[1px] bg-emerald-500/30" />
-                      <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-                        CAPABILITY INSPECTOR
-                      </span>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="font-mono text-2xl font-extrabold text-emerald-400">
+                          {activePillar.number}
+                        </span>
+                        <div className="h-4 w-[1px] bg-emerald-500/30" />
+                        <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
+                          CAPABILITY INSPECTOR
+                        </span>
+                      </div>
+
+                      {/* Header Carousel Stepper Arrows */}
+                      <div className={`flex items-center gap-1 px-2 py-1 rounded-full border ${
+                        isDark ? "bg-white/[0.04] border-white/10 text-neutral-300" : "bg-slate-100 border-slate-200 text-slate-700"
+                      }`}>
+                        <button
+                          onClick={handlePrevPillar}
+                          aria-label="Previous capability"
+                          className={`p-1 rounded-full transition-colors cursor-pointer ${
+                            isDark ? "hover:bg-white/10 hover:text-emerald-400" : "hover:bg-slate-200 hover:text-teal-700"
+                          }`}
+                        >
+                          <ChevronLeft className="h-3.5 w-3.5" />
+                        </button>
+                        <span className="font-mono text-[10px] font-bold px-1.5 text-neutral-400">
+                          {activePillarIndex + 1}/{PILLARS.length}
+                        </span>
+                        <button
+                          onClick={handleNextPillar}
+                          aria-label="Next capability"
+                          className={`p-1 rounded-full transition-colors cursor-pointer ${
+                            isDark ? "hover:bg-white/10 hover:text-emerald-400" : "hover:bg-slate-200 hover:text-teal-700"
+                          }`}
+                        >
+                          <ChevronRight className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </div>
 
                     <h4 className="font-sans text-2xl font-semibold tracking-tight">

@@ -3,261 +3,143 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState, useEffect } from "react";
-import { 
-  ShieldCheck, Microscope, Globe, FileSpreadsheet, 
-  ArrowLeftRight, HeartHandshake, ArrowRight 
-} from "lucide-react";
-import WhyPartner from "./WhyPartner";
+import React from "react";
+import { motion } from "motion/react";
 
 interface AboutUsProps {
-  onContactClick: () => void;
-  onNavigate: (pageId: string) => void;
+  onContactClick?: () => void;
+  onNavigate?: (pageId: string) => void;
   initialTab?: "story" | "partner";
 }
 
-export default function AboutUs({ onContactClick, onNavigate, initialTab = "story" }: AboutUsProps) {
-  const [activeTab, setActiveTab] = useState<"story" | "partner">(initialTab);
-
-  useEffect(() => {
-    if (initialTab) {
-      setActiveTab(initialTab);
-    }
-  }, [initialTab]);
-  const trustPillars = [
-    {
-      title: "Quality Assurance",
-      description: "Every compound batch undergoes double reverse-phase HPLC and Mass Spectrometry validation to guarantee a verified purity level of 99% or above.",
-      icon: <ShieldCheck className="h-4.5 w-4.5 text-emerald-400" strokeWidth={1.2} />
-    },
-    {
-      title: "Scientific Expertise",
-      description: "Our chemists specialize in solid-phase synthesis, custom sequence configuration, and standard counter-ion replacements.",
-      icon: <Microscope className="h-4.5 w-4.5 text-teal-400" strokeWidth={1.2} />
-    },
-    {
-      title: "Global Distribution",
-      description: "We navigate complex customs clearances and maintain temperature-controlled logistics for dependable international deliveries.",
-      icon: <Globe className="h-4.5 w-4.5 text-emerald-400" strokeWidth={1.2} />
-    },
-    {
-      title: "Documentation",
-      description: "Shipments include digitally verified chromatograms, raw analytical traces, and continuous cold-chain sensor records.",
-      icon: <FileSpreadsheet className="h-4.5 w-4.5 text-teal-400" strokeWidth={1.2} />
-    },
-    {
-      title: "Reliable Supply",
-      description: "Our long-term contract programs utilize locked-index pricing agreements to insulate your sourcing budget from market volatility.",
-      icon: <ArrowLeftRight className="h-4.5 w-4.5 text-emerald-400" strokeWidth={1.2} />
-    },
-    {
-      title: "Dedicated Support",
-      description: "A technical account manager oversees your orders, custom inquiries, and delivery requirements to ensure seamless procurement workflows.",
-      icon: <HeartHandshake className="h-4.5 w-4.5 text-teal-400" strokeWidth={1.2} />
-    }
-  ];
-
+export default function AboutUs({ onContactClick, onNavigate }: AboutUsProps) {
   return (
-    <div className="bg-neutral-950 text-white min-h-screen">
-      
-      {/* Sub-navigation tab selector */}
-      <div className="flex justify-center pt-8 pb-2 px-4">
-        <div className="inline-flex rounded-full bg-neutral-900/60 p-1 border border-white/5 backdrop-blur-md max-w-full">
-          <button
-            onClick={() => setActiveTab("story")}
-            className={`rounded-full px-4 sm:px-6 py-2.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-              activeTab === "story"
-                ? "bg-emerald-400 text-neutral-950 font-extrabold"
-                : "text-neutral-400 hover:text-white"
-            }`}
+    <article className="min-h-screen bg-neutral-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 px-5 sm:px-8 lg:px-12 relative overflow-hidden selection:bg-emerald-500/30 selection:text-emerald-300">
+      {/* Ambient background glow accents */}
+      <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-emerald-500/[0.02] blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/3 left-0 w-96 h-96 rounded-full bg-teal-500/[0.02] blur-[140px] pointer-events-none" />
+
+      <div className="mx-auto w-full max-w-4xl relative z-10">
+        
+        {/* Eyebrow Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-8 sm:mb-10"
+        >
+          <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.3em] text-emerald-400 font-bold block mb-3">
+            ABOUT US
+          </span>
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white leading-[1.15] max-w-3xl">
+            We Built the Partner We Wanted to Have
+          </h1>
+        </motion.div>
+
+        {/* Narrative Flow */}
+        <div className="space-y-8 sm:space-y-10">
+          
+          {/* Section 1: The Origin */}
+          <motion.section
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="space-y-5 text-neutral-300 text-sm sm:text-base md:text-lg font-light leading-relaxed border-b border-white/[0.08] pb-8 sm:pb-10"
           >
-            Company Story
-          </button>
-          <button
-            onClick={() => setActiveTab("partner")}
-            className={`rounded-full px-4 sm:px-6 py-2.5 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-              activeTab === "partner"
-                ? "bg-emerald-400 text-neutral-950 font-extrabold"
-                : "text-neutral-400 hover:text-white"
-            }`}
+            <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed">
+              We entered this space for a simple reason: we encountered the problem ourselves.
+            </p>
+            <p>
+              Having followed the development of the research peptide market closely over the past several years, we experienced first-hand how difficult it could be to consistently access quality research-grade products.
+            </p>
+            <p className="text-neutral-400 italic">
+              Finding reliable sources. Knowing where products came from. Getting clear communication. Maintaining consistency. Navigating changing suppliers and pricing.
+            </p>
+            <p>
+              That experience made one thing clear: there was a need for a supply partner that could offer greater reliability, transparency and consistency.
+            </p>
+          </motion.section>
+
+          {/* Section 2: Bridging the Gap */}
+          <motion.section
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="space-y-4 border-b border-white/[0.08] pb-12 sm:pb-16"
           >
-            Why Partner With Us
-          </button>
+            <h2 className="font-sans text-xl sm:text-2xl font-semibold tracking-tight text-white">
+              Bridging the Gap
+            </h2>
+            <div className="space-y-4 text-neutral-300 text-sm sm:text-base font-light leading-relaxed">
+              <p>
+                Our pharmaceutical background, global sourcing and distribution experience, and established international network gave us the foundation to approach the problem differently.
+              </p>
+              <p>
+                We recognised that this rapidly growing market needed reliable supply infrastructure to support its continued development.
+              </p>
+            </div>
+          </motion.section>
+
+          {/* Section 3: Built Around Reliability */}
+          <motion.section
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="space-y-4 border-b border-white/[0.08] pb-12 sm:pb-16"
+          >
+            <h2 className="font-sans text-xl sm:text-2xl font-semibold tracking-tight text-white">
+              Built Around Reliability
+            </h2>
+            <div className="space-y-4 text-neutral-300 text-sm sm:text-base font-light leading-relaxed">
+              <p>
+                Our aim is to make it easier for businesses and researchers operating in this space to access the products they need without having to navigate the same challenges we encountered ourselves.
+              </p>
+              <p>
+                We have built relationships with trusted supply partners and developed a network that allows us to source products, support testing requirements and provide additional solutions as our customers&apos; needs evolve.
+              </p>
+              <p>
+                We want our customers to spend less time worrying about where their next product is coming from, and more time focused on the work and businesses that are driving this industry forward.
+              </p>
+            </div>
+          </motion.section>
+
+          {/* Section 4: Supporting an Industry With Enormous Potential */}
+          <motion.section
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="space-y-4 border-b border-white/[0.08] pb-12 sm:pb-16"
+          >
+            <h2 className="font-sans text-xl sm:text-2xl font-semibold tracking-tight text-white">
+              Supporting an Industry With Enormous Potential
+            </h2>
+            <div className="space-y-4 text-neutral-300 text-sm sm:text-base font-light leading-relaxed">
+              <p>
+                We believe research peptides have significant potential to contribute to scientific exploration across areas including metabolic health, longevity, recovery, aesthetics, performance and beyond.
+              </p>
+              <p>
+                The industry is still evolving, and there is much more to learn.
+              </p>
+            </div>
+          </motion.section>
+
+          {/* Section 5: Ambition / Conclusion */}
+          <motion.section
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="space-y-4 pt-2"
+          >
+            <h2 className="font-sans text-xl sm:text-2xl font-semibold tracking-tight text-emerald-400">
+              Our ambition is simple.
+            </h2>
+            <p className="text-white text-base sm:text-lg md:text-xl font-normal leading-relaxed max-w-3xl">
+              To become a trusted global partner for businesses working with research peptides, and to help this promising industry reach its potential.
+            </p>
+          </motion.section>
+
         </div>
       </div>
-
-      {activeTab === "partner" ? (
-        <WhyPartner onContactClick={onContactClick} onNavigate={onNavigate} />
-      ) : (
-        <>
-          {/* 1. Hero */}
-      <section className="relative py-20 px-6 sm:px-8 lg:px-12 border-b border-white/5 overflow-hidden">
-        <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-emerald-500/[0.01] blur-[150px] pointer-events-none" />
-        <div className="absolute left-0 bottom-0 h-96 w-96 rounded-full bg-teal-500/[0.01] blur-[150px] pointer-events-none" />
-
-        <div className="mx-auto w-full max-w-4xl text-center relative z-10 space-y-6">
-          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-emerald-400 block font-bold">
-            ABOUT B2B PEPS
-          </span>
-          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-tight">
-            The Global Partner for <br />
-            Peptide Sourcing and Quality Assurance
-          </h1>
-          <p className="font-sans text-sm sm:text-base text-neutral-400 font-light max-w-2xl mx-auto leading-relaxed">
-            B2B Peps is a premium B2B peptide solutions partner specializing in high-purity solid-phase synthesis and advanced chromatographic purification. We design, manufacture, and distribute reference standards to biotechnology companies, clinical organizations, and research institutions globally.
-          </p>
-        </div>
-      </section>
-
-      {/* 2. Who We Are */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 border-b border-white/5">
-        <div className="mx-auto w-full max-w-4xl space-y-6">
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block font-bold">
-            WHO WE ARE
-          </span>
-          <h2 className="font-sans text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-            An International Leader in Chemical Precision
-          </h2>
-          <p className="font-sans text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-            B2B Peps is a premier B2B peptide solutions enterprise dedicated to serving international biotechnology developers, pharmaceutical laboratories, and research organizations. By pairing deep scientific expertise with state-of-the-art solid-phase synthesis, we supply high-purity research compounds and custom formulation agents designed to survive the most demanding validation protocols. We prioritize full analytical documentation, strict regulatory compliance, and a resilient, secure supply chain to insulate our global clients from quality inconsistencies and sourcing interruptions.
-          </p>
-        </div>
-      </section>
-
-      {/* 3. Our Philosophy */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 border-b border-white/5 bg-neutral-900/5">
-        <div className="mx-auto w-full max-w-4xl space-y-6">
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block font-bold">
-            OUR PHILOSOPHY
-          </span>
-          <h2 className="font-sans text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-            Precision, Transparency, and Operational Trust
-          </h2>
-          <p className="font-sans text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-            Our approach is built on absolute scientific precision, uncompromised transparency, and rigorous operational execution. We believe that life sciences sourcing must be guided by objective analytical evidence rather than corporate assertions. By maintaining complete chromatographic clarity, standardizing counter-ion exchanges, and keeping stable locked-index pricing models, we protect client research from experimental variance and market instability, fostering deep, long-term technical partnerships with the clients we serve.
-          </p>
-        </div>
-      </section>
-
-      {/* 4 & 5. Mission & Vision */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 border-b border-white/5">
-        <div className="mx-auto w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div className="space-y-4">
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block font-bold">
-              OUR MISSION
-            </span>
-            <p className="font-sans text-sm sm:text-base text-neutral-200 font-light leading-relaxed">
-              To deliver the world’s most consistent, chromatographically verified peptide solutions, empowering biotechnology and research organizations to advance clinical science with absolute confidence.
-            </p>
-          </div>
-          <div className="space-y-4 border-t md:border-t-0 md:border-l border-white/5 pt-8 md:pt-0 md:pl-12">
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block font-bold">
-              OUR VISION
-            </span>
-            <p className="font-sans text-sm sm:text-base text-neutral-200 font-light leading-relaxed">
-              To set the definitive global benchmark for peptide purity, traceability, and supply chain security in the international life sciences industry.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Why Businesses Trust B2B Peps */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 border-b border-white/5">
-        <div className="mx-auto w-full max-w-5xl">
-          <div className="text-center mb-16 space-y-3">
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block font-bold">
-              THE SIX TRUST PILLARS
-            </span>
-            <h2 className="font-sans text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-              Why Businesses Choose B2B Peps
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trustPillars.map((pillar, idx) => (
-              <div 
-                key={idx}
-                className="border border-white/5 bg-neutral-900/10 p-6 rounded-[24px] backdrop-blur-sm flex flex-col justify-between min-h-[180px]"
-              >
-                <div className="h-9 w-9 rounded-full bg-neutral-950 border border-white/5 flex items-center justify-center shrink-0 mb-4">
-                  {pillar.icon}
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-sans text-xs font-semibold text-white">
-                    {pillar.title}
-                  </h3>
-                  <p className="font-sans text-[11px] text-neutral-400 font-light leading-relaxed">
-                    {pillar.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. Our Commitment to Quality */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 border-b border-white/5 relative overflow-hidden bg-neutral-900/5">
-        <div className="absolute right-0 top-1/4 h-80 w-80 rounded-full bg-emerald-500/[0.01] blur-3xl pointer-events-none" />
-        
-        <div className="mx-auto w-full max-w-4xl space-y-8">
-          <div className="space-y-4">
-            <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-emerald-400 block font-bold">
-              ANALYTICAL STANDARDS
-            </span>
-            <h2 className="font-sans text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-              Our Uncompromising Commitment to Quality
-            </h2>
-            <p className="font-sans text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-              At B2B Peps, quality is not a retrospective check; it is an active manufacturing parameter. Our production processes conform to ISO 9001:2015 and cGMP guidelines, validating each phase of solid-phase peptide synthesis. We reject simple static reports in favor of active, digitally signed HPLC and Mass Spectrometry chromatograms that map the complete molecular profile of each compound. By providing full transparency on counter-ion content and moisture levels, we ensure our reference standards perform reliably in vitro and in vivo.
-            </p>
-          </div>
-
-          <div className="pt-2">
-            <button
-              onClick={() => onNavigate("quality")}
-              className="group inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-emerald-400 hover:text-white transition-colors cursor-pointer"
-            >
-              <span>Explore Dedicated Quality Assurance Page</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 8. Closing CTA */}
-      <section className="py-16 sm:py-24 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
-        <div className="absolute right-10 top-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-emerald-500/[0.01] blur-[150px] pointer-events-none" />
-        
-        <div className="mx-auto w-full max-w-3xl text-center relative z-10 space-y-6 sm:space-y-8 bg-neutral-900/10 border border-white/5 p-6 sm:p-12 md:p-16 rounded-[28px] sm:rounded-[48px] backdrop-blur-sm">
-          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-emerald-400 block font-bold">
-            SECURE PARTNERSHIP
-          </span>
-          <h2 className="font-display text-2xl sm:text-4xl font-semibold tracking-tight text-white leading-tight">
-            Partner with B2B Peps
-          </h2>
-          <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light max-w-xl mx-auto leading-relaxed">
-            Initiate a technical consultation to secure your research pipeline or explore our product catalogue.
-          </p>
-          <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
-            <button
-              onClick={() => onNavigate("products")}
-              className="w-full sm:w-auto rounded-full bg-emerald-400 hover:bg-emerald-500 text-neutral-950 font-sans text-xs font-bold uppercase tracking-wider py-3.5 sm:py-4 px-8 sm:px-10 transition-colors cursor-pointer min-h-[48px]"
-            >
-              Explore Our Products
-            </button>
-            <button
-              onClick={onContactClick}
-              className="w-full sm:w-auto rounded-full border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 px-6 sm:px-8 py-3.5 sm:py-4 font-sans text-xs font-semibold tracking-wider text-white transition-all uppercase cursor-pointer min-h-[48px]"
-            >
-              Speak With Our Team
-            </button>
-          </div>
-        </div>
-      </section>
-        </>
-      )}
-
-    </div>
+    </article>
   );
 }

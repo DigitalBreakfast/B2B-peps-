@@ -31,8 +31,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
 
   const navLinks = [
     { label: "Products", id: "products" },
-    { label: "What We Offer", id: "services" },
-    { label: "Quality & Testing", id: "quality" },
+    { label: "Partner With Us", id: "why-partner" },
     { label: "About Us", id: "about" },
     { label: "Contact", id: "contact" }
   ];
@@ -41,15 +40,15 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
     <footer
       className={`relative w-full border-t transition-colors duration-500 font-sans ${
         isDark
-          ? "bg-[#070b12] text-slate-300 border-white/[0.08]"
-          : "bg-slate-50 text-slate-700 border-slate-200"
+          ? "bg-[#04110d] text-emerald-100/90 border-emerald-900/40"
+          : "bg-emerald-50/75 text-slate-800 border-emerald-200/80"
       }`}
     >
-      <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12 py-12 sm:py-16 space-y-12">
+      <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12 py-12 sm:py-16 space-y-10 sm:space-y-12">
         {/* Top Grid: Brand, Navigation & Contact */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start justify-between">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start justify-between text-left">
           {/* Brand */}
-          <div className="md:col-span-4 space-y-3">
+          <div className="md:col-span-4 space-y-3 flex flex-col items-start text-left">
             <div
               onClick={() => onNavClick("home")}
               className="flex items-center space-x-3 cursor-pointer group w-fit"
@@ -69,7 +68,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
                   strokeWidth={1.5}
                 />
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col text-left">
                 <span
                   className={`font-sans text-sm font-semibold tracking-[0.2em] ${
                     isDark ? "text-white" : "text-slate-900"
@@ -88,7 +87,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
             </div>
 
             <p
-              className={`text-sm leading-relaxed max-w-xs font-light ${
+              className={`text-sm leading-relaxed max-w-xs font-light text-left ${
                 isDark ? "text-slate-400" : "text-slate-600"
               }`}
             >
@@ -97,7 +96,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-5 flex flex-col justify-start">
+          <div className="md:col-span-5 flex flex-col items-start justify-start text-left">
             <div
               className={`font-mono text-[9px] uppercase tracking-[0.25em] font-semibold mb-3 ${
                 isDark ? "text-emerald-400/80" : "text-teal-700"
@@ -105,12 +104,12 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
             >
               Navigation
             </div>
-            <nav className="flex flex-wrap items-center gap-x-2 gap-y-1.5 text-xs sm:text-sm">
+            <nav className="flex flex-wrap items-center gap-x-2 gap-y-2 text-xs sm:text-sm">
               {navLinks.map((link, idx) => (
                 <span key={link.id} className="inline-flex items-center">
                   <button
                     onClick={() => onNavClick(link.id)}
-                    className={`transition-colors py-1 cursor-pointer font-medium ${
+                    className={`transition-colors py-1 cursor-pointer font-medium min-h-[44px] flex items-center ${
                       isDark
                         ? "text-slate-300 hover:text-white"
                         : "text-slate-700 hover:text-teal-800"
@@ -133,7 +132,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
           </div>
 
           {/* Contact Direct Channels */}
-          <div className="md:col-span-3 flex flex-col justify-start">
+          <div className="md:col-span-3 flex flex-col items-start justify-start text-left">
             <div
               className={`font-mono text-[9px] uppercase tracking-[0.25em] font-semibold mb-3 ${
                 isDark ? "text-emerald-400/80" : "text-teal-700"
@@ -141,11 +140,11 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
             >
               Direct Sourcing Inquiries
             </div>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="flex flex-wrap gap-2.5 w-full sm:w-auto">
               {/* Email */}
               <a
                 href="mailto:contact@b2bpeps.com"
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-medium border transition-all cursor-pointer min-h-[44px] ${
                   isDark
                     ? "border-white/10 bg-neutral-900/60 text-slate-300 hover:bg-neutral-800 hover:text-white hover:border-emerald-500/30"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 hover:border-teal-500/40 shadow-xs"
@@ -161,7 +160,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
                 href="https://wa.me/18005557377"
                 target="_blank"
                 rel="noreferrer"
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-medium border transition-all cursor-pointer min-h-[44px] ${
                   isDark
                     ? "border-white/10 bg-neutral-900/60 text-slate-300 hover:bg-emerald-950/40 hover:text-emerald-300 hover:border-emerald-500/30"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-teal-50 hover:text-teal-800 hover:border-teal-500/40 shadow-xs"
@@ -177,7 +176,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
                 href="https://t.me/b2bpeps"
                 target="_blank"
                 rel="noreferrer"
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
+                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-medium border transition-all cursor-pointer min-h-[44px] ${
                   isDark
                     ? "border-white/10 bg-neutral-900/60 text-slate-300 hover:bg-sky-950/40 hover:text-sky-300 hover:border-sky-500/30"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-sky-50 hover:text-sky-800 hover:border-sky-400 shadow-xs"
@@ -195,8 +194,8 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
         <div
           className={`rounded-2xl border transition-all overflow-hidden ${
             isDark
-              ? "border-white/10 bg-neutral-900/40"
-              : "border-slate-200/90 bg-white shadow-xs"
+              ? "border-emerald-900/30 bg-neutral-900/50"
+              : "border-emerald-200/80 bg-white/95 shadow-xs"
           }`}
         >
           <button
@@ -268,8 +267,8 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
         <div
           className={`pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs ${
             isDark
-              ? "border-white/[0.08] text-slate-500"
-              : "border-slate-200 text-slate-500"
+              ? "border-emerald-900/30 text-emerald-300/60"
+              : "border-emerald-200/80 text-slate-600"
           }`}
         >
           <div>

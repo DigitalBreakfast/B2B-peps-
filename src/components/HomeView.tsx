@@ -7,6 +7,7 @@ import React from "react";
 import HeroSection from "./HeroSection";
 import ResearchDirectory from "./ResearchDirectory";
 import WhyPartnerSection from "./WhyPartnerSection";
+import VideoDivider from "./VideoDivider";
 import { useTheme } from "../context/ThemeContext";
 
 interface HomeViewProps {
@@ -27,11 +28,14 @@ export default function HomeView({ onNavigate, onSelectProduct: _onSelectProduct
       {/* Section 01: Rebuilt Futuristic Biotechnology Hero Section */}
       <HeroSection onNavigate={onNavigate} theme={theme} />
 
-      {/* Section 02: Research Directory */}
-      <ResearchDirectory onNavigate={onNavigate} theme={theme} />
-
-      {/* Section 03: Why Leading Businesses Partner With B2B Peps */}
+      {/* Section 02: Why Leading Businesses Partner With B2B Peps */}
       <WhyPartnerSection onNavigate={onNavigate} theme={theme} />
+
+      {/* Video Divider: Continuous Automated Production Line Ribbon */}
+      <VideoDivider />
+
+      {/* Section 03: Research Directory (Placed directly above the footer) */}
+      <ResearchDirectory onNavigate={onNavigate} theme={theme} />
     </div>
   );
 }
