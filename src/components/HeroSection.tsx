@@ -153,7 +153,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative w-full h-auto min-h-0 pt-20 pb-8 md:pt-24 md:pb-10 px-6 sm:px-8 lg:px-12 flex flex-col justify-between transition-colors duration-700 ${
+      className={`relative w-full h-auto min-h-0 pt-20 pb-8 md:pt-24 md:pb-10 flex flex-col justify-between transition-colors duration-700 ${
         isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
@@ -236,7 +236,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
           ========================================================= */}
       <motion.div 
         style={isMobile ? undefined : { y: heroY, opacity: opacityFade }} 
-        className="relative z-10 my-auto w-full max-w-7xl mx-auto"
+        className="relative z-10 my-auto site-container"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center min-h-0 lg:min-h-[640px]">
           

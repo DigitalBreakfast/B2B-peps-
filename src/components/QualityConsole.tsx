@@ -268,8 +268,8 @@ export default function QualityConsole({ preselectedPeptideId }: QualityConsoleP
   };
 
   return (
-    <section id="quality" className="relative bg-neutral-950 px-6 sm:px-8 lg:px-12 py-24 border-t border-white/5">
-      <div className="mx-auto w-full max-w-7xl">
+    <section id="quality" className="relative bg-neutral-950 py-24 border-t border-white/5">
+      <div className="site-container">
         
         {/* Header Block */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-4">

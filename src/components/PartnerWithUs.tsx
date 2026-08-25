@@ -114,14 +114,14 @@ export default function PartnerWithUs({ onNavigate, onContactClick }: PartnerWit
   ];
 
   return (
-    <div className={`min-h-screen pt-24 pb-12 sm:pt-28 sm:pb-16 px-5 sm:px-8 lg:px-12 relative overflow-hidden transition-colors duration-500 ${
+    <div className={`min-h-screen pt-24 pb-12 sm:pt-28 sm:pb-16 relative overflow-hidden transition-colors duration-500 ${
       isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
     }`}>
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-emerald-500/[0.03] blur-[150px] pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-96 h-96 rounded-full bg-teal-500/[0.03] blur-[150px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-5xl relative z-10 space-y-10 sm:space-y-12">
+      <div className="site-container relative z-10 space-y-10 sm:space-y-12">
         
         {/* ========================================================
             HERO INTRO SECTION

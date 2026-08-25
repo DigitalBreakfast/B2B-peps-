@@ -148,7 +148,7 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
         className="sticky top-0 z-40 w-full pt-3 sm:pt-4 px-3 sm:px-6 pointer-events-none transition-all duration-500"
       >
         <div 
-          className={`pointer-events-auto mx-auto flex max-w-7xl items-center justify-between px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border transition-all duration-500 shadow-2xl backdrop-blur-2xl ${
+          className={`pointer-events-auto mx-auto flex w-full max-w-[1400px] xl:max-w-[1500px] 2xl:max-w-[1600px] items-center justify-between px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border transition-all duration-500 shadow-2xl backdrop-blur-2xl ${
             isDark 
               ? scrolled
                 ? "border-emerald-500/20 bg-neutral-950/85 shadow-[0_20px_50px_rgba(0,0,0,0.8)]" 

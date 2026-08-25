@@ -877,7 +877,7 @@ export default function ResearchCategoryDetail({
       {/* -------------------------------------------------------------
        * HERO SECTION: Full-Width Atmospheric Hero Slide with Visible Background Imagery
        * ------------------------------------------------------------- */}
-      <section className="relative z-10 w-full min-h-[50vh] lg:min-h-[60vh] flex items-center py-10 sm:py-14 lg:py-16 px-5 sm:px-8 lg:px-14 border-b border-slate-200/60 dark:border-white/10 overflow-hidden">
+      <section className="relative z-10 w-full min-h-[50vh] lg:min-h-[60vh] flex items-center py-10 sm:py-14 lg:py-16 border-b border-slate-200/60 dark:border-white/10 overflow-hidden">
         
         {/* Background Image Layer with Cinematic Grain & Lighting Overlays */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
@@ -919,7 +919,7 @@ export default function ResearchCategoryDetail({
         </div>
 
         {/* Foreground Content Container */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full">
+        <div className="relative z-10 site-container">
           
           {/* Main Content Column: Page Title & Intro Description */}
           <motion.div
@@ -957,7 +957,7 @@ export default function ResearchCategoryDetail({
        * ------------------------------------------------------------- */}
       <section
         id="products-catalogue-list"
-        className="relative z-10 max-w-7xl mx-auto py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8"
+        className="relative z-10 site-container py-8 sm:py-10 lg:py-12"
       >
         {/* Peptides List - Compact Horizontal Two-Column / Split Layout */}
         <div className="space-y-4 sm:space-y-5">

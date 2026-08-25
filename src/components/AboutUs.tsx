@@ -14,12 +14,13 @@ interface AboutUsProps {
 
 export default function AboutUs({ onContactClick, onNavigate }: AboutUsProps) {
   return (
-    <article className="min-h-screen bg-neutral-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 px-5 sm:px-8 lg:px-12 relative overflow-hidden selection:bg-emerald-500/30 selection:text-emerald-300">
+    <article className="min-h-screen bg-neutral-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 relative overflow-hidden selection:bg-emerald-500/30 selection:text-emerald-300">
       {/* Ambient background glow accents */}
       <div className="absolute top-1/4 right-0 w-96 h-96 rounded-full bg-emerald-500/[0.02] blur-[140px] pointer-events-none" />
       <div className="absolute bottom-1/3 left-0 w-96 h-96 rounded-full bg-teal-500/[0.02] blur-[140px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-4xl relative z-10">
+      <div className="site-container relative z-10">
+        <div className="max-w-4xl">
         
         {/* Eyebrow Header */}
         <motion.div
@@ -139,6 +140,7 @@ export default function AboutUs({ onContactClick, onNavigate }: AboutUsProps) {
           </motion.section>
 
         </div>
+      </div>
       </div>
     </article>
   );

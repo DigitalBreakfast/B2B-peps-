@@ -42,11 +42,11 @@ export default function Services({ onContactClick }: ServicesProps) {
   ];
 
   return (
-    <section className="bg-neutral-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 px-4 sm:px-8 lg:px-12 relative overflow-hidden">
+    <section className="bg-neutral-950 text-white pt-24 pb-12 sm:pt-28 sm:pb-16 relative overflow-hidden">
       <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-emerald-500/[0.01] blur-[120px] pointer-events-none" />
       <div className="absolute left-10 bottom-1/4 h-96 w-96 rounded-full bg-teal-500/[0.01] blur-[120px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="site-container">
         
         {/* Page Header */}
         <div className="max-w-3xl mb-8 sm:mb-12">

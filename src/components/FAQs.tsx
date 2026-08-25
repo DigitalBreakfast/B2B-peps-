@@ -52,11 +52,12 @@ export default function FAQs() {
   );
 
   return (
-    <section className="bg-neutral-950 text-white py-16 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+    <section className="bg-neutral-950 text-white py-16 relative overflow-hidden">
       <div className="absolute right-0 top-1/4 h-96 w-96 rounded-full bg-emerald-500/[0.01] blur-[120px] pointer-events-none" />
       <div className="absolute left-10 bottom-1/4 h-96 w-96 rounded-full bg-teal-500/[0.01] blur-[120px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-4xl">
+      <div className="site-container">
+        <div className="max-w-4xl mx-auto">
         
         {/* Page Header */}
         <div className="text-center mb-16">
@@ -144,6 +145,7 @@ export default function FAQs() {
           )}
         </div>
 
+      </div>
       </div>
     </section>
   );

@@ -49,7 +49,7 @@ export default function VideoDivider({ className = "" }: VideoDividerProps) {
         />
 
         {/* Minimal High-Craft Overlay Metadata Ticker / Eyebrow */}
-        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between p-4 sm:p-6 max-w-7xl mx-auto w-full">
+        <div className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between py-4 sm:py-6 site-container">
           
           {/* Top Row Indicator */}
           <div className="flex items-center justify-between w-full">

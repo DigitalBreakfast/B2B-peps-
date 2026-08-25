@@ -164,14 +164,14 @@ export default function ProductCatalog({
   };
 
   return (
-    <div className={`min-h-screen pt-24 pb-12 sm:pt-28 sm:pb-16 px-5 sm:px-8 lg:px-12 relative overflow-hidden transition-colors duration-500 ${
+    <div className={`min-h-screen pt-24 pb-12 sm:pt-28 sm:pb-16 relative overflow-hidden transition-colors duration-500 ${
       isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
     }`}>
       {/* Ambient background glows */}
       <div className="absolute right-0 top-1/4 h-[500px] w-[500px] rounded-full bg-emerald-500/[0.03] blur-[150px] pointer-events-none" />
       <div className="absolute left-0 bottom-1/3 h-[500px] w-[500px] rounded-full bg-teal-500/[0.03] blur-[150px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-7xl relative z-10 space-y-8 sm:space-y-12">
+      <div className="site-container relative z-10 space-y-8 sm:space-y-12">
         
         {/* ========================================================
             HERO INTRO SECTION

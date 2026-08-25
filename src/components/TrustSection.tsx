@@ -41,7 +41,7 @@ export default function TrustSection({ theme }: TrustSectionProps) {
     <section 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className={`relative min-h-[105vh] w-full py-24 sm:py-32 px-6 sm:px-10 lg:px-16 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
+      className={`relative min-h-[105vh] w-full py-24 sm:py-32 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
         isDark 
           ? "bg-neutral-950 text-white" 
           : "bg-slate-50 text-slate-900"
@@ -96,7 +96,7 @@ export default function TrustSection({ theme }: TrustSectionProps) {
       {/* =========================================================
           MAIN TOP COMPOSITION: 12-COLUMN EDITORIAL SPLIT (40% / 60%)
           ========================================================= */}
-      <div className="mx-auto w-full max-w-7xl relative z-10 my-auto">
+      <div className="site-container relative z-10 my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
           {/* =========================================================

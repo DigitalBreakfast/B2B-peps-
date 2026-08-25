@@ -47,6 +47,47 @@ html, body {
     min-height: 44px;
     min-width: 44px;
   }
+
+  /* Global Container System */
+  .site-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .site-container {
+      width: 90%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-container {
+      max-width: 1400px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    .site-container {
+      max-width: 1500px;
+      padding-left: 40px;
+      padding-right: 40px;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    .site-container {
+      max-width: 1600px;
+      padding-left: 48px;
+      padding-right: 48px;
+    }
+  }
 }
 
 /* Custom theme styling scrollbars */

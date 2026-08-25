@@ -44,7 +44,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
           : "bg-emerald-50/75 text-slate-800 border-emerald-200/80"
       }`}
     >
-      <div className="mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-12 py-12 sm:py-16 space-y-10 sm:space-y-12">
+      <div className="site-container py-12 sm:py-16 space-y-10 sm:space-y-12">
         {/* Top Grid: Brand, Navigation & Contact */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start justify-between text-left">
           {/* Brand */}

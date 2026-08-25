@@ -202,7 +202,7 @@ export default function FeaturedProducts({ onNavigate, onSelectProduct, theme: t
   return (
     <section 
       id="flagship-compounds"
-      className={`py-20 sm:py-28 px-4 sm:px-8 lg:px-14 relative overflow-hidden transition-colors duration-500 border-t ${
+      className={`py-20 sm:py-28 relative overflow-hidden transition-colors duration-500 border-t ${
         isDark 
           ? "bg-[#060a0f] border-emerald-500/10 text-white" 
           : "bg-slate-950 border-slate-800 text-white"
@@ -226,7 +226,7 @@ export default function FeaturedProducts({ onNavigate, onSelectProduct, theme: t
         <div className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-emerald-300/50 blur-[1px]" />
       </div>
 
-      <div className="max-w-[1400px] mx-auto relative z-10">
+      <div className="site-container relative z-10">
         
         {/* TOP EDITORIAL HEADER WITH 3D VIAL RENDERING */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-10 mb-12 sm:mb-16">

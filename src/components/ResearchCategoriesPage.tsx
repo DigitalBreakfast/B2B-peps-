@@ -143,7 +143,7 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
       {/* =========================================================
           HERO SECTION: Large Full-Width Editorial Hero
           ========================================================= */}
-      <section className="relative pt-28 pb-10 sm:pt-32 sm:pb-14 lg:pt-36 lg:pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-28 pb-10 sm:pt-32 sm:pb-14 lg:pt-36 lg:pb-16 site-container overflow-hidden">
         
         {/* Subtle Background Scientific Grid & Ambient Floating Glows */}
         <div className="absolute inset-0 pointer-events-none">
@@ -161,7 +161,7 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
           <div className="absolute top-10 right-[10%] w-[380px] h-[380px] bg-emerald-400/8 rounded-full blur-[100px] pointer-events-none" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
 
           {/* Main Title */}
           <motion.div
@@ -197,7 +197,7 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
           ========================================================= */}
       <section 
         id="category-gallery" 
-        className="relative py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+        className="relative py-10 sm:py-14 site-container"
       >
         {/* The 4x2 Grid Gallery */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">

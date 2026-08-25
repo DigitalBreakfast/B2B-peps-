@@ -23,8 +23,8 @@ export default function EditorialResources() {
   const activeArticle = EDITORIAL_ARTICLES.find(art => art.id === selectedArticleId);
 
   return (
-    <section id="editorial" className="relative bg-neutral-950 px-6 sm:px-8 lg:px-12 py-24 border-t border-white/5">
-      <div className="mx-auto w-full max-w-7xl">
+    <section id="editorial" className="relative bg-neutral-950 py-24 border-t border-white/5">
+      <div className="site-container">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">

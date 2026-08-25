@@ -53,12 +53,12 @@ export default function PartnershipSpecs() {
   ];
 
   return (
-    <section id="why-partner" className="relative overflow-hidden bg-neutral-950 px-6 sm:px-8 lg:px-12 py-32 border-t border-white/5">
+    <section id="why-partner" className="relative overflow-hidden bg-neutral-950 py-32 border-t border-white/5">
       {/* Background ambient lighting */}
       <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-emerald-500/[0.02] blur-[150px] pointer-events-none" />
       <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-teal-500/[0.01] blur-[120px] pointer-events-none" />
 
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="site-container">
         
         {/* Simplified Header with Pure Storytelling Focus */}
         <div className="max-w-3xl mb-28">

@@ -112,7 +112,7 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
     <section 
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className={`relative w-full py-12 sm:py-16 lg:py-18 px-4 sm:px-10 lg:px-16 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
+      className={`relative w-full py-12 sm:py-16 lg:py-18 flex flex-col justify-between overflow-hidden transition-colors duration-700 select-none ${
         isDark ? "bg-neutral-950 text-white" : "bg-slate-50 text-slate-900"
       }`}
     >
@@ -161,7 +161,7 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
         />
       </div>
 
-      <div className="mx-auto w-full max-w-7xl relative z-10 space-y-12 sm:space-y-16">
+      <div className="site-container relative z-10 space-y-12 sm:space-y-16">
 
         {/* =========================================================
             TOP EXPERIENCE: EDITORIAL INTRO & BIOTECHNOLOGY VISUAL ANCHOR
