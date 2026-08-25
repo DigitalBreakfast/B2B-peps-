@@ -921,24 +921,13 @@ export default function ResearchCategoryDetail({
         {/* Foreground Content Container */}
         <div className="relative z-10 max-w-7xl mx-auto w-full">
           
-          {/* Main Content Column: Page Title, Intro Description & CTAs */}
+          {/* Main Content Column: Page Title & Intro Description */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-2xl lg:max-w-3xl flex flex-col justify-center"
           >
-            {/* Category Breadcrumb / Telemetry Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border backdrop-blur-md mb-5 w-fit border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
-              </span>
-              <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] font-semibold">
-                Research Portfolio Monograph Series
-              </span>
-            </div>
-
             {/* Page Title (H1) */}
             <h1
               className={`text-3xl sm:text-4xl lg:text-[2.85rem] xl:text-[3.25rem] font-serif font-medium tracking-[-0.025em] leading-[1.15] mb-5 sm:mb-7 drop-shadow-xs ${
@@ -949,7 +938,7 @@ export default function ResearchCategoryDetail({
             </h1>
 
             {/* Introductory Paragraphs (Verbatim copy preserved) */}
-            <div className="space-y-4 sm:space-y-5 max-w-[65ch] mb-8 sm:mb-10 text-[0.95rem] sm:text-[1.125rem] leading-[1.75] sm:leading-[1.85] font-sans font-normal">
+            <div className="space-y-4 sm:space-y-5 max-w-[65ch] text-[0.95rem] sm:text-[1.125rem] leading-[1.75] sm:leading-[1.85] font-sans font-normal">
               {content.introParagraphs.map((para, idx) => (
                 <p
                   key={idx}
@@ -958,25 +947,6 @@ export default function ResearchCategoryDetail({
                   {para}
                 </p>
               ))}
-            </div>
-
-            {/* CTAs: Primary & Secondary Actions */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-4">
-              <button
-                onClick={scrollToCatalogue}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-medium text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:-translate-y-0.5 active:translate-y-0 min-h-[44px]"
-              >
-                <span>Explore Products</span>
-                <ArrowDown className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={handleRequestCatalogue}
-                className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl font-medium text-sm sm:text-base transition-all cursor-pointer flex items-center justify-center gap-2.5 border border-slate-300 dark:border-white/15 bg-white/70 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-800 dark:text-slate-200 hover:-translate-y-0.5 active:translate-y-0 backdrop-blur-md shadow-xs min-h-[44px]"
-              >
-                <FileText className="w-4 h-4 opacity-75" />
-                <span>Request Product Catalogue</span>
-              </button>
             </div>
           </motion.div>
         </div>
@@ -989,16 +959,6 @@ export default function ResearchCategoryDetail({
         id="products-catalogue-list"
         className="relative z-10 max-w-7xl mx-auto py-8 sm:py-10 lg:py-12 px-4 sm:px-6 lg:px-8"
       >
-        {/* Section Header */}
-        <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-white/10 pb-4 mb-6 sm:mb-8">
-          <div className="flex items-center gap-2.5 font-mono text-[11px] uppercase tracking-[0.2em]">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-bold text-emerald-500">Compound Monographs</span>
-            <span className="opacity-40">•</span>
-            <span className="opacity-60">{content.peptides.length} Available Formulations</span>
-          </div>
-        </div>
-
         {/* Peptides List - Compact Horizontal Two-Column / Split Layout */}
         <div className="space-y-4 sm:space-y-5">
           {content.peptides.map((peptide, index) => (
@@ -1017,19 +977,11 @@ export default function ResearchCategoryDetail({
                   : "bg-gradient-to-r from-white/95 via-white/85 to-slate-50/80 border-slate-200/90 hover:border-teal-500/40 hover:shadow-lg hover:shadow-slate-200/50"
               }`}
             >
-              {/* Scientific Accent Vector Motif */}
-              {renderScientificMotif(index)}
-
-              {/* Horizontal Layout Container: Left column metadata & title, Right column description */}
-              <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 items-baseline">
+              {/* Horizontal Layout Container: Left column title, Right column description */}
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-baseline">
                 
-                {/* Left Column (md: 4.5 cols): Monograph Index, Tag & Compound Name */}
-                <div className="md:col-span-4 lg:col-span-4 space-y-1.5 shrink-0">
-                  <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.18em] opacity-60">
-                    <span className="text-emerald-500 font-bold">§ {String(index + 1).padStart(2, "0")}</span>
-                    <span>•</span>
-                    <span>Monograph</span>
-                  </div>
+                {/* Left Column (md: 4 cols): Compound Name */}
+                <div className="md:col-span-4 lg:col-span-4 shrink-0">
                   <h2
                     className={`text-lg sm:text-xl lg:text-[1.35rem] font-serif font-semibold tracking-[-0.015em] leading-snug transition-colors ${
                       isDark

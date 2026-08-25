@@ -307,24 +307,11 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
             >
               {/* PRIMARY CTA */}
               <button
-                onClick={() => onNavigate("contact")}
+                onClick={() => onNavigate("products")}
                 className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-full font-mono text-[10px] uppercase tracking-[0.22em] font-extrabold transition-all duration-300 cursor-pointer shadow-2xl hover:scale-[1.03] active:scale-[0.98] ${
                   isDark 
                     ? "bg-emerald-400 hover:bg-emerald-300 text-neutral-950 shadow-[0_0_35px_rgba(52,211,153,0.35)]" 
                     : "bg-teal-600 hover:bg-teal-700 text-white shadow-[0_8px_30px_rgba(13,148,136,0.3)]"
-                }`}
-              >
-                <span>Speak With Our Team</span>
-                <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </button>
-
-              {/* SECONDARY CTA */}
-              <button
-                onClick={() => onNavigate("products")}
-                className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-full font-mono text-[10px] uppercase tracking-[0.22em] font-extrabold border transition-all duration-300 cursor-pointer hover:scale-[1.03] active:scale-[0.98] ${
-                  isDark
-                    ? "border-white/20 bg-white/[0.05] hover:bg-white/[0.1] text-white hover:border-emerald-400/50"
-                    : "border-slate-300 bg-white/90 hover:bg-white text-slate-800 shadow-sm hover:border-teal-500/50"
                 }`}
               >
                 <span>Explore Products</span>

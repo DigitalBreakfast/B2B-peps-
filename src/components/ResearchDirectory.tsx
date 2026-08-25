@@ -6,8 +6,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { 
-  ArrowRight, ChevronLeft, ChevronRight, Sparkles, Activity, 
-  Dna, Microscope, Zap, ShieldCheck, TrendingUp, Brain, FlaskConical 
+  ChevronLeft, ChevronRight, Sparkles 
 } from "lucide-react";
 
 interface ResearchDirectoryProps {
@@ -22,9 +21,6 @@ const CATEGORIES = [
     title: "Weight Management",
     description: "Peptides focused on metabolism, appetite regulation, glucose balance, and body composition.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Adipose_cells_glowing_microscopi__202608221913_stedur.jpg",
-    code: "METABOLIC-SYS v9.1",
-    metric: "GLUCOSE REGULATION",
-    visualIcon: Activity
   },
   {
     number: "02",
@@ -32,9 +28,6 @@ const CATEGORIES = [
     title: "Recovery & Regeneration",
     description: "Peptides supporting tissue repair, recovery, healing, and regenerative biology.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Regenerating_muscle_fibres_repai__202608221913_p9mg4g.jpg",
-    code: "REGEN-MATRIX v8.2",
-    metric: "TISSUE REPAIR ASSAY",
-    visualIcon: Zap
   },
   {
     number: "03",
@@ -42,9 +35,6 @@ const CATEGORIES = [
     title: "Longevity",
     description: "Peptides centred on healthy ageing, cellular function, mitochondrial health, and longevity.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406360/Mitochondria_and_DNA_cellular_ag__202608221915_plb22x.jpg",
-    code: "CELLULAR-REJ v4.4",
-    metric: "TELOMERE ASSAY",
-    visualIcon: Dna
   },
   {
     number: "04",
@@ -52,9 +42,6 @@ const CATEGORIES = [
     title: "Aesthetics",
     description: "Peptides for skin health, collagen production, pigmentation, hair biology, and cosmetic applications.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
-    code: "DERMA-COLLAGEN v3.8",
-    metric: "EPIDERMAL MATRIX",
-    visualIcon: Sparkles
   },
   {
     number: "05",
@@ -62,9 +49,6 @@ const CATEGORIES = [
     title: "Growth Hormone",
     description: "Peptides involved in growth hormone pathways, muscle physiology, performance, and recovery.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Molecules_interacting_with_hormo__202608221914_g8apqb.jpg",
-    code: "GH-SOMATO v6.1",
-    metric: "SOMATOTROPE PATH",
-    visualIcon: TrendingUp
   },
   {
     number: "06",
@@ -72,9 +56,6 @@ const CATEGORIES = [
     title: "Hormonal Health",
     description: "Peptides supporting endocrine function, reproductive health, hormone balance, and fertility.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
-    code: "ENDOCRINE-MOD v5.5",
-    metric: "HOMEOSTASIS PROFILE",
-    visualIcon: ShieldCheck
   },
   {
     number: "07",
@@ -82,9 +63,6 @@ const CATEGORIES = [
     title: "Cognitive Health",
     description: "Peptides related to memory, learning, neuroprotection, sleep, and brain function.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
-    code: "NEURO-SYNAPSE v8.3",
-    metric: "SYNAPTIC DENSITY",
-    visualIcon: Brain
   },
   {
     number: "08",
@@ -92,9 +70,6 @@ const CATEGORIES = [
     title: "Research Support",
     description: "Essential laboratory solutions and supporting products for peptide preparation and handling.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Red_blood_cells_flowing_vessel_202608221914_zu9htw.jpg",
-    code: "LAB-PRECISION v2.4",
-    metric: "RECONSTITUTION MATRIX",
-    visualIcon: FlaskConical
   }
 ];
 
@@ -253,8 +228,8 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
               viewport={{ once: true }}
               className="inline-flex items-center gap-2.5"
             >
-              <span className="font-mono text-[11px] font-extrabold uppercase tracking-[0.25em] text-emerald-400">
-                RESEARCH DIRECTORY
+              <span className="font-mono text-xs font-extrabold uppercase tracking-[0.3em] text-emerald-400">
+                WHAT WE OFFER
               </span>
               <div className="h-[1px] w-10 bg-gradient-to-r from-emerald-400 to-transparent" />
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,1)]" />
@@ -287,47 +262,31 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
             </motion.p>
           </div>
 
-          {/* RIGHT: CTA + Scroll Navigation Buttons */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 shrink-0">
-            {/* TOP CTA */}
+          {/* RIGHT: Scroll Navigation Buttons */}
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
-              onClick={() => onNavigate("products")}
-              className={`group relative inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-full font-mono text-[11px] uppercase tracking-[0.18em] font-extrabold transition-all duration-300 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-[0.98] ${
+              onClick={scrollPrev}
+              aria-label="Previous Category"
+              className={`p-2.5 rounded-full border backdrop-blur-xl transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 ${
                 isDark 
-                  ? "bg-emerald-400 hover:bg-emerald-300 text-neutral-950 shadow-[0_0_20px_rgba(52,211,153,0.25)]" 
-                  : "bg-teal-600 hover:bg-teal-700 text-white shadow-[0_6px_20px_rgba(13,148,136,0.25)]"
+                  ? "border-white/15 bg-white/[0.05] hover:bg-white/10 text-white hover:border-emerald-500/50" 
+                  : "border-slate-300 bg-white hover:bg-slate-100 text-slate-800 shadow-sm"
               }`}
             >
-              <span>Explore All Products</span>
-              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+              <ChevronLeft className="h-4 w-4" />
             </button>
 
-            {/* ARROW CONTROLS */}
-            <div className="flex items-center gap-1.5">
-              <button
-                onClick={scrollPrev}
-                aria-label="Previous Category"
-                className={`p-2.5 rounded-full border backdrop-blur-xl transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 ${
-                  isDark 
-                    ? "border-white/15 bg-white/[0.05] hover:bg-white/10 text-white hover:border-emerald-500/50" 
-                    : "border-slate-300 bg-white hover:bg-slate-100 text-slate-800 shadow-sm"
-                }`}
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </button>
-
-              <button
-                onClick={scrollNext}
-                aria-label="Next Category"
-                className={`p-2.5 rounded-full border backdrop-blur-xl transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 ${
-                  isDark 
-                    ? "border-white/15 bg-white/[0.05] hover:bg-white/10 text-white hover:border-emerald-500/50" 
-                    : "border-slate-300 bg-white hover:bg-slate-100 text-slate-800 shadow-sm"
-                }`}
-              >
-                <ChevronRight className="h-4 w-4" />
-              </button>
-            </div>
+            <button
+              onClick={scrollNext}
+              aria-label="Next Category"
+              className={`p-2.5 rounded-full border backdrop-blur-xl transition-all duration-300 cursor-pointer hover:scale-105 active:scale-95 ${
+                isDark 
+                  ? "border-white/15 bg-white/[0.05] hover:bg-white/10 text-white hover:border-emerald-500/50" 
+                  : "border-slate-300 bg-white hover:bg-slate-100 text-slate-800 shadow-sm"
+              }`}
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
 
         </div>
@@ -352,7 +311,6 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
         >
           {CATEGORIES.map((cat, index) => {
             const isActive = activeCardIndex === index;
-            const VisualIcon = cat.visualIcon;
 
             return (
               <motion.div
@@ -402,67 +360,29 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
                       ? "bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent" 
                       : "bg-gradient-to-t from-white via-white/30 to-transparent"
                   }`} />
-
-                  {/* Top HUD Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                    <span className="font-mono text-[8px] bg-black/65 border border-emerald-500/30 px-2 py-0.5 rounded-full text-emerald-400 font-extrabold uppercase tracking-wider backdrop-blur-md">
-                      {cat.code}
-                    </span>
-
-                    <span className="font-mono text-[8px] text-neutral-300 uppercase tracking-wider bg-black/65 px-2 py-0.5 rounded border border-white/10 backdrop-blur-md">
-                      {cat.metric}
-                    </span>
-                  </div>
-
-                  {/* Molecular Icon Graphic Float */}
-                  <div className="absolute bottom-3 right-3 h-8 w-8 sm:h-9 sm:w-9 rounded-xl bg-emerald-500/20 backdrop-blur-xl border border-emerald-400/30 flex items-center justify-center text-emerald-300 shadow group-hover:scale-110 transition-transform">
-                    <VisualIcon className="h-4 w-4" />
-                  </div>
                 </div>
 
                 {/* ---------------------------------------------------
                     BOTTOM HALF: Content Panel
                     --------------------------------------------------- */}
-                <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 space-y-3">
-                  
+                <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 space-y-2">
                   <div className="space-y-1.5">
-                    {/* Category Number & Title */}
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-base sm:text-lg font-extrabold text-emerald-400">
-                        {cat.number}
-                      </span>
-                      <span className="h-1 w-1 rounded-full bg-emerald-400/60" />
-                      <h3 className={`font-sans text-sm sm:text-base font-semibold tracking-tight transition-colors ${
-                        isActive 
-                          ? (isDark ? "text-white" : "text-slate-900") 
-                          : (isDark ? "text-neutral-200 group-hover:text-emerald-300" : "text-slate-800 group-hover:text-teal-700")
-                      }`}>
-                        {cat.title}
-                      </h3>
-                    </div>
+                    {/* Title */}
+                    <h3 className={`font-sans text-sm sm:text-base font-semibold tracking-tight transition-colors ${
+                      isActive 
+                        ? (isDark ? "text-white" : "text-slate-900") 
+                        : (isDark ? "text-neutral-200 group-hover:text-emerald-300" : "text-slate-800 group-hover:text-teal-700")
+                    }`}>
+                      {cat.title}
+                    </h3>
 
                     {/* Exact Description */}
-                    <p className={`font-sans text-[11px] sm:text-xs leading-relaxed line-clamp-2 ${
+                    <p className={`font-sans text-[11px] sm:text-xs leading-relaxed line-clamp-3 ${
                       isDark ? "text-neutral-300 font-light" : "text-slate-600 font-normal"
                     }`}>
                       {cat.description}
                     </p>
                   </div>
-
-                  {/* CTA Button */}
-                  <div className="pt-1">
-                    <div
-                      className={`group/btn w-full inline-flex items-center justify-between px-3.5 py-2.5 rounded-xl border font-mono text-[10px] font-bold uppercase tracking-wider transition-all duration-300 ${
-                        isDark 
-                          ? "bg-white/[0.04] border-white/15 group-hover:bg-emerald-500/20 group-hover:border-emerald-500/40 text-white group-hover:text-emerald-300" 
-                          : "bg-slate-100 border-slate-200 group-hover:bg-teal-50 group-hover:border-teal-400 text-slate-800 group-hover:text-teal-800"
-                      }`}
-                    >
-                      <span>Access Category</span>
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1 text-emerald-400" />
-                    </div>
-                  </div>
-
                 </div>
 
               </motion.div>

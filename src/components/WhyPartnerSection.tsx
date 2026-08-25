@@ -275,18 +275,6 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
             BOTTOM EXPERIENCE: INTERACTIVE MOLECULAR HEXAGONAL CAPABILITY GRID / MOBILE INTERACTIVE LIST
             ========================================================= */}
         <div className="space-y-8 sm:space-y-12">
-          
-          <div className="text-center space-y-3">
-            <span className="font-mono text-xs font-extrabold text-emerald-400 uppercase tracking-[0.25em]">
-              MOLECULAR CAPABILITY EXPLORER
-            </span>
-            <h3 className={`font-sans text-2xl sm:text-3xl font-semibold tracking-tight ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}>
-              Select a Capability Node to Inspect Technical Details
-            </h3>
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* MOBILE INTERACTIVE HORIZONTAL/VERTICAL PILL SELECTOR (Shown strictly on md and down) */}
@@ -509,10 +497,6 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                         <span className="font-mono text-2xl font-extrabold text-emerald-400">
                           {activePillar.number}
                         </span>
-                        <div className="h-4 w-[1px] bg-emerald-500/30" />
-                        <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-                          CAPABILITY INSPECTOR
-                        </span>
                       </div>
 
                       {/* Header Carousel Stepper Arrows */}
@@ -564,21 +548,6 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                       <CheckCircle2 className="h-3.5 w-3.5 text-teal-400 shrink-0" />
                       <span>CONTRACT GUARANTEED</span>
                     </div>
-                  </div>
-
-                  {/* Action CTA */}
-                  <div className="pt-2">
-                    <button
-                      onClick={() => onNavigate("why-partner")}
-                      className={`w-full inline-flex items-center justify-between px-6 py-4 rounded-2xl border font-mono text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer ${
-                        isDark 
-                          ? "bg-emerald-500/20 border-emerald-500/40 hover:bg-emerald-500/30 text-emerald-300" 
-                          : "bg-teal-50 border-teal-300 hover:bg-teal-100 text-teal-800"
-                      }`}
-                    >
-                      <span>Explore Capability Details</span>
-                      <ArrowRight className="h-4 w-4" />
-                    </button>
                   </div>
 
                 </motion.div>

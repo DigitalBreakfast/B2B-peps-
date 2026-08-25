@@ -3,12 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useRef } from "react";
+import React from "react";
 import { motion } from "motion/react";
 import { 
-  ArrowRight, 
   Sparkles, 
-  ChevronDown, 
   ChevronRight, 
   Atom, 
   FileText, 
@@ -128,11 +126,6 @@ const CATEGORIES: CategoryCardItem[] = [
 export default function ResearchCategoriesPage({ onNavigate, onContactClick }: ResearchCategoriesPageProps) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const galleryRef = useRef<HTMLDivElement>(null);
-
-  const scrollToGallery = () => {
-    galleryRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const handleContact = () => {
     if (onContactClick) {
@@ -177,10 +170,10 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
             transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-4"
           >
-            <h1 className={`font-sans text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.06] ${
+            <h1 className={`font-sans text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] ${
               isDark ? "text-white" : "text-slate-900"
             }`}>
-              Research Categories
+              Research-Grade Peptides. <span className={isDark ? "text-emerald-400" : "text-teal-600"}>Commercial-Scale Partnerships.</span>
             </h1>
           </motion.div>
 
@@ -196,26 +189,6 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
             Explore our portfolio of research-grade peptides across eight specialised areas of scientific research. Each category has been carefully curated to support researchers, clinics, laboratories and commercial partners with high-quality investigational compounds.
           </motion.p>
 
-          {/* Primary Hero CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap items-center justify-center gap-4 pt-4"
-          >
-            <button
-              onClick={scrollToGallery}
-              className={`group relative inline-flex items-center justify-center gap-3 px-8 py-4.5 rounded-full font-mono text-[11px] uppercase tracking-[0.22em] font-extrabold transition-all duration-300 cursor-pointer shadow-2xl hover:scale-[1.03] active:scale-[0.98] ${
-                isDark
-                  ? "bg-emerald-400 hover:bg-emerald-300 text-neutral-950 shadow-[0_0_35px_rgba(52,211,153,0.35)]"
-                  : "bg-teal-600 hover:bg-teal-700 text-white shadow-[0_8px_30px_rgba(13,148,136,0.3)]"
-              }`}
-            >
-              <span>Explore Products</span>
-              <ChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1" />
-            </button>
-          </motion.div>
-
         </div>
       </section>
 
@@ -223,32 +196,11 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
           CATEGORY GALLERY: 4 Columns × 2 Rows on Desktop
           ========================================================= */}
       <section 
-        ref={galleryRef} 
         id="category-gallery" 
         className="relative py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
       >
-        {/* Gallery Section Header & Quick Stats */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10 border-b pb-4 sm:pb-6 border-white/10 dark:border-white/10">
-          <div>
-            <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-emerald-500 font-bold mb-2">
-              <Layers className="h-3.5 w-3.5" />
-              <span>Scientific Portfolio Directory</span>
-            </div>
-            <h2 className={`font-sans text-2xl sm:text-3xl font-bold tracking-tight ${
-              isDark ? "text-white" : "text-slate-900"
-            }`}>
-              Eight Specialised Research Categories
-            </h2>
-          </div>
-          <div className="flex items-center gap-4 text-xs font-mono opacity-60">
-            <span>08 DISCIPLINE MODULES</span>
-            <span>•</span>
-            <span>PRECLINICAL STANDARDS</span>
-          </div>
-        </div>
-
         {/* The 4x2 Grid Gallery */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
           {CATEGORIES.map((category, index) => {
             const Icon = category.icon;
             return (
@@ -262,73 +214,56 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
                   onNavigate(`research/${category.id}`);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`group relative flex flex-col justify-between h-[490px] sm:h-[530px] rounded-3xl overflow-hidden cursor-pointer border transition-all duration-500 backdrop-blur-xl shadow-xl hover:-translate-y-2 ${
+                className={`group relative flex flex-col justify-between rounded-2xl overflow-hidden cursor-pointer border transition-all duration-500 backdrop-blur-xl shadow-lg hover:-translate-y-1.5 ${
                   isDark
-                    ? "bg-neutral-900/60 border-white/10 hover:border-emerald-500/50 hover:shadow-[0_20px_50px_rgba(52,211,153,0.18)]"
-                    : "bg-white/80 border-slate-200/90 hover:border-teal-500/50 hover:shadow-[0_20px_45px_rgba(13,148,136,0.14)]"
+                    ? "bg-neutral-900/70 border-white/10 hover:border-emerald-500/50 hover:shadow-[0_15px_35px_rgba(52,211,153,0.15)]"
+                    : "bg-white/90 border-slate-200/90 hover:border-teal-500/50 hover:shadow-[0_15px_30px_rgba(13,148,136,0.12)]"
                 }`}
               >
-                {/* Background Artwork Image with Zoom & Dark Gradient Overlay */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
+                {/* Visual Image Header (Slightly smaller, focused height) */}
+                <div className="relative h-44 sm:h-48 w-full overflow-hidden bg-black/40">
                   <img
                     src={category.image}
                     alt={category.title}
-                    className="w-full h-full object-cover object-center filter contrast-105 brightness-95 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover object-center filter contrast-105 brightness-90 group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
-                  {/* Dynamic Dark Gradient Scrim for crisp editorial legibility */}
-                  <div className={`absolute inset-0 transition-opacity duration-500 ${
+                  {/* Subtle Gradient Scrim at bottom of image */}
+                  <div className={`absolute inset-0 bg-gradient-to-t ${
                     isDark 
-                      ? "bg-gradient-to-t from-neutral-950 via-neutral-950/75 to-neutral-950/25 group-hover:opacity-90"
-                      : "bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/20 group-hover:opacity-85"
+                      ? "from-neutral-900/90 via-transparent to-black/30" 
+                      : "from-white/90 via-transparent to-black/20"
                   }`} />
-                  
-                  {/* Liquid Glass Reflection Sheen */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/15 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                </div>
 
-                {/* Top Bar: Category Number & Micro Icon Badge */}
-                <div className="relative z-10 p-6 flex items-center justify-between">
-                  {/* Category Zero-Padded Number */}
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs font-bold text-emerald-400 tracking-[0.2em] px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15">
-                      § {category.number}
-                    </span>
-                  </div>
-
-                  {/* Micro Category Icon Badge */}
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/15 text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-neutral-950 transition-all duration-300">
-                    <Icon className="h-4 w-4" />
+                  {/* Top Badge: Micro Category Icon */}
+                  <div className="absolute top-3 right-3 flex items-center justify-end z-10">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-emerald-400 group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-neutral-950 transition-all duration-300">
+                      <Icon className="h-3.5 w-3.5" />
+                    </div>
                   </div>
                 </div>
 
-                {/* Bottom Content Area: Title, Description & Action Button */}
-                <div className="relative z-10 p-6 pt-0 space-y-4 text-left">
-                  
-                  {/* Category Title */}
-                  <h3 className="font-sans text-2xl font-bold tracking-tight text-white group-hover:text-emerald-300 transition-colors duration-300">
-                    {category.title}
-                  </h3>
+                {/* Content Area: Title & Description */}
+                <div className="p-5 flex flex-col justify-between flex-1 space-y-3 text-left">
+                  <div className="space-y-1.5">
+                    {/* Category Title */}
+                    <h3 className={`font-sans text-lg font-bold tracking-tight transition-colors duration-300 ${
+                      isDark ? "text-white group-hover:text-emerald-300" : "text-slate-900 group-hover:text-teal-700"
+                    }`}>
+                      {category.title}
+                    </h3>
 
-                  {/* Short Description */}
-                  <p className="font-sans text-xs sm:text-[13px] leading-relaxed text-neutral-200 font-light line-clamp-3">
-                    {category.description}
-                  </p>
-
-                  {/* Access Category Button */}
-                  <div className="pt-2">
-                    <button
-                      className="inline-flex items-center gap-2 font-mono text-[10.5px] uppercase tracking-[0.2em] font-extrabold text-emerald-400 group-hover:text-white transition-colors duration-300"
-                    >
-                      <span>Access Category</span>
-                      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1.5 text-emerald-400" />
-                    </button>
+                    {/* Short Description */}
+                    <p className={`font-sans text-xs leading-relaxed font-light line-clamp-3 ${
+                      isDark ? "text-neutral-300" : "text-slate-600"
+                    }`}>
+                      {category.description}
+                    </p>
                   </div>
-
                 </div>
 
                 {/* Subtle Inner Accent Border on Hover */}
-                <div className="absolute inset-0 rounded-3xl border border-emerald-400/0 group-hover:border-emerald-400/30 transition-colors duration-500 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl border border-emerald-400/0 group-hover:border-emerald-400/30 transition-colors duration-500 pointer-events-none" />
               </motion.div>
             );
           })}
