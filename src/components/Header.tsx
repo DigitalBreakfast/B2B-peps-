@@ -161,25 +161,15 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
           {/* Logo */}
           <div 
             onClick={() => handleItemClick("home")}
-            className="group flex cursor-pointer items-center space-x-3"
+            className="group flex cursor-pointer items-center transition-all duration-300"
             id="brand-logo"
           >
-            <div className={`relative flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-500 ${
-              isDark 
-                ? "border-white/10 bg-neutral-900/50 group-hover:border-emerald-500/40 group-hover:bg-neutral-900/80" 
-                : "border-slate-300 bg-slate-100/80 group-hover:border-teal-500/40 group-hover:bg-white"
-            }`}>
-              <div className={`absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm ${isDark ? "bg-emerald-500/20" : "bg-teal-500/20"}`} />
-              <Activity className={`relative h-4.5 w-4.5 transition-all duration-500 group-hover:scale-110 ${
-                isDark ? "text-neutral-300 group-hover:text-emerald-400" : "text-slate-700 group-hover:text-teal-600"
-              }`} strokeWidth={1.5} />
-            </div>
-            <div>
-              <span className={`font-sans text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase ${isDark ? "text-white" : "text-slate-900"}`}>
-                B2B <span className={isDark ? "text-emerald-400 font-light" : "text-teal-600 font-light"}>Peps</span>
-              </span>
-              <div className={`h-[1px] w-0 transition-all duration-500 group-hover:w-full ${isDark ? "bg-gradient-to-r from-emerald-400 to-teal-400" : "bg-gradient-to-r from-teal-600 to-emerald-600"}`} />
-            </div>
+            <img
+              src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787945763/PEPES_logo_png_didjyy.png"
+              alt="B2B Peps"
+              className="h-8 sm:h-9 md:h-10 w-auto max-w-[170px] sm:max-w-[200px] object-contain transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.3)]"
+              referrerPolicy="no-referrer"
+            />
           </div>
 
           {/* Desktop Nav */}
@@ -294,20 +284,14 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
                 {/* Logo & Home Click */}
                 <div 
                   onClick={() => handleItemClick("home")}
-                  className="flex items-center space-x-2.5 cursor-pointer group py-1"
+                  className="flex items-center cursor-pointer group py-1"
                 >
-                  <div className={`flex h-8 w-8 items-center justify-center rounded-full border transition-all ${
-                    isDark 
-                      ? "border-emerald-500/30 bg-emerald-950/30 text-emerald-400" 
-                      : "border-teal-500/30 bg-teal-50 text-teal-700"
-                  }`}>
-                    <Activity className="h-4 w-4" strokeWidth={1.75} />
-                  </div>
-                  <span className={`font-sans text-xs font-semibold tracking-[0.22em] uppercase ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}>
-                    B2B <span className={isDark ? "text-emerald-400 font-light" : "text-teal-600 font-light"}>Peps</span>
-                  </span>
+                  <img
+                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787945763/PEPES_logo_png_didjyy.png"
+                    alt="B2B Peps"
+                    className="h-8 sm:h-9 w-auto max-w-[160px] object-contain transition-all duration-300 group-hover:scale-105"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
 
                 {/* Close Button (Min 44x44px touch target, always visible & accessible) */}

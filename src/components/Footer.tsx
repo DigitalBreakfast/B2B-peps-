@@ -51,39 +51,15 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
           <div className="md:col-span-4 space-y-3 flex flex-col items-start text-left">
             <div
               onClick={() => onNavClick("home")}
-              className="flex items-center space-x-3 cursor-pointer group w-fit"
+              className="flex items-center cursor-pointer group w-fit"
               id="footer-brand"
             >
-              <div
-                className={`flex h-9 w-9 items-center justify-center rounded-full border transition-colors duration-300 ${
-                  isDark
-                    ? "border-emerald-500/20 bg-neutral-900/60 group-hover:border-emerald-500/40"
-                    : "border-teal-500/30 bg-teal-50 group-hover:border-teal-500/60"
-                }`}
-              >
-                <Activity
-                  className={`h-4.5 w-4.5 transition-transform duration-300 group-hover:scale-105 ${
-                    isDark ? "text-emerald-400" : "text-teal-600"
-                  }`}
-                  strokeWidth={1.5}
-                />
-              </div>
-              <div className="flex flex-col text-left">
-                <span
-                  className={`font-sans text-sm font-semibold tracking-[0.2em] ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  B2B <span className={isDark ? "text-emerald-400" : "text-teal-600"}>PEPS</span>
-                </span>
-                <span
-                  className={`font-mono text-[7px] uppercase tracking-[0.25em] ${
-                    isDark ? "text-neutral-500" : "text-slate-400"
-                  }`}
-                >
-                  Enterprise Research Supply
-                </span>
-              </div>
+              <img
+                src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787945763/PEPES_logo_png_didjyy.png"
+                alt="B2B Peps"
+                className="h-8 sm:h-9 w-auto max-w-[180px] object-contain transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.3)]"
+                referrerPolicy="no-referrer"
+              />
             </div>
 
             <p
