@@ -63,11 +63,11 @@ export default function WorkflowStepper() {
     {
       id: "step-distribution",
       icon: <Truck className="h-5 w-5" strokeWidth={1.2} />,
-      title: "Global Cold-Chain",
-      subTitle: "Cryo-Tempered Cargo Logistics",
-      description: "Finished lyophilized powder is hermetically sealed in borosilicate glass vials, packed in vacuum-insulated shippers, and delivered worldwide. Continuous temperature logging telemetry guarantees cargo viability.",
+      title: "Global Delivery Solutions",
+      subTitle: "Worldwide Cargo Logistics",
+      description: "Finished lyophilized powder is hermetically sealed in borosilicate glass vials, securely packaged, and delivered worldwide with end-to-end cargo tracking.",
       duration: "Express Freight",
-      authority: "Cold-Chain Lead"
+      authority: "Logistics Lead"
     }
   ];
 

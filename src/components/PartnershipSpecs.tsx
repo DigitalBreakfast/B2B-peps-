@@ -19,7 +19,7 @@ export default function PartnershipSpecs() {
       id: "supply-chain",
       icon: <Globe className="h-5 w-5 text-emerald-400" strokeWidth={1.2} />,
       title: "International Sourcing",
-      description: "With active cold-chain depots across North America, Europe, and Asia-Pacific, we guarantee seamless customs pre-clearance and robust global delivery using active temperature telemetry.",
+      description: "With dedicated distribution depots across North America, Europe, and Asia-Pacific, we guarantee seamless customs pre-clearance and robust global delivery solutions.",
       metric: "3 Logistics Hubs"
     },
     {

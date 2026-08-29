@@ -5,8 +5,11 @@
 
 import React, { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import { motion } from "motion/react";
-import { ArrowDown, FileText, CheckCircle2, Shield, Activity, Beaker } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { 
+  ArrowRight, Sparkles, CheckCircle2, ShieldCheck, 
+  FlaskConical, X, ChevronRight, Dna, FileText, Layers
+} from "lucide-react";
 
 interface ResearchCategoryDetailProps {
   categoryId: string;
@@ -26,10 +29,13 @@ const CATEGORY_BACKGROUND_IMAGES: Record<string, string> = {
   "research-support": "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Red_blood_cells_flowing_vessel_202608221914_zu9htw.jpg",
 };
 
-interface PeptideEntry {
+export interface PeptideEntry {
   name: string;
   description: string;
   researchAreas: string[];
+  featured?: boolean;
+  scientificContext?: string;
+  puritySpec?: string;
 }
 
 interface CategoryCatalogueContent {
@@ -39,7 +45,7 @@ interface CategoryCatalogueContent {
 }
 
 const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Weight Management & Metabolic Research",
+  pageTitle: "Weight Management & Metabolic",
   introParagraphs: [
     "The field of metabolic research has evolved rapidly in recent years, driven by growing scientific interest in the biological mechanisms that regulate appetite, energy balance, glucose metabolism and body composition. This has led to the development of several investigational peptides targeting complementary metabolic pathways, making this one of the most active areas of peptide research today.",
     "Our portfolio includes a range of research peptides currently being investigated for their potential roles in metabolic signalling, appetite regulation, fat metabolism and energy homeostasis. Together, they provide researchers, clinics and commercial partners with access to a comprehensive suite of products supporting a broad spectrum of metabolic research applications."
@@ -47,6 +53,7 @@ const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "Tirzepatide",
+      featured: true,
       description:
         "Tirzepatide is a dual GIP and GLP-1 receptor agonist that has become one of the most widely recognised peptides in metabolic research. It is being investigated for its role in glucose regulation, appetite signalling and body composition, making it a key molecule of interest within modern metabolic research.",
       researchAreas: [
@@ -54,10 +61,13 @@ const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
         "Glucose Metabolism",
         "Metabolic Research",
         "Body Composition"
-      ]
+      ],
+      scientificContext: "Dual incretin mimetic acting as an agonist at both the glucose-dependent insulinotropic polypeptide (GIP) receptor and the glucagon-like peptide-1 (GLP-1) receptor.",
+      puritySpec: "≥99.2% HPLC Purity (Lyophilized Acetate Salt)"
     },
     {
       name: "Retatrutide",
+      featured: true,
       description:
         "Retatrutide is a next-generation investigational peptide that targets GLP-1, GIP and glucagon receptors simultaneously. Its multi-receptor mechanism has generated significant interest in research exploring metabolic regulation, energy expenditure and body composition.",
       researchAreas: [
@@ -65,10 +75,13 @@ const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
         "Energy Balance",
         "Appetite Regulation",
         "Body Composition"
-      ]
+      ],
+      scientificContext: "Triple co-agonist targeting the GLP-1, GIP, and glucagon receptors to explore synergistic mechanisms on thermogenesis and energy expenditure.",
+      puritySpec: "≥99.4% HPLC Purity (Lyophilized Powder)"
     },
     {
       name: "Semaglutide",
+      featured: true,
       description:
         "Semaglutide is a GLP-1 receptor agonist that has become a cornerstone molecule within metabolic research. Ongoing studies continue to investigate its role in appetite regulation, glucose metabolism and body composition, making it one of the most established peptides in this category.",
       researchAreas: [
@@ -76,7 +89,9 @@ const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
         "Appetite Regulation",
         "Glucose Metabolism",
         "Metabolic Health"
-      ]
+      ],
+      scientificContext: "Synthetic GLP-1 receptor agonist bearing a C-18 fatty diacid chain for albumin binding and extended pharmacokinetic stability in laboratory assays.",
+      puritySpec: "≥99.5% HPLC Purity (Reference Standard)"
     },
     {
       name: "Cagrilintide",
@@ -148,7 +163,7 @@ const WEIGHT_MANAGEMENT_CONTENT: CategoryCatalogueContent = {
 };
 
 const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Recovery & Regenerative Research",
+  pageTitle: "Recovery & Regeneration",
   introParagraphs: [
     "The field of regenerative research focuses on understanding the biological processes involved in tissue repair, wound healing, inflammation and cellular regeneration. Peptides in this category are being investigated for their potential roles in supporting these complex biological pathways and continue to attract significant scientific interest across regenerative medicine, sports science and translational research.",
     "Our regenerative portfolio brings together well-established investigational peptides and innovative combination formulations that are widely studied for tissue repair, recovery biology and cellular resilience. Together they provide clinics, researchers and commercial partners with a comprehensive selection of products supporting a broad range of regenerative research applications."
@@ -156,6 +171,7 @@ const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "BPC-157",
+      featured: true,
       description:
         "BPC-157 is one of the most recognised peptides in regenerative research and has been widely investigated for its potential involvement in tissue repair, angiogenesis and cellular recovery. Its broad research profile has made it a cornerstone molecule for organisations exploring musculoskeletal healing, gastrointestinal biology and regenerative pathways.",
       researchAreas: [
@@ -163,10 +179,13 @@ const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
         "Tendon & Ligament Research",
         "Angiogenesis",
         "Regenerative Biology"
-      ]
+      ],
+      scientificContext: "Stable gastric pentadecapeptide fragment targeting focal adhesion kinase (FAK), VEGFR2 signaling cascades, and nitric oxide pathway modulation.",
+      puritySpec: "≥99.4% HPLC Purity (Acetate Salt / TFA <1.0%)"
     },
     {
       name: "TB-500 Acetate",
+      featured: true,
       description:
         "TB-500 is a synthetic peptide investigated for its role in cell migration, tissue remodelling and recovery processes. Researchers continue to study its potential contribution to wound healing, musculoskeletal repair and the biological mechanisms involved in tissue regeneration.",
       researchAreas: [
@@ -174,10 +193,13 @@ const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
         "Recovery Biology",
         "Cell Migration",
         "Musculoskeletal Research"
-      ]
+      ],
+      scientificContext: "Synthetic analogue of the active region of Thymosin Beta-4, sequestering G-actin to promote actin polymerization and cell motility.",
+      puritySpec: "≥99.3% HPLC Purity"
     },
     {
       name: "BPC-157 + TB-500",
+      featured: true,
       description:
         "This combination brings together two complementary regenerative peptides that are frequently researched alongside one another to better understand tissue repair and recovery. It has become a popular formulation for laboratories exploring synergistic approaches to regenerative biology.",
       researchAreas: [
@@ -185,10 +207,13 @@ const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
         "Tissue Repair",
         "Recovery Biology",
         "Regenerative Medicine"
-      ]
+      ],
+      scientificContext: "Dual-peptide co-lyophilized formulation exploring cooperative angiogenic and cytoskeletal dynamics during accelerated wound healing models.",
+      puritySpec: "≥99.0% Dual HPLC Assay Purity"
     },
     {
       name: "GLOW (GHK-Cu + BPC-157 + TB-500)",
+      featured: true,
       description:
         "GLOW combines regenerative peptides with the copper peptide GHK-Cu in a formulation designed for advanced regenerative research. It is being investigated for applications involving tissue repair, collagen biology, skin health and cellular regeneration.",
       researchAreas: [
@@ -196,7 +221,9 @@ const RECOVERY_REGENERATION_CONTENT: CategoryCatalogueContent = {
         "Tissue Repair",
         "Collagen Biology",
         "Recovery Research"
-      ]
+      ],
+      scientificContext: "Tri-peptide matrix integrating copper chelation biology, actin motility, and cytoprotective signaling for comprehensive cellular regeneration.",
+      puritySpec: "Analytical Research Formulation Grade"
     },
     {
       name: "KLOW (BPC-157 + TB-500 + GHK-Cu + KPV)",
@@ -254,6 +281,7 @@ const LONGEVITY_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "Epithalon",
+      featured: true,
       description:
         "Epithalon is one of the best-known investigational peptides in longevity research and has attracted considerable interest for its potential role in cellular ageing and telomere biology. It continues to be studied for its interaction with pathways associated with healthy ageing, cellular maintenance and long-term biological resilience.",
       researchAreas: [
@@ -261,7 +289,51 @@ const LONGEVITY_CONTENT: CategoryCatalogueContent = {
         "Telomere Biology",
         "Cellular Maintenance",
         "Longevity Research"
-      ]
+      ],
+      scientificContext: "Synthetic pineal tetrapeptide (Ala-Glu-Asp-Gly) investigated for telomerase catalytic subunit (TERT) gene upregulation and chromatin remodeling.",
+      puritySpec: "≥99.5% HPLC Purity"
+    },
+    {
+      name: "FOXO4-DRI",
+      featured: true,
+      description:
+        "FOXO4-DRI is a modified investigational peptide designed for research into senescent cell biology and mechanisms associated with ageing. It has become an important molecule within longevity research exploring cellular rejuvenation and tissue health.",
+      researchAreas: [
+        "Senolytic Research",
+        "Cellular Rejuvenation",
+        "Healthy Ageing",
+        "Tissue Biology"
+      ],
+      scientificContext: "D-retro-inverso peptide engineered to disrupt FOXO4 and p53 transcription factor interaction in senescent cell lines.",
+      puritySpec: "≥98.8% HPLC Purity"
+    },
+    {
+      name: "NAD+",
+      featured: true,
+      description:
+        "NAD+ is an essential biological coenzyme involved in cellular energy production and numerous metabolic processes. It is widely researched for its relationship with mitochondrial function, cellular repair mechanisms and healthy ageing.",
+      researchAreas: [
+        "Mitochondrial Function",
+        "Cellular Energy",
+        "Healthy Ageing",
+        "Metabolic Research"
+      ],
+      scientificContext: "Core redox coenzyme and substrate for sirtuins (SIRT1-7) and poly(ADP-ribose) polymerases (PARPs) involved in DNA repair and longevity.",
+      puritySpec: "≥99.1% Bio-Grade Standard"
+    },
+    {
+      name: "SS-31",
+      featured: true,
+      description:
+        "SS-31 is a mitochondria-targeting investigational peptide that has generated growing interest for its potential role in supporting mitochondrial integrity and cellular energy production. Ongoing research continues to explore its relevance across ageing and metabolic biology.",
+      researchAreas: [
+        "Mitochondrial Biology",
+        "Cellular Energy",
+        "Oxidative Stress",
+        "Longevity Research"
+      ],
+      scientificContext: "Szeto-Schiller peptide selectively targeting cardiolipin on the inner mitochondrial membrane to optimize electron transport efficiency.",
+      puritySpec: "≥99.2% HPLC Purity"
     },
     {
       name: "FOXO4",
@@ -271,39 +343,6 @@ const LONGEVITY_CONTENT: CategoryCatalogueContent = {
         "Cellular Senescence",
         "Healthy Ageing",
         "Tissue Biology",
-        "Longevity Research"
-      ]
-    },
-    {
-      name: "FOXO4-DRI",
-      description:
-        "FOXO4-DRI is a modified investigational peptide designed for research into senescent cell biology and mechanisms associated with ageing. It has become an important molecule within longevity research exploring cellular rejuvenation and tissue health.",
-      researchAreas: [
-        "Senolytic Research",
-        "Cellular Rejuvenation",
-        "Healthy Ageing",
-        "Tissue Biology"
-      ]
-    },
-    {
-      name: "NAD+",
-      description:
-        "NAD+ is an essential biological coenzyme involved in cellular energy production and numerous metabolic processes. It is widely researched for its relationship with mitochondrial function, cellular repair mechanisms and healthy ageing.",
-      researchAreas: [
-        "Mitochondrial Function",
-        "Cellular Energy",
-        "Healthy Ageing",
-        "Metabolic Research"
-      ]
-    },
-    {
-      name: "SS-31",
-      description:
-        "SS-31 is a mitochondria-targeting investigational peptide that has generated growing interest for its potential role in supporting mitochondrial integrity and cellular energy production. Ongoing research continues to explore its relevance across ageing and metabolic biology.",
-      researchAreas: [
-        "Mitochondrial Biology",
-        "Cellular Energy",
-        "Oxidative Stress",
         "Longevity Research"
       ]
     },
@@ -333,7 +372,7 @@ const LONGEVITY_CONTENT: CategoryCatalogueContent = {
 };
 
 const AESTHETICS_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Aesthetics, Skin & Hair Research",
+  pageTitle: "Aesthetics, Skin & Hair",
   introParagraphs: [
     "The fields of aesthetic medicine and dermatological research continue to evolve as scientists investigate peptides that influence skin quality, hair biology, pigmentation and connective tissue health. These investigational compounds are being explored for their interactions with collagen production, tissue regeneration, pigmentation pathways and other mechanisms associated with healthy skin and hair.",
     "Our Aesthetics, Skin & Hair portfolio brings together a carefully selected range of peptides that are widely researched by aesthetic clinics, wellness centres and regenerative medicine practitioners. Together they support investigations into skin rejuvenation, cosmetic science and hair restoration while complementing broader longevity and regenerative research."
@@ -341,6 +380,7 @@ const AESTHETICS_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "GHK-Cu",
+      featured: true,
       description:
         "GHK-Cu is the most extensively researched copper peptide in regenerative and aesthetic science. It is widely investigated for its potential role in collagen production, skin rejuvenation, wound healing and hair follicle biology, making it a cornerstone molecule within aesthetic research.",
       researchAreas: [
@@ -348,10 +388,13 @@ const AESTHETICS_CONTENT: CategoryCatalogueContent = {
         "Collagen Biology",
         "Hair Research",
         "Tissue Repair"
-      ]
+      ],
+      scientificContext: "High-affinity copper (II) chelating tripeptide (Gly-His-Lys) modulating metalloproteinases, procollagen Type I/III synthesis, and dermal remodeling.",
+      puritySpec: "≥99.6% HPLC Purity (Deep Blue Lyophilized Powder)"
     },
     {
       name: "AHK-Cu",
+      featured: true,
       description:
         "AHK-Cu is a copper peptide that has attracted growing interest for its interaction with hair follicle biology and skin health. Ongoing research continues to explore its potential role in supporting hair growth pathways and maintaining healthy skin structure.",
       researchAreas: [
@@ -359,10 +402,13 @@ const AESTHETICS_CONTENT: CategoryCatalogueContent = {
         "Skin Health",
         "Copper Peptide Research",
         "Regenerative Science"
-      ]
+      ],
+      scientificContext: "Targeted copper complex (Ala-His-Lys:Cu2+) stimulating dermal papilla cell proliferation and microcirculation in hair biology assays.",
+      puritySpec: "≥99.1% HPLC Purity"
     },
     {
       name: "Snap-8",
+      featured: true,
       description:
         "Snap-8 is an investigational peptide studied within cosmetic science for its interaction with facial expression pathways. It is widely researched as part of advanced skincare formulations focused on improving the appearance of expression lines and supporting non-invasive aesthetic applications.",
       researchAreas: [
@@ -370,7 +416,9 @@ const AESTHETICS_CONTENT: CategoryCatalogueContent = {
         "Skin Appearance",
         "Aesthetic Research",
         "Peptide Skincare"
-      ]
+      ],
+      scientificContext: "Octapeptide analogue of the SNAP-25 N-terminus that modulates the SNARE complex assembly in neuromuscular in-vitro models.",
+      puritySpec: "≥99.3% HPLC Purity"
     },
     {
       name: "Melanotan I",
@@ -409,7 +457,7 @@ const AESTHETICS_CONTENT: CategoryCatalogueContent = {
 };
 
 const GROWTH_HORMONE_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Growth Hormone & Performance Research",
+  pageTitle: "Growth Hormone & Performance",
   introParagraphs: [
     "The Growth Hormone & Performance category encompasses investigational peptides that are widely studied for their interactions with growth hormone secretion, muscle physiology, recovery, body composition and physical performance. These compounds continue to play an important role in scientific research exploring endocrine signalling, exercise physiology and healthy body composition.",
     "Our portfolio includes many of the most recognised growth hormone secretagogues and related research peptides available today. Together they provide researchers, longevity clinics and performance-focused organisations with a comprehensive selection of products supporting investigations into growth hormone biology, recovery and human performance."
@@ -417,6 +465,7 @@ const GROWTH_HORMONE_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "CJC-1295 with DAC",
+      featured: true,
       description:
         "CJC-1295 with DAC is a long-acting growth hormone releasing hormone (GHRH) analogue that is widely researched for its prolonged stimulation of endogenous growth hormone pathways. Its extended duration of action has made it one of the most established investigational peptides within growth hormone research.",
       researchAreas: [
@@ -424,7 +473,51 @@ const GROWTH_HORMONE_CONTENT: CategoryCatalogueContent = {
         "Endocrine Biology",
         "Recovery",
         "Body Composition"
-      ]
+      ],
+      scientificContext: "GHRH 1-29 analogue conjugated with a Drug Affinity Complex (maleimidopropionic acid) for irreversible covalent binding to serum albumin.",
+      puritySpec: "≥99.3% HPLC Purity"
+    },
+    {
+      name: "CJC-1295 + Ipamorelin",
+      featured: true,
+      description:
+        "This combination pairs a GHRH analogue with a selective growth hormone secretagogue to investigate complementary mechanisms involved in endogenous growth hormone release. It is one of the most widely researched peptide combinations within performance and recovery science.",
+      researchAreas: [
+        "Combination Therapy Research",
+        "Growth Hormone Biology",
+        "Recovery",
+        "Performance"
+      ],
+      scientificContext: "Synergistic dual secretagogue pairing activating pituitary GHRH receptors and ghrelin/GHS-R1a receptors concurrently.",
+      puritySpec: "≥99.2% Combined Purity Standard"
+    },
+    {
+      name: "Ipamorelin",
+      featured: true,
+      description:
+        "Ipamorelin is a selective growth hormone secretagogue recognised for its targeted interaction with ghrelin receptors. It remains an important investigational peptide for studies involving growth hormone physiology, recovery and body composition.",
+      researchAreas: [
+        "Growth Hormone Secretion",
+        "Ghrelin Biology",
+        "Recovery",
+        "Body Composition"
+      ],
+      scientificContext: "Pentapeptide displaying high selectivity for the GHS-R1a receptor without stimulating cortisol, prolactin, or ACTH release.",
+      puritySpec: "≥99.4% HPLC Purity"
+    },
+    {
+      name: "IGF-1 LR3",
+      featured: true,
+      description:
+        "IGF-1 LR3 is a long-acting analogue of insulin-like growth factor-1 that is extensively investigated for its role in cellular growth, muscle biology and recovery. It has become a key molecule within performance and regenerative research.",
+      researchAreas: [
+        "Muscle Biology",
+        "Cellular Growth",
+        "Recovery",
+        "Regenerative Research"
+      ],
+      scientificContext: "83-amino-acid recombinant IGF-1 analogue featuring an Arg substitution at position 3 and an N-terminal 13-amino-acid extension.",
+      puritySpec: "≥98.9% Analytical Bio-Purity"
     },
     {
       name: "CJC-1295 (Without DAC)",
@@ -435,28 +528,6 @@ const GROWTH_HORMONE_CONTENT: CategoryCatalogueContent = {
         "Recovery",
         "Endocrine Research",
         "Performance Science"
-      ]
-    },
-    {
-      name: "CJC-1295 + Ipamorelin",
-      description:
-        "This combination pairs a GHRH analogue with a selective growth hormone secretagogue to investigate complementary mechanisms involved in endogenous growth hormone release. It is one of the most widely researched peptide combinations within performance and recovery science.",
-      researchAreas: [
-        "Combination Therapy Research",
-        "Growth Hormone Biology",
-        "Recovery",
-        "Performance"
-      ]
-    },
-    {
-      name: "Ipamorelin",
-      description:
-        "Ipamorelin is a selective growth hormone secretagogue recognised for its targeted interaction with ghrelin receptors. It remains an important investigational peptide for studies involving growth hormone physiology, recovery and body composition.",
-      researchAreas: [
-        "Growth Hormone Secretion",
-        "Ghrelin Biology",
-        "Recovery",
-        "Body Composition"
       ]
     },
     {
@@ -490,17 +561,6 @@ const GROWTH_HORMONE_CONTENT: CategoryCatalogueContent = {
         "Endocrine Signalling",
         "Performance",
         "Recovery"
-      ]
-    },
-    {
-      name: "IGF-1 LR3",
-      description:
-        "IGF-1 LR3 is a long-acting analogue of insulin-like growth factor-1 that is extensively investigated for its role in cellular growth, muscle biology and recovery. It has become a key molecule within performance and regenerative research.",
-      researchAreas: [
-        "Muscle Biology",
-        "Cellular Growth",
-        "Recovery",
-        "Regenerative Research"
       ]
     },
     {
@@ -551,7 +611,7 @@ const GROWTH_HORMONE_CONTENT: CategoryCatalogueContent = {
 };
 
 const HORMONAL_HEALTH_CONTENT: CategoryCatalogueContent = {
-  pageTitle: "Hormonal & Sexual Health Research",
+  pageTitle: "Hormonal & Sexual Health",
   introParagraphs: [
     "The endocrine system regulates many of the body's most important physiological processes, including reproductive health, hormone signalling, sexual function and fertility. Peptides in this category are widely investigated for their interactions with these complex hormonal pathways and continue to generate significant interest across endocrinology, reproductive medicine and longevity research.",
     "Our Hormonal & Sexual Health portfolio includes a diverse range of investigational peptides that support research into reproductive biology, hormone regulation, sexual wellness and endocrine function. Together they provide researchers and healthcare organisations with access to innovative compounds across this rapidly evolving field."
@@ -559,6 +619,7 @@ const HORMONAL_HEALTH_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "Kisspeptin",
+      featured: true,
       description:
         "Kisspeptin is a naturally occurring peptide that plays a central role in regulating the hypothalamic-pituitary-gonadal axis. It is widely researched for its involvement in reproductive biology, fertility and hormone signalling, making it one of the most important molecules in modern endocrine research.",
       researchAreas: [
@@ -566,7 +627,37 @@ const HORMONAL_HEALTH_CONTENT: CategoryCatalogueContent = {
         "Fertility Research",
         "Hormone Regulation",
         "Endocrinology"
-      ]
+      ],
+      scientificContext: "Upstream regulator of gonadotropin-releasing hormone (GnRH) pulsatility binding to KISS1R (GPR54) in the arcuate nucleus.",
+      puritySpec: "≥99.3% HPLC Purity"
+    },
+    {
+      name: "PT-141 (Bremelanotide)",
+      featured: true,
+      description:
+        "PT-141 is an investigational melanocortin peptide researched for its interaction with pathways involved in sexual health and desire. Its unique mechanism has distinguished it from traditional hormonal approaches, generating considerable interest within sexual wellness research.",
+      researchAreas: [
+        "Sexual Health",
+        "Melanocortin Biology",
+        "Hormonal Research",
+        "Neuroendocrinology"
+      ],
+      scientificContext: "Centrally-acting melanocortin receptor agonist (MC3R/MC4R) modulating central nervous system sexual arousal pathways.",
+      puritySpec: "≥99.5% HPLC Purity (Acetate Salt)"
+    },
+    {
+      name: "Oxytocin",
+      featured: true,
+      description:
+        "Oxytocin is a naturally occurring peptide hormone that plays an important role in social behaviour, bonding and reproductive physiology. Ongoing research continues to explore its broad relevance across reproductive health, emotional wellbeing and neuroendocrine function.",
+      researchAreas: [
+        "Social Behaviour",
+        "Reproductive Biology",
+        "Neuroendocrinology",
+        "Hormone Research"
+      ],
+      scientificContext: "Neurohypophysial nonapeptide acting as a neuromodulator across oxytocin receptors (OXTR) in reproductive and behavioral neuroscience models.",
+      puritySpec: "≥99.4% HPLC Purity"
     },
     {
       name: "Gonadorelin",
@@ -577,28 +668,6 @@ const HORMONAL_HEALTH_CONTENT: CategoryCatalogueContent = {
         "Fertility",
         "Hormone Signalling",
         "Endocrine Biology"
-      ]
-    },
-    {
-      name: "PT-141 (Bremelanotide)",
-      description:
-        "PT-141 is an investigational melanocortin peptide researched for its interaction with pathways involved in sexual health and desire. Its unique mechanism has distinguished it from traditional hormonal approaches, generating considerable interest within sexual wellness research.",
-      researchAreas: [
-        "Sexual Health",
-        "Melanocortin Biology",
-        "Hormonal Research",
-        "Neuroendocrinology"
-      ]
-    },
-    {
-      name: "Oxytocin",
-      description:
-        "Oxytocin is a naturally occurring peptide hormone that plays an important role in social behaviour, bonding and reproductive physiology. Ongoing research continues to explore its broad relevance across reproductive health, emotional wellbeing and neuroendocrine function.",
-      researchAreas: [
-        "Social Behaviour",
-        "Reproductive Biology",
-        "Neuroendocrinology",
-        "Hormone Research"
       ]
     },
     {
@@ -624,6 +693,7 @@ const COGNITIVE_HEALTH_CONTENT: CategoryCatalogueContent = {
   peptides: [
     {
       name: "Semax",
+      featured: true,
       description:
         "Semax is one of the most widely recognised nootropic peptides and has generated significant interest for its interaction with cognitive and neurological pathways. It continues to be researched for learning, memory, neuroprotection and overall cognitive performance.",
       researchAreas: [
@@ -631,10 +701,13 @@ const COGNITIVE_HEALTH_CONTENT: CategoryCatalogueContent = {
         "Learning & Memory",
         "Neuroprotection",
         "Brain Health"
-      ]
+      ],
+      scientificContext: "Heptapeptide analogue of ACTH(4-10) with a Pro-Gly-Pro C-terminal tripeptide fragment, elevating BDNF and TrkB receptor expression.",
+      puritySpec: "≥99.4% HPLC Purity (Lyophilized Powder)"
     },
     {
       name: "Selank",
+      featured: true,
       description:
         "Selank is an investigational peptide studied for its interaction with neurotransmitter systems involved in mood, cognition and neurological function. Researchers continue to explore its potential role in supporting cognitive resilience and emotional regulation.",
       researchAreas: [
@@ -642,7 +715,9 @@ const COGNITIVE_HEALTH_CONTENT: CategoryCatalogueContent = {
         "Cognitive Function",
         "Mood Biology",
         "Brain Health"
-      ]
+      ],
+      scientificContext: "Tuftsin-derived heptapeptide modulating allosteric GABA-A receptor sites and enkephalin-degrading enzyme dynamics.",
+      puritySpec: "≥99.3% HPLC Purity"
     },
     {
       name: "DSIP",
@@ -669,6 +744,77 @@ const COGNITIVE_HEALTH_CONTENT: CategoryCatalogueContent = {
   ]
 };
 
+const RESEARCH_SUPPORT_CONTENT: CategoryCatalogueContent = {
+  pageTitle: "Research Support",
+  introParagraphs: [
+    "High-precision peptide research requires analytical-grade solvents, standardized reconstitution media, low-protein-binding consumables, and sterile filtration accessories to preserve peptide stability and ensure reproducibility across in-vitro and chromatographic workflows.",
+    "Our Research Support portfolio provides researchers, laboratories, and institutions with essential reconstitution solvents, isotonic diluents, and precision labware designed to maintain compound integrity and prevent surface adsorption."
+  ],
+  peptides: [
+    {
+      name: "Bacteriostatic Water (0.9% Benzyl Alcohol)",
+      featured: true,
+      description:
+        "USP-grade non-pyrogenic sterile water containing 0.9% (9 mg/mL) benzyl alcohol preservative to inhibit microbial replication in multi-dose peptide research vials.",
+      researchAreas: [
+        "Peptide Reconstitution",
+        "Multi-Dose Preservation",
+        "Microbial Growth Inhibition",
+        "Analytical Preparation"
+      ],
+      scientificContext: "Multi-dose research reconstitution medium filtered through 0.22µm sterile filtration units to prevent contamination across multi-week assay regimens.",
+      puritySpec: "USP / EP Analytic Solvent Grade"
+    },
+    {
+      name: "Sterile Reconstitution Saline (0.9% NaCl)",
+      featured: true,
+      description:
+        "Isotonic non-pyrogenic physiological saline solution formulated to maintain osmotic balance for sensitive cell-culture assays and in-vitro receptor binding protocols.",
+      researchAreas: [
+        "Osmolarity Reconstitution",
+        "Cell Culture Assays",
+        "Buffer Preparation",
+        "Physiological Buffering"
+      ],
+      scientificContext: "Isotonic (308 mOsm/L) sterile matrix supporting osmolarity-sensitive bio-assays without non-specific protein precipitation.",
+      puritySpec: "Endotoxin <0.02 EU/mL"
+    },
+    {
+      name: "Sterile Acetic Acid Solution (0.6% v/v)",
+      description:
+        "Sterile sub-molar acetic acid reagent formulated to protonate basic amino acid residues and solubilize hydrophobic or basic peptide sequences without chemical degradation.",
+      researchAreas: [
+        "Hydrophobic Solubilization",
+        "Basic Peptide Dissolution",
+        "Aggregation Prevention",
+        "Solvent Optimization"
+      ]
+    },
+    {
+      name: "Low-Binding Microcentrifuge Filter Tubes",
+      description:
+        "Surface-passivated ultra-low retention polypropylene microtubes engineered to reduce non-specific peptide adhesion by >95% for serial dilutions and aliquoting.",
+      researchAreas: [
+        "Adsorption Elimination",
+        "Stock Aliquoting",
+        "Serial Dilution Precision",
+        "Sample Recovery"
+      ]
+    },
+    {
+      name: "0.22µm PES Sterile Syringe Filters",
+      description:
+        "Hydrophilic low protein-binding polyethersulfone (PES) membrane filters ensuring particulate and microbial filtration with minimal peptide sample loss (<1.5%).",
+      researchAreas: [
+        "Sterile Filtration",
+        "Particulate Removal",
+        "HPLC Clarification",
+        "Sample Purity"
+      ]
+    }
+  ]
+};
+
 export default function ResearchCategoryDetail({
   categoryId,
   onNavigate,
@@ -677,45 +823,21 @@ export default function ResearchCategoryDetail({
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+  // Selected compound for the Research Overview Modal
+  const [selectedPeptideForOverview, setSelectedPeptideForOverview] = useState<PeptideEntry | null>(null);
+
   // Select content according to the requested category
   let content = WEIGHT_MANAGEMENT_CONTENT;
+  let normalizedKey = "weight-management";
+
   if (categoryId === "recovery-regeneration") {
     content = RECOVERY_REGENERATION_CONTENT;
-  } else if (categoryId === "longevity") {
-    content = LONGEVITY_CONTENT;
-  } else if (categoryId === "aesthetics" || categoryId === "aesthetics-skin-hair") {
-    content = AESTHETICS_CONTENT;
-  } else if (
-    categoryId === "growth-hormone" ||
-    categoryId === "growth-hormone-performance" ||
-    categoryId === "growth-hormone-secretagogues" ||
-    categoryId === "gh"
-  ) {
-    content = GROWTH_HORMONE_CONTENT;
-  } else if (
-    categoryId === "hormonal-health" ||
-    categoryId === "hormonal-sexual-health" ||
-    categoryId === "hormone" ||
-    categoryId === "hormonal" ||
-    categoryId === "hormones"
-  ) {
-    content = HORMONAL_HEALTH_CONTENT;
-  } else if (
-    categoryId === "cognitive-health" ||
-    categoryId === "cognitive" ||
-    categoryId === "cognition" ||
-    categoryId === "neurobiology" ||
-    categoryId === "cognitive-health-neurobiology"
-  ) {
-    content = COGNITIVE_HEALTH_CONTENT;
-  }
-
-  let normalizedKey = "weight-management";
-  if (categoryId === "recovery-regeneration") {
     normalizedKey = "recovery-regeneration";
   } else if (categoryId === "longevity") {
+    content = LONGEVITY_CONTENT;
     normalizedKey = "longevity";
   } else if (categoryId === "aesthetics" || categoryId === "aesthetics-skin-hair") {
+    content = AESTHETICS_CONTENT;
     normalizedKey = "aesthetics";
   } else if (
     categoryId === "growth-hormone" ||
@@ -723,6 +845,7 @@ export default function ResearchCategoryDetail({
     categoryId === "growth-hormone-secretagogues" ||
     categoryId === "gh"
   ) {
+    content = GROWTH_HORMONE_CONTENT;
     normalizedKey = "growth-hormone";
   } else if (
     categoryId === "hormonal-health" ||
@@ -731,6 +854,7 @@ export default function ResearchCategoryDetail({
     categoryId === "hormonal" ||
     categoryId === "hormones"
   ) {
+    content = HORMONAL_HEALTH_CONTENT;
     normalizedKey = "hormonal-health";
   } else if (
     categoryId === "cognitive-health" ||
@@ -739,8 +863,10 @@ export default function ResearchCategoryDetail({
     categoryId === "neurobiology" ||
     categoryId === "cognitive-health-neurobiology"
   ) {
+    content = COGNITIVE_HEALTH_CONTENT;
     normalizedKey = "cognitive-health";
-  } else if (categoryId === "research-support") {
+  } else if (categoryId === "research-support" || categoryId === "support") {
+    content = RESEARCH_SUPPORT_CONTENT;
     normalizedKey = "research-support";
   }
 
@@ -748,96 +874,20 @@ export default function ResearchCategoryDetail({
     CATEGORY_BACKGROUND_IMAGES[normalizedKey] ||
     CATEGORY_BACKGROUND_IMAGES["weight-management"];
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  // Split peptides into Featured vs Remaining (All Products)
+  const featuredPeptides = content.peptides.filter(p => p.featured);
+  const remainingPeptides = content.peptides.filter(p => !p.featured);
 
-  const scrollToCatalogue = () => {
-    const el = document.getElementById("products-catalogue-list");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const handleRequestCatalogue = () => {
+  const handleRequestQuote = (compoundName?: string) => {
     if (onContactClick) {
-      onContactClick(`Catalogue Request: ${content.pageTitle}`);
-    } else if (onNavigate) {
+      if (compoundName) {
+        onContactClick(`Quotation Request: ${compoundName} (${content.pageTitle})`);
+      } else {
+        onContactClick(`Quotation Request: ${content.pageTitle}`);
+      }
+    } else {
       onNavigate("contact");
     }
-  };
-
-  // SVG Scientific Motif Renderer for card backgrounds
-  const renderScientificMotif = (index: number) => {
-    const motifs = [
-      // Hexagonal & Peptide Bond Lattice
-      <svg
-        key="motif-0"
-        className="absolute -right-10 -bottom-10 w-64 h-64 pointer-events-none opacity-[0.04] dark:opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.09] dark:group-hover:opacity-[0.12]"
-        viewBox="0 0 200 200"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path d="M50 30 L80 15 L110 30 L110 60 L80 75 L50 60 Z" strokeWidth="1.5" />
-        <path d="M110 30 L140 15 L170 30 L170 60 L140 75 L110 60" strokeWidth="1.5" />
-        <path d="M80 75 L80 110 L50 125 L20 110 L20 75 L50 60" strokeWidth="1.5" />
-        <path d="M110 60 L140 75 L140 110 L110 125 L80 110" strokeWidth="1.5" />
-        <circle cx="80" cy="15" r="3" fill="currentColor" />
-        <circle cx="140" cy="15" r="3" fill="currentColor" />
-        <circle cx="110" cy="60" r="3" fill="currentColor" />
-        <circle cx="80" cy="110" r="3" fill="currentColor" />
-        <circle cx="140" cy="110" r="3" fill="currentColor" />
-      </svg>,
-      // Orbital Chemical Wave Motif
-      <svg
-        key="motif-1"
-        className="absolute -right-8 -top-8 w-60 h-60 pointer-events-none opacity-[0.04] dark:opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.09] dark:group-hover:opacity-[0.12]"
-        viewBox="0 0 200 200"
-        fill="none"
-        stroke="currentColor"
-      >
-        <circle cx="100" cy="100" r="70" strokeWidth="1" strokeDasharray="4 4" />
-        <ellipse cx="100" cy="100" rx="85" ry="35" transform="rotate(-30 100 100)" strokeWidth="1.2" />
-        <ellipse cx="100" cy="100" rx="85" ry="35" transform="rotate(45 100 100)" strokeWidth="1.2" />
-        <circle cx="100" cy="100" r="6" fill="currentColor" />
-        <circle cx="45" cy="70" r="3" fill="currentColor" />
-        <circle cx="155" cy="130" r="3" fill="currentColor" />
-      </svg>,
-      // Helical Signal Motif
-      <svg
-        key="motif-2"
-        className="absolute -right-6 -bottom-6 w-60 h-60 pointer-events-none opacity-[0.04] dark:opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.09] dark:group-hover:opacity-[0.12]"
-        viewBox="0 0 200 200"
-        fill="none"
-        stroke="currentColor"
-      >
-        <path d="M30 40 Q70 10 100 40 T170 40" strokeWidth="1.5" />
-        <path d="M30 70 Q70 100 100 70 T170 70" strokeWidth="1.5" />
-        <path d="M30 100 Q70 70 100 100 T170 100" strokeWidth="1.5" />
-        <path d="M30 130 Q70 160 100 130 T170 130" strokeWidth="1.5" />
-        <line x1="65" y1="25" x2="65" y2="85" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="135" y1="25" x2="135" y2="85" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="65" y1="85" x2="65" y2="145" strokeWidth="1" strokeDasharray="2 2" />
-        <line x1="135" y1="85" x2="135" y2="145" strokeWidth="1" strokeDasharray="2 2" />
-      </svg>,
-      // Receptor Node Matrix
-      <svg
-        key="motif-3"
-        className="absolute -right-8 -bottom-8 w-60 h-60 pointer-events-none opacity-[0.04] dark:opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.09] dark:group-hover:opacity-[0.12]"
-        viewBox="0 0 200 200"
-        fill="none"
-        stroke="currentColor"
-      >
-        <circle cx="60" cy="60" r="14" strokeWidth="1.5" />
-        <circle cx="140" cy="60" r="18" strokeWidth="1.5" />
-        <circle cx="100" cy="130" r="22" strokeWidth="1.5" />
-        <line x1="72" y1="68" x2="88" y2="114" strokeWidth="1.5" />
-        <line x1="128" y1="72" x2="112" y2="114" strokeWidth="1.5" />
-        <line x1="74" y1="60" x2="122" y2="60" strokeWidth="1.5" />
-        <circle cx="60" cy="60" r="4" fill="currentColor" />
-        <circle cx="140" cy="60" r="5" fill="currentColor" />
-        <circle cx="100" cy="130" r="6" fill="currentColor" />
-      </svg>
-    ];
-    return motifs[index % motifs.length];
   };
 
   return (
@@ -858,14 +908,9 @@ export default function ResearchCategoryDetail({
             isDark ? "bg-emerald-950/30" : "bg-emerald-100/50"
           }`}
         />
-        <div
-          className={`absolute bottom-1/4 left-10 w-[650px] h-[650px] rounded-full blur-[160px] opacity-25 transition-colors duration-700 ${
-            isDark ? "bg-indigo-950/30" : "bg-slate-200/50"
-          }`}
-        />
       </div>
 
-      {/* Background Layer 2: Subtle Technical Grid & Scientific Coordinates */}
+      {/* Background Layer 2: Subtle Technical Grid */}
       <div
         className={`absolute inset-0 pointer-events-none opacity-[0.035] dark:opacity-[0.045] ${
           isDark
@@ -875,31 +920,18 @@ export default function ResearchCategoryDetail({
       />
 
       {/* -------------------------------------------------------------
-       * HERO SECTION: Full-Width Atmospheric Hero Slide with Visible Background Imagery
+       * HERO SECTION
        * ------------------------------------------------------------- */}
-      <section className="relative z-10 w-full min-h-[50vh] lg:min-h-[60vh] flex items-center py-10 sm:py-14 lg:py-16 border-b border-slate-200/60 dark:border-white/10 overflow-hidden">
-        
-        {/* Background Image Layer with Cinematic Grain & Lighting Overlays */}
+      <section className="relative z-10 w-full min-h-[45vh] lg:min-h-[50vh] flex items-center py-12 sm:py-16 border-b border-slate-200/60 dark:border-white/10 overflow-hidden">
+        {/* Background Image Layer */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 select-none">
-          {/* Category Scientific Specimen Image - Right aligned and clear on the right side */}
           <img
             src={heroBgImage}
             alt=""
             aria-hidden="true"
             referrerPolicy="no-referrer"
-            className="w-full h-full object-cover object-right md:object-center filter contrast-[1.08] brightness-[0.88] dark:brightness-[0.72] saturate-[0.9] scale-100 transition-transform duration-1000"
+            className="w-full h-full object-cover object-right md:object-center filter contrast-[1.08] brightness-[0.88] dark:brightness-[0.72] saturate-[0.9]"
           />
-
-          {/* Grainy Noise Overlay Texture */}
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 opacity-30 dark:opacity-40 mix-blend-overlay"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`
-            }}
-          />
-
-          {/* Directional Horizontal Mask: High opacity on left for readability, clear/transparent on the right so background image is distinctly visible */}
           <div
             className={`absolute inset-0 ${
               isDark
@@ -907,38 +939,37 @@ export default function ResearchCategoryDetail({
                 : "bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/90 via-45% md:via-50% to-transparent"
             }`}
           />
-
-          {/* Vertical Transitions to Seamlessly Blend into Surrounding Canvas */}
           <div
             className={`absolute inset-0 ${
               isDark
-                ? "bg-gradient-to-b from-[#080c14]/70 via-transparent to-[#080c14]/90"
-                : "bg-gradient-to-b from-[#f8fafc]/70 via-transparent to-[#f8fafc]/90"
+                ? "bg-gradient-to-b from-[#080c14]/70 via-transparent to-[#080c14]"
+                : "bg-gradient-to-b from-[#f8fafc]/70 via-transparent to-[#f8fafc]"
             }`}
           />
         </div>
 
-        {/* Foreground Content Container */}
+        {/* Hero Content */}
         <div className="relative z-10 site-container">
-          
-          {/* Main Content Column: Page Title & Intro Description */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-2xl lg:max-w-3xl flex flex-col justify-center"
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl lg:max-w-3xl"
           >
-            {/* Page Title (H1) */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 font-mono text-[10px] sm:text-xs uppercase tracking-widest font-semibold mb-4">
+              <FlaskConical className="h-3 w-3" />
+              <span>Research Category</span>
+            </div>
+
             <h1
-              className={`text-3xl sm:text-4xl lg:text-[2.85rem] xl:text-[3.25rem] font-serif font-medium tracking-[-0.025em] leading-[1.15] mb-5 sm:mb-7 drop-shadow-xs ${
-                isDark ? "text-slate-50" : "text-slate-900"
+              className={`text-3xl sm:text-4xl lg:text-5xl font-serif font-medium tracking-tight leading-[1.15] mb-5 drop-shadow-xs ${
+                isDark ? "text-slate-50" : "text-[#0B1B3D]"
               }`}
             >
               {content.pageTitle}
             </h1>
 
-            {/* Introductory Paragraphs (Verbatim copy preserved) */}
-            <div className="space-y-4 sm:space-y-5 max-w-[65ch] text-[0.95rem] sm:text-[1.125rem] leading-[1.75] sm:leading-[1.85] font-sans font-normal">
+            <div className="space-y-4 max-w-[65ch] text-[0.95rem] sm:text-[1.05rem] leading-[1.75] font-sans font-normal">
               {content.introParagraphs.map((para, idx) => (
                 <p
                   key={idx}
@@ -953,62 +984,273 @@ export default function ResearchCategoryDetail({
       </section>
 
       {/* -------------------------------------------------------------
-       * CATALOGUE COMPENDIUM: Product Containers List (Horizontal & Compact Layout)
+       * SECTION 1: FEATURED RESEARCH COMPOUNDS (Visually Larger Cards)
        * ------------------------------------------------------------- */}
-      <section
-        id="products-catalogue-list"
-        className="relative z-10 site-container py-8 sm:py-10 lg:py-12"
-      >
-        {/* Peptides List - Compact Horizontal Two-Column / Split Layout */}
-        <div className="space-y-4 sm:space-y-5">
-          {content.peptides.map((peptide, index) => (
-            <motion.section
-              key={peptide.name}
-              id={`compound-${peptide.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-20px" }}
-              transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.15), ease: [0.16, 1, 0.3, 1] }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              className={`group relative rounded-2xl p-5 sm:p-6 lg:p-7 border backdrop-blur-xl transition-all duration-300 overflow-hidden ${
-                isDark
-                  ? "bg-gradient-to-r from-slate-900/70 via-slate-900/50 to-slate-950/70 border-white/10 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-950/20"
-                  : "bg-gradient-to-r from-white/95 via-white/85 to-slate-50/80 border-slate-200/90 hover:border-teal-500/40 hover:shadow-lg hover:shadow-slate-200/50"
-              }`}
-            >
-              {/* Horizontal Layout Container: Left column title, Right column description */}
-              <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-baseline">
-                
-                {/* Left Column (md: 4 cols): Compound Name */}
-                <div className="md:col-span-4 lg:col-span-4 shrink-0">
-                  <h2
-                    className={`text-lg sm:text-xl lg:text-[1.35rem] font-serif font-semibold tracking-[-0.015em] leading-snug transition-colors ${
-                      isDark
-                        ? "text-slate-100 group-hover:text-emerald-300"
-                        : "text-slate-900 group-hover:text-teal-900"
-                    }`}
-                  >
+      {featuredPeptides.length > 0 && (
+        <section className="relative z-10 site-container pt-12 sm:pt-16 pb-8">
+          <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10 dark:border-white/10">
+            <h2 className={`font-serif text-2xl sm:text-3xl font-semibold tracking-tight ${
+              isDark ? "text-white" : "text-slate-900"
+            }`}>
+              Featured Research Compounds
+            </h2>
+          </div>
+
+          {/* Featured Grid - Visually larger, spacious cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {featuredPeptides.map((peptide, index) => (
+              <motion.div
+                key={peptide.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: 0.45, delay: index * 0.08 }}
+                className={`group relative rounded-3xl p-6 sm:p-8 border backdrop-blur-xl transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xl ${
+                  isDark
+                    ? "bg-gradient-to-b from-slate-900/90 via-slate-900/70 to-slate-950/90 border-white/10 hover:border-emerald-500/40 hover:shadow-emerald-950/30"
+                    : "bg-white/95 border-slate-200/90 hover:border-teal-500/40 hover:shadow-teal-900/10"
+                }`}
+              >
+                {/* Ambient Top Glow on Card */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/[0.06] rounded-full blur-2xl pointer-events-none group-hover:bg-emerald-500/[0.12] transition-colors" />
+
+                <div className="relative z-10 space-y-4">
+                  {/* Compound Name */}
+                  <h3 className={`font-serif text-2xl sm:text-3xl font-semibold tracking-tight group-hover:text-emerald-400 transition-colors ${
+                    isDark ? "text-white" : "text-slate-900"
+                  }`}>
                     {peptide.name}
-                  </h2>
+                  </h3>
+
+                  {/* Description */}
+                  <p className={`font-sans text-sm leading-relaxed ${
+                    isDark ? "text-slate-300" : "text-slate-600"
+                  }`}>
+                    {peptide.description}
+                  </p>
+
+                  {/* Research Areas */}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {peptide.researchAreas.map((area) => (
+                      <span
+                        key={area}
+                        className={`font-sans text-[11px] px-2.5 py-1 rounded-md border ${
+                          isDark
+                            ? "bg-white/5 border-white/10 text-neutral-300"
+                            : "bg-slate-100 border-slate-200 text-slate-700"
+                        }`}
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                {/* Right Column (md: 7.5-8 cols): Description Editorial Copy (Preserved Verbatim) */}
-                <div className="md:col-span-8 lg:col-span-8">
-                  <p
-                    className={`text-[0.925rem] sm:text-[0.98rem] leading-[1.65] font-sans font-normal transition-colors ${
-                      isDark ? "text-slate-300/90 group-hover:text-slate-200" : "text-slate-600/95 group-hover:text-slate-800"
+                {/* View Research Overview Action */}
+                <div className="relative z-10 pt-6 mt-6 border-t border-white/10 dark:border-white/10 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPeptideForOverview(peptide)}
+                    className={`group/btn inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer`}
+                  >
+                    <span>View Research Overview</span>
+                    <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* -------------------------------------------------------------
+       * SECTION 2: ALL PRODUCTS (Simple Cards, No Individual Info Buttons)
+       * ------------------------------------------------------------- */}
+      <section className="relative z-10 site-container pt-12 pb-16">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10 dark:border-white/10">
+          <h2 className={`font-serif text-2xl sm:text-3xl font-semibold tracking-tight ${
+            isDark ? "text-white" : "text-slate-900"
+          }`}>
+            All Products
+          </h2>
+        </div>
+
+        {/* Simple Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {remainingPeptides.map((peptide, index) => (
+            <motion.div
+              key={peptide.name}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ duration: 0.35, delay: Math.min(index * 0.04, 0.2) }}
+              className={`rounded-2xl p-5 sm:p-6 border backdrop-blur-md transition-all duration-200 flex flex-col justify-between ${
+                isDark
+                  ? "bg-slate-900/50 border-white/10 hover:border-white/20 hover:bg-slate-900/70"
+                  : "bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white"
+              }`}
+            >
+              <div className="space-y-3">
+                <h3 className={`font-serif text-lg sm:text-xl font-semibold tracking-tight ${
+                  isDark ? "text-white" : "text-slate-900"
+                }`}>
+                  {peptide.name}
+                </h3>
+
+                <p className={`font-sans text-xs sm:text-[13px] leading-relaxed ${
+                  isDark ? "text-neutral-300" : "text-slate-600"
+                }`}>
+                  {peptide.description}
+                </p>
+              </div>
+
+              {/* Research Areas Tagging */}
+              <div className="flex flex-wrap gap-1.5 pt-4 mt-4 border-t border-white/5 dark:border-white/5">
+                {peptide.researchAreas.map((area) => (
+                  <span
+                    key={area}
+                    className={`font-sans text-[10px] px-2 py-0.5 rounded border ${
+                      isDark
+                        ? "bg-neutral-950/60 border-white/5 text-neutral-400"
+                        : "bg-slate-50 border-slate-200 text-slate-500"
                     }`}
                   >
-                    {peptide.description}
+                    {area}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Single Request Pricing Button Near Bottom of Catalogue */}
+        <div className="mt-12 flex justify-center">
+          <button
+            type="button"
+            onClick={() => handleRequestQuote()}
+            className={`inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-mono text-xs uppercase tracking-widest font-bold border transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
+              isDark
+                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 hover:border-emerald-400"
+                : "border-teal-500/50 bg-teal-50 text-teal-800 hover:bg-teal-100"
+            }`}
+          >
+            <FlaskConical className="h-4 w-4 text-emerald-400" />
+            <span>Request Pricing</span>
+          </button>
+        </div>
+      </section>
+
+      {/* -------------------------------------------------------------
+       * MODAL: RESEARCH OVERVIEW MODAL
+       * ------------------------------------------------------------- */}
+      <AnimatePresence>
+        {selectedPeptideForOverview && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 10 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 10 }}
+              className={`w-full max-w-2xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 rounded-3xl border shadow-2xl space-y-6 ${
+                isDark ? "bg-neutral-900 border-white/15 text-white" : "bg-white border-slate-200 text-slate-900"
+              }`}
+            >
+              {/* Header */}
+              <div className="flex items-start justify-between border-b border-white/10 pb-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-mono text-[10px] uppercase text-emerald-400 font-bold tracking-widest">
+                      Scientific Dossier Overview
+                    </span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
+                    {selectedPeptideForOverview.name}
+                  </h3>
+                  <p className="font-sans text-xs text-neutral-400 mt-1">
+                    Category: {content.pageTitle}
                   </p>
                 </div>
 
+                <button
+                  type="button"
+                  onClick={() => setSelectedPeptideForOverview(null)}
+                  className="p-1.5 rounded-full hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
               </div>
-            </motion.section>
-          ))}
-        </div>
-      </section>
+
+              {/* Body */}
+              <div className="space-y-4 font-sans text-sm leading-relaxed">
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold mb-1">
+                    Abstract & Research Scope
+                  </h4>
+                  <p className={isDark ? "text-neutral-300" : "text-slate-700"}>
+                    {selectedPeptideForOverview.description}
+                  </p>
+                </div>
+
+                {selectedPeptideForOverview.scientificContext && (
+                  <div className="p-4 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04]">
+                    <h4 className="font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold mb-1 flex items-center gap-1.5">
+                      <Dna className="h-3.5 w-3.5" />
+                      <span>Mechanism & Receptor Profile</span>
+                    </h4>
+                    <p className={`text-xs ${isDark ? "text-neutral-200" : "text-slate-800"}`}>
+                      {selectedPeptideForOverview.scientificContext}
+                    </p>
+                  </div>
+                )}
+
+                <div>
+                  <h4 className="font-mono text-xs uppercase tracking-wider text-neutral-400 font-semibold mb-2">
+                    Investigated Target Areas
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedPeptideForOverview.researchAreas.map((area) => (
+                      <span
+                        key={area}
+                        className="px-3 py-1 rounded-lg bg-neutral-950 border border-white/10 text-emerald-300 font-mono text-xs"
+                      >
+                        {area}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {selectedPeptideForOverview.puritySpec && (
+                  <div className="flex items-center gap-2 pt-2 text-xs font-mono text-neutral-400">
+                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                    <span>Purity Standard: {selectedPeptideForOverview.puritySpec}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-col sm:flex-row items-center justify-end gap-3 pt-4 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setSelectedPeptideForOverview(null)}
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-full border border-white/20 text-xs font-mono uppercase text-neutral-300 hover:text-white"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const name = selectedPeptideForOverview.name;
+                    setSelectedPeptideForOverview(null);
+                    handleRequestQuote(name);
+                  }}
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-emerald-400 text-neutral-950 font-mono text-xs uppercase font-bold hover:bg-emerald-300 transition-colors shadow-md"
+                >
+                  Request a Quote for {selectedPeptideForOverview.name}
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </article>
   );
 }

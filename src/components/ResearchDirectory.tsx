@@ -18,7 +18,7 @@ const CATEGORIES = [
   {
     number: "01",
     id: "weight-management",
-    title: "Weight Management",
+    title: "Weight Management & Metabolic",
     description: "Peptides focused on metabolism, appetite regulation, glucose balance, and body composition.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Adipose_cells_glowing_microscopi__202608221913_stedur.jpg",
   },
@@ -32,37 +32,37 @@ const CATEGORIES = [
   {
     number: "03",
     id: "longevity",
-    title: "Longevity",
+    title: "Longevity & Cellular Health",
     description: "Peptides centred on healthy ageing, cellular function, mitochondrial health, and longevity.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406360/Mitochondria_and_DNA_cellular_ag__202608221915_plb22x.jpg",
   },
   {
     number: "04",
-    id: "aesthetics",
-    title: "Aesthetics",
-    description: "Peptides for skin health, collagen production, pigmentation, hair biology, and cosmetic applications.",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
-  },
-  {
-    number: "05",
     id: "growth-hormone",
-    title: "Growth Hormone",
+    title: "Growth Hormone & Performance",
     description: "Peptides involved in growth hormone pathways, muscle physiology, performance, and recovery.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Molecules_interacting_with_hormo__202608221914_g8apqb.jpg",
   },
   {
+    number: "05",
+    id: "cognitive-health",
+    title: "Cognitive Health & Neurobiology",
+    description: "Peptides related to memory, learning, neuroprotection, sleep, and brain function.",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
+  },
+  {
     number: "06",
-    id: "hormonal-health",
-    title: "Hormonal Health",
-    description: "Peptides supporting endocrine function, reproductive health, hormone balance, and fertility.",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
+    id: "aesthetics",
+    title: "Aesthetics, Skin & Hair",
+    description: "Peptides for skin health, collagen production, pigmentation, hair biology, and cosmetic applications.",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
   },
   {
     number: "07",
-    id: "cognitive-health",
-    title: "Cognitive Health",
-    description: "Peptides related to memory, learning, neuroprotection, sleep, and brain function.",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
+    id: "hormonal-health",
+    title: "Hormonal & Sexual Health",
+    description: "Peptides supporting endocrine function, reproductive health, hormone balance, and fertility.",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
   },
   {
     number: "08",
@@ -368,7 +368,7 @@ export default function ResearchDirectory({ onNavigate, theme }: ResearchDirecto
                 <div className="p-4 sm:p-5 flex flex-col justify-between flex-1 space-y-2">
                   <div className="space-y-1.5">
                     {/* Title */}
-                    <h3 className={`font-sans text-sm sm:text-base font-semibold tracking-tight transition-colors ${
+                    <h3 className={`font-sans text-[13px] sm:text-[14px] font-semibold tracking-tight leading-snug min-h-[2.4rem] flex items-center transition-colors ${
                       isActive 
                         ? (isDark ? "text-white" : "text-slate-900") 
                         : (isDark ? "text-neutral-200 group-hover:text-emerald-300" : "text-slate-800 group-hover:text-teal-700")

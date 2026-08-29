@@ -24,8 +24,8 @@ export default function FAQs() {
     },
     {
       category: "Shipping & Logistics",
-      question: "What is active cryo-telemetry cold chain shipping?",
-      answer: "Delicate peptides undergo conformational degradation if subjected to ambient temperature fluctuations. For bulk and enterprise cargo, we ship inside insulated cryo-capsules packed with dry ice and equipped with active cellular sensor modules. This allows you to track and verify temperature continuity from dispatch to laboratory delivery."
+      question: "How are international research shipments protected during transit?",
+      answer: "We utilize specialized protective packaging and dedicated global air cargo routes. All bulk and enterprise orders include milestone tracking and priority customs pre-clearance to ensure fast, dependable international delivery."
     },
     {
       category: "Custom Formulations",

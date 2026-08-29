@@ -44,7 +44,7 @@ const CATEGORIES: CategoryCardItem[] = [
   {
     number: "01",
     id: "weight-management",
-    title: "Weight Management",
+    title: "Weight Management & Metabolic",
     description: "Peptides focused on metabolism, appetite regulation, glucose balance and body composition.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Adipose_cells_glowing_microscopi__202608221913_stedur.jpg",
     code: "METABOLIC-SYS v9.1",
@@ -64,7 +64,7 @@ const CATEGORIES: CategoryCardItem[] = [
   {
     number: "03",
     id: "longevity",
-    title: "Longevity",
+    title: "Longevity & Cellular Health",
     description: "Peptides centred on healthy ageing, cellular function, mitochondrial health and longevity.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406360/Mitochondria_and_DNA_cellular_ag__202608221915_plb22x.jpg",
     code: "CELLULAR-REJ v4.4",
@@ -73,18 +73,8 @@ const CATEGORIES: CategoryCardItem[] = [
   },
   {
     number: "04",
-    id: "aesthetics",
-    title: "Aesthetics",
-    description: "Peptides for skin health, collagen production, pigmentation, hair biology and cosmetic applications.",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
-    code: "DERMA-COLLAGEN v3.8",
-    tag: "Extracellular Matrix",
-    icon: Sparkles
-  },
-  {
-    number: "05",
     id: "growth-hormone",
-    title: "Growth Hormone",
+    title: "Growth Hormone & Performance",
     description: "Peptides involved in growth hormone pathways, muscle physiology, performance and recovery.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Molecules_interacting_with_hormo__202608221914_g8apqb.jpg",
     code: "GH-SOMATO v6.1",
@@ -92,24 +82,34 @@ const CATEGORIES: CategoryCardItem[] = [
     icon: TrendingUp
   },
   {
-    number: "06",
-    id: "hormonal-health",
-    title: "Hormonal Health",
-    description: "Peptides supporting endocrine function, reproductive health, hormone balance and fertility.",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
-    code: "ENDOCRINE-MOD v5.5",
-    tag: "Endocrine Regulation",
-    icon: ShieldCheck
-  },
-  {
-    number: "07",
+    number: "05",
     id: "cognitive-health",
-    title: "Cognitive Health",
+    title: "Cognitive Health & Neurobiology",
     description: "Peptides related to memory, learning, neuroprotection, sleep and brain function.",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
     code: "NEURO-SYNAPSE v8.3",
     tag: "Neurotrophic Factors",
     icon: Brain
+  },
+  {
+    number: "06",
+    id: "aesthetics",
+    title: "Aesthetics, Skin & Hair",
+    description: "Peptides for skin health, collagen production, pigmentation, hair biology and cosmetic applications.",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
+    code: "DERMA-COLLAGEN v3.8",
+    tag: "Extracellular Matrix",
+    icon: Sparkles
+  },
+  {
+    number: "07",
+    id: "hormonal-health",
+    title: "Hormonal & Sexual Health",
+    description: "Peptides supporting endocrine function, reproductive health, hormone balance and fertility.",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
+    code: "ENDOCRINE-MOD v5.5",
+    tag: "Endocrine Regulation",
+    icon: ShieldCheck
   },
   {
     number: "08",
@@ -171,7 +171,7 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
             className="space-y-4"
           >
             <h1 className={`font-sans text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] ${
-              isDark ? "text-white" : "text-slate-900"
+              isDark ? "text-white" : "text-[#0B1B3D]"
             }`}>
               Research-Grade Peptides. <span className={isDark ? "text-emerald-400" : "text-teal-600"}>Commercial-Scale Partnerships.</span>
             </h1>
@@ -247,7 +247,7 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
                 <div className="p-5 flex flex-col justify-between flex-1 space-y-3 text-left">
                   <div className="space-y-1.5">
                     {/* Category Title */}
-                    <h3 className={`font-sans text-lg font-bold tracking-tight transition-colors duration-300 ${
+                    <h3 className={`font-sans text-[15px] sm:text-base md:text-[1.05rem] font-bold tracking-tight leading-snug transition-colors duration-300 ${
                       isDark ? "text-white group-hover:text-emerald-300" : "text-slate-900 group-hover:text-teal-700"
                     }`}>
                       {category.title}
@@ -271,36 +271,45 @@ export default function ResearchCategoriesPage({ onNavigate, onContactClick }: R
       </section>
 
       {/* =========================================================
-          BOTTOM SECTION: Clean Scientific Compound Inquiry CTA
+          BOTTOM SECTION: Looking for Pricing CTA
           ========================================================= */}
-      <section className="relative py-20 sm:py-28 px-4 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden">
+      <section className="relative py-20 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-white/10 overflow-hidden">
         
         {/* Soft Background Radial Lighting */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-emerald-500/10 rounded-full blur-3xl" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
+        <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
 
           {/* Heading */}
           <h2 className={`font-sans text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight ${
             isDark ? "text-white" : "text-slate-900"
           }`}>
-            Looking for a specific research compound?
+            Looking for Pricing?
           </h2>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            {/* Contact Our Team */}
+          {/* Supporting Copy */}
+          <div className="space-y-1 max-w-xl mx-auto">
+            <p className={`font-sans text-sm sm:text-base ${isDark ? "text-neutral-300" : "text-slate-600"}`}>
+              Tell us what you're sourcing and the quantities you require.
+            </p>
+            <p className={`font-sans text-sm sm:text-base ${isDark ? "text-neutral-300" : "text-slate-600"}`}>
+              We'll prepare a quotation.
+            </p>
+          </div>
+
+          {/* Button: Request a Quote */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
             <button
               onClick={handleContact}
-              className={`w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-mono text-[10.5px] uppercase tracking-[0.2em] font-extrabold transition-all duration-300 cursor-pointer shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full font-mono text-[11px] sm:text-xs uppercase tracking-[0.2em] font-extrabold transition-all duration-300 cursor-pointer shadow-xl hover:scale-[1.03] active:scale-[0.98] ${
                 isDark
                   ? "bg-emerald-400 hover:bg-emerald-300 text-neutral-950 shadow-[0_0_30px_rgba(52,211,153,0.3)]"
                   : "bg-teal-600 hover:bg-teal-700 text-white shadow-[0_8px_25px_rgba(13,148,136,0.25)]"
               }`}
             >
-              <span>Contact Our Team</span>
+              <span>Request a Quote</span>
               <ChevronRight className="h-4 w-4" />
             </button>
           </div>

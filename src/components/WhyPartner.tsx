@@ -132,10 +132,10 @@ export default function WhyPartner({ onContactClick, onNavigate }: WhyPartnerPro
     {
       id: "logistics",
       title: "Volatile Shipments & Long Lead Times",
-      subtitle: "The temperature drop threat",
-      description: "Standard postal couriers fail to regulate cold-chain integrity, letting lyophilized peptides exceed protective room temperatures and triggering progressive chemical cleavage.",
-      resolution: "Cryo-Chain Telematics",
-      protocol: "We ship all high-density commercial orders via validated dry-ice containers with real-time cellular temperature tracking, protecting molecular stability during air cargo transit."
+      subtitle: "The transit integrity threat",
+      description: "Standard postal couriers fail to guarantee protective transit protocols, risking package delays and exposure during multi-leg international transit.",
+      resolution: "Global Delivery Solutions",
+      protocol: "We ship all high-density commercial orders via validated protective containers with end-to-end milestone tracking, protecting molecular stability during air cargo transit."
     },
     {
       id: "scalability",
@@ -172,14 +172,14 @@ export default function WhyPartner({ onContactClick, onNavigate }: WhyPartnerPro
       ]
     },
     {
-      title: "International Supply",
-      tagline: "Global Cold-Chain Telematics",
+      title: "Global Delivery Solutions",
+      tagline: "International Sourcing & Logistics",
       icon: <Globe className="h-5 w-5 text-emerald-400" />,
       shortDesc: "Our commercial network supports global sourcing, fulfilment, and logistics, helping businesses access products efficiently across international markets.",
       detailedSpecs: [
         "Robust direct global logistics routing through major primary international air cargo hubs.",
         "Integrated custom clearance coordination preventing border security transit holds.",
-        "Sealed cryo-shipper configurations maintaining stable storage parameters globally."
+        "Secure packaging configurations maintaining stable storage parameters globally."
       ]
     },
     {
@@ -245,9 +245,9 @@ export default function WhyPartner({ onContactClick, onNavigate }: WhyPartnerPro
     },
     {
       title: "International Fulfilment",
-      desc: "Reliable worldwide distribution supported by established logistics networks and active cold-chain container tracking.",
+      desc: "Reliable worldwide distribution supported by established logistics networks and end-to-end container tracking.",
       badge: "Logistics",
-      metrics: "Active Temperature-Monitoring"
+      metrics: "Global Delivery Solutions"
     },
     {
       title: "Product Delivery Solutions",

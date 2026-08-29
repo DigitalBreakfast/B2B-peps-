@@ -42,13 +42,13 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
 
   // Mobile Products Accordion Categories
   const productCategories = [
-    { name: "Weight Management", slug: "weight-management" },
+    { name: "Weight Management & Metabolic", slug: "weight-management" },
     { name: "Recovery & Regeneration", slug: "recovery-regeneration" },
-    { name: "Longevity", slug: "longevity" },
-    { name: "Aesthetics", slug: "aesthetics" },
-    { name: "Growth Hormone", slug: "growth-hormone" },
-    { name: "Hormonal Health", slug: "hormonal-health" },
-    { name: "Cognitive Health", slug: "cognitive-health" },
+    { name: "Longevity & Cellular Health", slug: "longevity" },
+    { name: "Growth Hormone & Performance", slug: "growth-hormone" },
+    { name: "Cognitive Health & Neurobiology", slug: "cognitive-health" },
+    { name: "Aesthetics, Skin & Hair", slug: "aesthetics" },
+    { name: "Hormonal & Sexual Health", slug: "hormonal-health" },
     { name: "Research Support", slug: "research-support" },
   ];
 
@@ -500,8 +500,8 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
                 <div className="grid grid-cols-3 gap-2">
                   {/* Email */}
                   <a
-                    href="mailto:contact@b2bpeps.com"
-                    aria-label="Send email to B2B Peps"
+                    href="mailto:info@b2bpeps.com"
+                    aria-label="Send email to info@b2bpeps.com"
                     className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 px-2 py-2.5 rounded-xl border text-xs font-semibold transition-all min-h-[44px] cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                       isDark
                         ? "border-white/10 bg-white/[0.05] hover:bg-white/10 text-neutral-200 hover:text-white hover:border-emerald-500/30"
@@ -514,10 +514,10 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
 
                   {/* WhatsApp */}
                   <a
-                    href="https://wa.me/18005557377"
+                    href="https://wa.me/447414219888"
                     target="_blank"
                     rel="noreferrer"
-                    aria-label="Contact via WhatsApp"
+                    aria-label="Contact via WhatsApp +44 7414 219888"
                     className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 px-2 py-2.5 rounded-xl border text-xs font-semibold transition-all min-h-[44px] cursor-pointer hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                       isDark
                         ? "border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-950/40 text-emerald-300 hover:border-emerald-400/50"

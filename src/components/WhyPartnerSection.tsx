@@ -20,12 +20,11 @@ const PILLARS = [
   {
     number: "01",
     id: "quality",
-    title: "Research-Grade Quality",
+    title: "Research-Grade Supply",
     description: "Products sourced to high manufacturing standards with an emphasis on purity, consistency, and reliability.",
     icon: ShieldCheck,
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg",
-    spec: "PURITY ASSAY ≥ 99.5%",
-    badge: "ISO 9001:2015 STANDARDS"
+    badges: ["Broad Product Range", "Flexible Order Volumes"]
   },
   {
     number: "02",
@@ -34,28 +33,25 @@ const PILLARS = [
     description: "Supporting commercial partners through dependable international sourcing, fulfilment, and logistics.",
     icon: Globe2,
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Professionals_inspecting_pharmac__202608231645_fhynxm.jpg",
-    spec: "70+ COUNTRIES COVERAGE",
-    badge: "COLD-CHAIN FULFILMENT"
+    badges: ["International Markets", "Flexible Fulfilment"]
   },
   {
     number: "03",
     id: "expertise",
-    title: "Scientific Expertise",
+    title: "Product Knowledge",
     description: "A technically informed approach to peptide sourcing, documentation, and product support.",
     icon: Atom,
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Engineers_inspecting_pharmaceuti__202608231646_xjish6.jpg",
-    spec: "PHD PHARMA CONSULTANTS",
-    badge: "ANALYTICAL SUPPORT"
+    badges: ["Growing Product Range", "Responsive Support"]
   },
   {
     number: "04",
     id: "partnership",
-    title: "Long-Term Partnership",
+    title: "Long-Term Partnerships",
     description: "Focused on building lasting commercial relationships through responsiveness, transparency, and dependable service.",
     icon: Handshake,
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Researchers_reviewing_technical___202608231645_kpdre3.jpg",
-    spec: "DEDICATED B2B DESK",
-    badge: "CONTRACT GUARANTEE"
+    badges: ["Reliable Communication", "Built to Scale"]
   },
   {
     number: "05",
@@ -64,18 +60,16 @@ const PILLARS = [
     description: "Private label programmes, branding, packaging, and scalable supply solutions designed for research-focused businesses.",
     icon: PackageCheck,
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Clever_Peps_peptide_manufacturin__202608231645_ut6wmc.jpg",
-    spec: "PRIVATE LABEL & BULK",
-    badge: "CUSTOM PACKAGING"
+    badges: ["Industry-Leading Pricing", "Volume Pricing"]
   },
   {
     number: "06",
     id: "documentation",
-    title: "Quality Documentation",
-    description: "Batch-specific analytical documentation, including HPLC analysis, LC-MS identity confirmation, and Certificates of Analysis, where available.",
+    title: "Quality & Testing",
+    description: "Batch-specific analytical documentation, independent testing support, and Certificates of Analysis, where available.",
     icon: FileCheck2,
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Pharmaceutical_quality_control_d__202608231645_pritv6.jpg",
-    spec: "HPLC & LC-MS SPECTRUM",
-    badge: "COA VERIFIED BATCHES"
+    badges: ["Independent Testing Support", "Documentation Available"]
   }
 ];
 
@@ -179,7 +173,7 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
               className="inline-flex items-center gap-3"
             >
               <span className="font-mono text-xs font-extrabold uppercase tracking-[0.3em] text-emerald-400">
-                SOLVING B2B CONTRACT CHALLENGES
+                RESEARCH PEPTIDE SUPPLY MADE SIMPLE
               </span>
               <div className="h-[1px] w-12 bg-gradient-to-r from-emerald-400 to-transparent" />
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,1)]" />
@@ -356,10 +350,10 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                       : "border-teal-500 bg-white shadow-[0_0_30px_rgba(13,148,136,0.3)] text-slate-900"
                   }`}>
                     <Dna className="h-4 w-4 sm:h-6 sm:w-6 text-emerald-400 animate-spin" style={{ animationDuration: '20s' }} />
-                    <span className="font-mono text-[8px] sm:text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 mt-0.5 sm:mt-1">
-                      B2B
+                    <span className="font-mono text-[7.5px] sm:text-[9.5px] font-extrabold uppercase tracking-wider text-emerald-400 mt-0.5 sm:mt-1">
+                      OUR
                     </span>
-                    <span className="font-mono text-[6px] sm:text-[8px] text-neutral-400 hidden min-[400px]:inline">CORE</span>
+                    <span className="font-mono text-[6px] sm:text-[8px] text-neutral-400 tracking-wider hidden min-[400px]:inline">APPROACH</span>
                   </div>
 
                   <HexNode 
@@ -538,16 +532,14 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                     </p>
                   </div>
 
-                  {/* Micro Specs List */}
-                  <div className="pt-4 border-t border-white/10 grid grid-cols-2 gap-3 font-mono text-[10px] text-neutral-400">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                      <span>HPLC / LC-MS VERIFIED</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-teal-400 shrink-0" />
-                      <span>CONTRACT GUARANTEED</span>
-                    </div>
+                  {/* Supporting Badges List */}
+                  <div className="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[10.5px] text-neutral-300">
+                    {activePillar.badges.map((badge, bIdx) => (
+                      <div key={bIdx} className="flex items-center gap-2">
+                        <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 ${bIdx === 0 ? "text-emerald-400" : "text-teal-400"}`} />
+                        <span className="uppercase tracking-wider font-semibold">{badge}</span>
+                      </div>
+                    ))}
                   </div>
 
                 </motion.div>

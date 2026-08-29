@@ -290,11 +290,11 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     publishedDate: "July 2, 2026",
     author: "Elena Rostov, VP of Global Logistics",
     readTime: "9 min read",
-    summary: "An in-depth analysis of cold-chain international freight regulations, customs clearance documentation, and import compliance for synthetic peptide research reagents.",
+    summary: "An in-depth analysis of international freight regulations, customs clearance documentation, and import compliance for synthetic peptide research reagents.",
     content: [
-      "Securing high-purity peptides is only half the battle. For global pharmaceutical companies, clinical research institutions, and large-scale distributors, the logistics of biological cargo transport represent a critical risk factor. A single customs delay, a single broken temperature log, or missing compliance documentation can ruin millions of dollars of scientific cargo.",
+      "Securing high-purity peptides is only half the battle. For global pharmaceutical companies, clinical research institutions, and large-scale distributors, the logistics of biological cargo transport represent a critical factor. A single customs delay or missing compliance documentation can hold up vital scientific programs.",
       "Different countries maintain highly variable customs environments for synthetic amino acid chains. The European Medicines Agency (EMA), the US Food and Drug Administration (FDA), and Asian regulatory authorities require distinct documentation structures, including precise CAS Registry declarations, material safety datasheets (MSDS), and strict non-therapeutic declarations for research reagents.",
-      "At B2B Peps, we guarantee customs clearance by operating as an authorized economic partner. We embed multi-sensor real-time temperature trackers inside every vacuum-insulated nitrogen cryo-shipper, and pre-file digitally authenticated dossiers to global borders. By building direct relationships with premium biological freight specialists, we maintain a 99.8% on-time customs clearance rate globally."
+      "At B2B Peps, we facilitate seamless customs clearance by operating as an authorized economic partner. We utilize specialized protective packaging and pre-file digitally authenticated dossiers with global customs authorities. By maintaining direct partnerships with premium air freight carriers, we achieve a 99.8% on-time global delivery rate."
     ],
     imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop"
   },

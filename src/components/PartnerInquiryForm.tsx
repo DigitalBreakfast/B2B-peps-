@@ -4,496 +4,601 @@
  */
 
 import React, { useState, useEffect } from "react";
-import { PEPTIDES_CATALOG } from "../data";
 import { motion, AnimatePresence } from "motion/react";
 import { 
-  Building2, Mail, Phone, Calendar, ArrowRight, ShieldCheck, 
-  Sparkles, CheckCircle2, ChevronRight, FileDown, HelpCircle, 
-  ChevronDown, MessageSquare 
+  Building2, Mail, Phone, Calendar, Clock, Globe2, 
+  Send, ShieldCheck, CheckCircle2, MessageSquare, 
+  FileText, DollarSign, Users, HelpCircle, ArrowRight,
+  Sparkles, Check, MessageCircle
 } from "lucide-react";
 
 interface PartnerInquiryFormProps {
-  prefilledPeptideName: string | null;
+  prefilledPeptideName?: string | null;
 }
 
-type InquiryType = "partner" | "catalog" | "consultation";
+const HELP_OPTIONS = [
+  {
+    id: "pricing",
+    label: "Request Pricing",
+    description: "Wholesale tier pricing & custom batch quotations",
+    icon: DollarSign,
+  },
+  {
+    id: "catalogue",
+    label: "Request Product Catalogue",
+    description: "Complete analytical dossier & chemical specifications",
+    icon: FileText,
+  },
+  {
+    id: "meeting",
+    label: "Request a Meeting",
+    description: "Direct video or phone consultation with technical leads",
+    icon: Users,
+  },
+  {
+    id: "general",
+    label: "General Enquiry / Other",
+    description: "Custom synthesis, synthesis protocols & logistics questions",
+    icon: HelpCircle,
+  },
+];
+
+const MONTHLY_REQUIREMENTS = [
+  "Under 100 vials/month",
+  "100–500",
+  "500–1,000",
+  "1,000+",
+  "Not sure yet",
+];
 
 export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInquiryFormProps) {
-  const [inquiryType, setInquiryType] = useState<InquiryType>("partner");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
-  
-  // Form State
-  const [companyName, setCompanyName] = useState("");
-  const [contactName, setContactName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [selectedPeptides, setSelectedPeptides] = useState<string[]>([]);
-  const [volume, setVolume] = useState("Vial Batches (<50 units)");
-  const [notes, setNotes] = useState("");
-  const [selectedDate, setSelectedDate] = useState("July 22, 2026");
-  const [selectedTime, setSelectedTime] = useState("10:00 AM EST (PhD Dr. Vance)");
 
-  // Sync pre-filled peptide name if user clicked "Enquire" on a peptide card
+  // Form Fields
+  const [name, setName] = useState("");
+  const [company, setCompany] = useState("");
+  const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [telegram, setTelegram] = useState("");
+  
+  // "What can we help with?" - Checkbox array (allow multiple)
+  const [selectedHelp, setSelectedHelp] = useState<string[]>(["pricing"]);
+  
+  // Approximate Monthly Requirement (optional)
+  const [monthlyRequirement, setMonthlyRequirement] = useState<string>("");
+  
+  // Message
+  const [message, setMessage] = useState("");
+
+  // Meeting Details (conditional if "Request a Meeting" selected)
+  const [preferredDate, setPreferredDate] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
+  const [userTimezone, setUserTimezone] = useState("");
+
+  // Automatically capture the visitor's timezone
+  useEffect(() => {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      setUserTimezone(tz || "UTC");
+    } catch {
+      setUserTimezone("UTC");
+    }
+
+    // Set default tomorrow date for meeting date picker
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const yyyy = tomorrow.getFullYear();
+    const mm = String(tomorrow.getMonth() + 1).padStart(2, "0");
+    const dd = String(tomorrow.getDate()).padStart(2, "0");
+    setPreferredDate(`${yyyy}-${mm}-${dd}`);
+    setPreferredTime("14:00");
+  }, []);
+
+  // Pre-fill if navigated with specific peptide
   useEffect(() => {
     if (prefilledPeptideName) {
-      setInquiryType("partner");
-      if (!selectedPeptides.includes(prefilledPeptideName)) {
-        setSelectedPeptides([...selectedPeptides, prefilledPeptideName]);
+      if (!selectedHelp.includes("pricing")) {
+        setSelectedHelp((prev) => [...prev, "pricing"]);
       }
-      setNotes(`Interested in acquiring technical batch pricing for: ${prefilledPeptideName}`);
-      const section = document.getElementById("inquiry");
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
+      setMessage((prev) => 
+        prev ? `${prev}\nInquiring about: ${prefilledPeptideName}` : `Inquiring about: ${prefilledPeptideName}`
+      );
     }
   }, [prefilledPeptideName]);
 
-  const togglePeptideSelection = (name: string) => {
-    if (selectedPeptides.includes(name)) {
-      setSelectedPeptides(selectedPeptides.filter(p => p !== name));
-    } else {
-      setSelectedPeptides([...selectedPeptides, name]);
-    }
+  const toggleHelpOption = (id: string) => {
+    setSelectedHelp((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const isMeetingSelected = selectedHelp.includes("meeting");
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
-    
+
     setTimeout(() => {
       setSubmitting(false);
       setSuccess(true);
-    }, 1800);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 1200);
   };
 
   const handleReset = () => {
     setSuccess(false);
-    setCompanyName("");
-    setContactName("");
+    setName("");
+    setCompany("");
     setEmail("");
-    setPhone("");
-    setSelectedPeptides([]);
-    setVolume("Vial Batches (<50 units)");
-    setNotes("");
+    setWhatsapp("");
+    setTelegram("");
+    setSelectedHelp(["pricing"]);
+    setMonthlyRequirement("");
+    setMessage("");
   };
 
-  const availableDates = [
-    "July 22, 2026",
-    "July 23, 2026",
-    "July 24, 2026",
-    "July 27, 2026"
-  ];
-
-  const availableSlots = [
-    "10:00 AM EST (PhD Dr. Vance)",
-    "01:30 PM EST (PhD Dr. Vance)",
-    "03:00 PM EST (VP of Logistics Rostov)",
-    "04:30 PM EST (PhD Dr. Thorne)"
-  ];
-
   return (
-    <section id="inquiry" className="relative bg-neutral-950 py-24 border-t border-white/5">
-      {/* Background radial highlight */}
-      <div className="absolute left-1/2 bottom-0 h-96 w-[600px] -translate-x-1/2 rounded-full bg-emerald-500/[0.03] blur-[150px] pointer-events-none" />
+    <article className="min-h-screen bg-neutral-950 text-white pt-24 pb-20 sm:pt-28 sm:pb-24 relative overflow-hidden selection:bg-emerald-500/30 selection:text-emerald-300">
+      {/* Subtle ambient lighting */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] rounded-full bg-emerald-500/[0.03] blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-teal-500/[0.02] blur-[140px] pointer-events-none" />
 
-      <div className="site-container">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8 items-start">
-          
-          {/* Left panel: Typography final CTA */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-emerald-400 mb-3">
-              Establish Sourcing Stability
+      <div className="site-container relative z-10">
+        
+        {/* Top Header */}
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-emerald-400 font-bold block mb-3">
+              Direct Contact & Procurement
             </span>
-            <h2 className="font-sans text-4xl font-semibold tracking-tight text-white sm:text-5xl leading-tight">
-              Build your peptide business with confidence.
-            </h2>
-            <p className="mt-6 font-sans text-sm text-neutral-400 leading-relaxed max-w-md">
-              Secure a trusted B2B manufacturing partner. Whether you are scaling clinical testing trials, distributing certified peptide products, or building customized formulations, we offer absolute reliability.
+            <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white leading-tight">
+              Get in Touch with Our Team
+            </h1>
+            <p className="mt-4 font-sans text-sm sm:text-base text-neutral-400 leading-relaxed max-w-xl mx-auto">
+              Submit your inquiry below for wholesale pricing, full analytical catalogues, custom synthesis specifications, or meeting requests.
             </p>
 
-
-            {/* Lead Technical Sourcing Advisors */}
-            <div className="mt-8 border-t border-white/5 pt-6">
-              <span className="font-mono text-[8px] uppercase tracking-[0.25em] text-neutral-500 block mb-4">
-                Lead Technical Sourcing Advisors
-              </span>
-              <div className="space-y-4">
-                {[
-                  {
-                    name: "Dr. Elian Vance, PhD",
-                    role: "Chief Scientific Officer",
-                    specialty: "Oversight on stereochemical assembly and chiral purity validation.",
-                    initials: "EV",
-                    border: "border-emerald-500/20 text-emerald-400 bg-emerald-500/5",
-                  },
-                  {
-                    name: "Dr. Marcus Thorne, PhD",
-                    role: "Director of Assay Validation",
-                    specialty: "Expertise on high-resolution chromatography and mass spectrometry.",
-                    initials: "MT",
-                    border: "border-teal-500/20 text-teal-400 bg-teal-500/5",
-                  },
-                  {
-                    name: "Elena Rostov, MS",
-                    role: "VP of Global Logistics",
-                    specialty: "Specialist in active cold-chain cryo-telemetry and customs clearance.",
-                    initials: "ER",
-                    border: "border-neutral-500/20 text-neutral-300 bg-neutral-900/50",
-                  },
-                ].map((member, idx) => (
-                  <div key={idx} className="flex gap-3.5 items-start">
-                    <div className={`h-8 w-8 rounded-full border ${member.border} flex items-center justify-center font-mono text-[9px] font-bold shrink-0 shadow-sm`}>
-                      {member.initials}
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-sans text-xs font-semibold text-white">{member.name}</span>
-                        <span className="h-1 w-1 rounded-full bg-neutral-600" />
-                        <span className="font-sans text-[10px] text-neutral-400">{member.role}</span>
-                      </div>
-                      <p className="font-sans text-[11px] text-neutral-500 mt-0.5 leading-snug font-light">
-                        {member.specialty}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Quick interactive selector buttons (replaces standard tabs) */}
-            <div className="mt-8 flex flex-col gap-3 max-w-xs">
-              <button
-                onClick={() => { setInquiryType("partner"); setSuccess(false); }}
-                className={`flex items-center justify-between text-left px-5 py-4 rounded-xl border transition-all duration-300 ${
-                  inquiryType === "partner" && !success
-                    ? "border-white/20 bg-white/5 text-white font-bold"
-                    : "border-white/5 bg-neutral-900/10 text-neutral-400 hover:bg-neutral-900/30 hover:text-white"
-                }`}
+            {/* Direct Quick Contact Buttons */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href="mailto:info@b2bpeps.com"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 bg-white/[0.04] hover:bg-white/10 hover:border-emerald-500/30 text-neutral-200 hover:text-white transition-all text-xs font-mono min-h-[44px] cursor-pointer"
+                title="Email: info@b2bpeps.com"
               >
-                <div className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                  <span className="font-sans text-xs tracking-wider uppercase font-semibold">1. Become a Partner</span>
-                </div>
-                <ChevronRight className="h-4 w-4 opacity-50" strokeWidth={1.2} />
-              </button>
+                <Mail className="h-4 w-4 text-emerald-400" />
+                <span>info@b2bpeps.com</span>
+              </a>
 
-              <button
-                onClick={() => { setInquiryType("catalog"); setSuccess(false); }}
-                className={`flex items-center justify-between text-left px-5 py-4 rounded-xl border transition-all duration-300 ${
-                  inquiryType === "catalog" && !success
-                    ? "border-white/20 bg-white/5 text-white font-bold"
-                    : "border-white/5 bg-neutral-900/10 text-neutral-400 hover:bg-neutral-900/30 hover:text-white"
-                }`}
+              <a
+                href="https://wa.me/447414219888"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-emerald-500/30 bg-emerald-950/20 hover:bg-emerald-950/40 hover:border-emerald-400/50 text-emerald-300 transition-all text-xs font-mono min-h-[44px] cursor-pointer"
+                title="WhatsApp: +44 7414 219888"
               >
-                <div className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                  <span className="font-sans text-xs tracking-wider uppercase font-semibold">2. Request Catalogue</span>
-                </div>
-                <ChevronRight className="h-4 w-4 opacity-50" strokeWidth={1.2} />
-              </button>
+                <MessageCircle className="h-4 w-4 text-emerald-400" />
+                <span>WhatsApp: +44 7414 219888</span>
+              </a>
+            </div>
+          </motion.div>
+        </div>
 
-              <button
-                onClick={() => { setInquiryType("consultation"); setSuccess(false); }}
-                className={`flex items-center justify-between text-left px-5 py-4 rounded-xl border transition-all duration-300 ${
-                  inquiryType === "consultation" && !success
-                    ? "border-white/20 bg-white/5 text-white font-bold"
-                    : "border-white/5 bg-neutral-900/10 text-neutral-400 hover:bg-neutral-900/30 hover:text-white"
-                }`}
+        {/* Form Container */}
+        <div className="max-w-3xl mx-auto">
+          <AnimatePresence mode="wait">
+            {success ? (
+              <motion.div
+                key="success-message"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className="rounded-2xl border border-emerald-500/20 bg-neutral-900/60 p-8 sm:p-10 backdrop-blur-md text-center"
               >
-                <div className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
-                  <span className="font-sans text-xs tracking-wider uppercase font-semibold">3. Book Consultation</span>
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-6">
+                  <CheckCircle2 className="h-8 w-8" />
                 </div>
-                <ChevronRight className="h-4 w-4 opacity-50" strokeWidth={1.2} />
-              </button>
-            </div>
 
-            {/* Trust Seal */}
-            <div className="mt-12 flex items-center gap-3.5 border-t border-white/5 pt-8">
-              <ShieldCheck className="h-6 w-6 text-emerald-400 shrink-0" strokeWidth={1.2} />
-              <div className="font-sans text-[11px] text-neutral-500 leading-relaxed">
-                Your data is transmitted securely under 256-bit encryption. All B2B inquiries remain strictly confidential.
-              </div>
-            </div>
-          </div>
+                <span className="font-mono text-[10px] uppercase tracking-widest text-emerald-400 font-bold">
+                  Transmission Received
+                </span>
+                <h2 className="font-sans text-2xl sm:text-3xl font-bold text-white mt-2">
+                  Thank you for your enquiry.
+                </h2>
+                <p className="font-sans text-sm text-neutral-300 mt-3 max-w-md mx-auto leading-relaxed">
+                  We'll contact you to confirm the exact details, pricing, or meeting time by email, WhatsApp or Telegram.
+                </p>
 
-          {/* Right panel: Active Interactive Form card */}
-          <div className="lg:col-span-7">
-            <div className="rounded-2xl border border-white/10 bg-neutral-900/20 p-8 backdrop-blur-sm relative overflow-hidden min-h-[480px]">
-              
-              <AnimatePresence mode="wait">
-                {success ? (
-                  <motion.div
-                    key="success-card"
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex flex-col items-center justify-center text-center py-8"
-                  >
-                    <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/15 border border-emerald-500/20 mb-6">
-                      <CheckCircle2 className="h-10 w-10 text-emerald-400" />
-                    </div>
-
-                    <span className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest font-bold">
-                      Transmission Confirmed
+                {/* Summary of submitted details */}
+                <div className="mt-8 bg-neutral-950/80 rounded-xl border border-white/5 p-5 text-left font-sans text-xs text-neutral-300 space-y-3 max-w-lg mx-auto">
+                  <div className="flex justify-between border-b border-white/5 pb-2.5">
+                    <span className="text-neutral-500 font-mono">Reference</span>
+                    <span className="text-emerald-400 font-mono font-semibold">
+                      ENQ-{Math.floor(100000 + Math.random() * 900000)}
                     </span>
-                    <h3 className="font-sans text-2xl font-bold text-white mt-2">
-                      Inquiry logged successfully.
-                    </h3>
-                    
-                    <div className="mt-6 bg-neutral-950 p-5 rounded-xl border border-white/5 font-mono text-[11px] text-left text-neutral-400 w-full max-w-md space-y-2.5">
-                      <div className="flex justify-between border-b border-white/5 pb-2">
-                        <span>Registry ID</span>
-                        <span className="text-white font-bold">REG-B2B-2026-9912A</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Contact Name</span>
-                        <span className="text-white">{contactName || "Global Sourcing Agent"}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Organization</span>
-                        <span className="text-white">{companyName || "Verified Life Science"}</span>
-                      </div>
-                      {inquiryType === "consultation" ? (
-                        <div className="flex justify-between border-t border-white/5 pt-2 text-emerald-400 font-bold">
-                          <span>Confirmed Time</span>
-                          <span>{selectedDate} @ {selectedTime.split(" (")[0]}</span>
-                        </div>
-                      ) : (
-                        <div className="flex justify-between border-t border-white/5 pt-2 text-emerald-400 font-semibold">
-                          <span>B2B Peps Dispatch SLA</span>
-                          <span>Within 4 Hours</span>
-                        </div>
-                      )}
+                  </div>
+
+                  <div className="flex justify-between border-b border-white/5 pb-2.5">
+                    <span className="text-neutral-500 font-mono">Name</span>
+                    <span className="text-white font-medium">{name}</span>
+                  </div>
+
+                  {company && (
+                    <div className="flex justify-between border-b border-white/5 pb-2.5">
+                      <span className="text-neutral-500 font-mono">Company</span>
+                      <span className="text-white font-medium">{company}</span>
                     </div>
+                  )}
 
-                    <p className="font-sans text-xs text-neutral-400 mt-6 max-w-sm leading-relaxed">
-                      Our directors have been notified. An authentication key and customized pricing dossiers have been generated and pre-allocated to your contact email.
-                    </p>
+                  <div className="flex justify-between border-b border-white/5 pb-2.5">
+                    <span className="text-neutral-500 font-mono">Email</span>
+                    <span className="text-white font-medium">{email}</span>
+                  </div>
 
-                    <button
-                      onClick={handleReset}
-                      className="mt-8 rounded-full border border-white/10 px-6 py-2.5 font-sans text-xs font-semibold tracking-wider text-neutral-300 hover:bg-white/5 transition-all"
-                    >
-                      Log Another Request
-                    </button>
-                  </motion.div>
-                ) : (
-                  <motion.form
-                    key={inquiryType}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.25 }}
-                    onSubmit={handleFormSubmit}
-                    className="space-y-6"
+                  {whatsapp && (
+                    <div className="flex justify-between border-b border-white/5 pb-2.5">
+                      <span className="text-neutral-500 font-mono">WhatsApp</span>
+                      <span className="text-white font-medium">{whatsapp}</span>
+                    </div>
+                  )}
+
+                  {telegram && (
+                    <div className="flex justify-between border-b border-white/5 pb-2.5">
+                      <span className="text-neutral-500 font-mono">Telegram</span>
+                      <span className="text-white font-medium">{telegram}</span>
+                    </div>
+                  )}
+
+                  <div className="flex justify-between border-b border-white/5 pb-2.5">
+                    <span className="text-neutral-500 font-mono">Services Requested</span>
+                    <span className="text-emerald-300 font-medium text-right">
+                      {selectedHelp.length > 0 
+                        ? selectedHelp.map(id => HELP_OPTIONS.find(o => o.id === id)?.label).join(", ")
+                        : "General Enquiry"}
+                    </span>
+                  </div>
+
+                  {monthlyRequirement && (
+                    <div className="flex justify-between border-b border-white/5 pb-2.5">
+                      <span className="text-neutral-500 font-mono">Monthly Requirement</span>
+                      <span className="text-white font-medium">{monthlyRequirement}</span>
+                    </div>
+                  )}
+
+                  {isMeetingSelected && (
+                    <div className="flex justify-between pt-1 text-emerald-400">
+                      <span className="font-mono">Preferred Meeting</span>
+                      <span className="font-medium text-right">
+                        {preferredDate || "Selected date"} @ {preferredTime || "14:00"} ({userTimezone})
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-8 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-6 py-2.5 font-sans text-xs font-semibold uppercase tracking-wider text-neutral-200 hover:bg-white/10 hover:text-white transition-colors"
                   >
-                    {/* Header specific to active form type */}
+                    Submit Another Enquiry
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.form
+                key="enquiry-form"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                onSubmit={handleSubmit}
+                className="rounded-2xl border border-white/10 bg-neutral-900/30 p-6 sm:p-8 md:p-10 backdrop-blur-md shadow-2xl space-y-8"
+              >
+                
+                {/* 1. Contact Information */}
+                <div className="space-y-4">
+                  <div className="border-b border-white/5 pb-2">
+                    <h2 className="font-sans text-base font-semibold text-white">
+                      1. Contact Information
+                    </h2>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Name */}
                     <div>
-                      <div className="font-mono text-[10px] text-emerald-400 uppercase tracking-widest font-bold">
-                        {inquiryType === "partner" ? "B2B Partnership Inquiry" : inquiryType === "catalog" ? "Digital Catalogue Request" : "Direct PhD Sourcing Consultation"}
-                      </div>
-                      <h3 className="font-sans text-xl font-semibold text-white mt-1">
-                        {inquiryType === "partner" ? "Verify your clinical enterprise parameters" : inquiryType === "catalog" ? "Acquire full compound & specifications list" : "Schedule technical sequence analysis"}
-                      </h3>
+                      <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                        Name <span className="text-emerald-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Your full name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 px-4 text-xs sm:text-sm text-white placeholder:text-neutral-600 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 outline-none transition-all"
+                      />
                     </div>
 
-                    {/* Form Fields: General Contact Section */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-neutral-500 block mb-1.5">Company / Entity Name *</label>
-                        <div className="relative">
-                          <Building2 className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500" strokeWidth={1.2} />
-                          <input
-                            type="text"
-                            required
-                            placeholder="e.g. Geneva Biotech Labs"
-                            value={companyName}
-                            onChange={(e) => setCompanyName(e.target.value)}
-                            className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-xs text-white focus:border-white outline-none transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-neutral-500 block mb-1.5">Representative Name *</label>
+                    {/* Company (optional) */}
+                    <div>
+                      <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                        Company <span className="text-neutral-500 text-[11px] font-normal">(optional)</span>
+                      </label>
+                      <div className="relative">
+                        <Building2 className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500 pointer-events-none" strokeWidth={1.4} />
                         <input
                           type="text"
-                          required
-                          placeholder="e.g. Dr. Arthur Pendelton"
-                          value={contactName}
-                          onChange={(e) => setContactName(e.target.value)}
-                          className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3.5 px-4 text-xs text-white focus:border-white outline-none transition-all"
+                          placeholder="Institution, clinic or company name"
+                          value={company}
+                          onChange={(e) => setCompany(e.target.value)}
+                          className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-neutral-600 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 outline-none transition-all"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Email (required) */}
+                  <div>
+                    <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                      Email <span className="text-emerald-400">*</span>
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500 pointer-events-none" strokeWidth={1.4} />
+                      <input
+                        type="email"
+                        required
+                        placeholder="yourname@organization.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-neutral-600 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+
+                  {/* WhatsApp (optional) & Telegram (optional) */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                        WhatsApp <span className="text-neutral-500 text-[11px] font-normal">(optional)</span>
+                      </label>
+                      <div className="relative">
+                        <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500 pointer-events-none" strokeWidth={1.4} />
+                        <input
+                          type="tel"
+                          placeholder="+1 (555) 000-0000"
+                          value={whatsapp}
+                          onChange={(e) => setWhatsapp(e.target.value)}
+                          className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-neutral-600 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 outline-none transition-all"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-neutral-500 block mb-1.5">Business Email *</label>
-                        <div className="relative">
-                          <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500" strokeWidth={1.2} />
-                          <input
-                            type="email"
-                            required
-                            placeholder="e.g. procurement@entity.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-xs text-white focus:border-white outline-none transition-all"
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="font-mono text-[9px] uppercase tracking-wider text-neutral-500 block mb-1.5">Direct Line (Optional)</label>
-                        <div className="relative">
-                          <Phone className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500" strokeWidth={1.2} />
-                          <input
-                            type="tel"
-                            placeholder="e.g. +41 22 767 11 00"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3.5 pl-11 pr-4 text-xs text-white focus:border-white outline-none transition-all"
-                          />
-                        </div>
+                    <div>
+                      <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                        Telegram <span className="text-neutral-500 text-[11px] font-normal">(optional)</span>
+                      </label>
+                      <div className="relative">
+                        <MessageSquare className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500 pointer-events-none" strokeWidth={1.4} />
+                        <input
+                          type="text"
+                          placeholder="@username or phone"
+                          value={telegram}
+                          onChange={(e) => setTelegram(e.target.value)}
+                          className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-neutral-600 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 outline-none transition-all"
+                        />
                       </div>
                     </div>
+                  </div>
+                </div>
 
-                    {/* Form Fields: TYPE-SPECIFIC SECTIONS */}
-                    
-                    {/* TYPE 1: Partnership specifics */}
-                    {inquiryType === "partner" && (
-                      <div className="space-y-4">
-                        {/* Multi-peptide selection */}
-                        <div>
-                          <label className="font-mono text-[10px] uppercase text-neutral-500 block mb-2">Compound Vectors Under Investigation (Select Any)</label>
-                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            {PEPTIDES_CATALOG.map((p) => {
-                              const isChecked = selectedPeptides.includes(p.name);
-                              return (
-                                <div
-                                  key={p.id}
-                                  onClick={() => togglePeptideSelection(p.name)}
-                                  className={`flex items-center gap-2 border rounded-lg p-2.5 cursor-pointer text-[11px] transition-all ${
-                                    isChecked
-                                      ? "border-emerald-500/30 bg-emerald-500/5 text-white"
-                                      : "border-white/5 bg-neutral-950 text-neutral-400 hover:border-white/10 hover:text-white"
-                                  }`}
-                                >
-                                  <div className={`h-3 w-3 rounded flex items-center justify-center border ${isChecked ? "bg-emerald-500 border-emerald-400 text-neutral-950" : "border-white/20"}`}>
-                                    {isChecked && <span className="text-[8px] font-bold">✓</span>}
-                                  </div>
-                                  <span className="truncate">{p.name}</span>
-                                </div>
-                              );
-                            })}
+                {/* 2. What can we help with? (Checkboxes, allow multiple selections) */}
+                <div className="space-y-3">
+                  <div className="border-b border-white/5 pb-2 flex items-center justify-between">
+                    <h2 className="font-sans text-base font-semibold text-white">
+                      2. What can we help with?
+                    </h2>
+                    <span className="font-mono text-[10px] text-neutral-500">
+                      Select all that apply
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    {HELP_OPTIONS.map((opt) => {
+                      const isChecked = selectedHelp.includes(opt.id);
+                      return (
+                        <div
+                          key={opt.id}
+                          onClick={() => toggleHelpOption(opt.id)}
+                          className={`relative flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all duration-200 select-none ${
+                            isChecked
+                              ? "border-emerald-500/40 bg-emerald-500/[0.07] text-white shadow-sm shadow-emerald-500/10"
+                              : "border-white/10 bg-neutral-950/60 text-neutral-400 hover:border-white/20 hover:text-neutral-200"
+                          }`}
+                        >
+                          {/* Custom Checkbox */}
+                          <div
+                            className={`mt-0.5 h-4 w-4 rounded flex items-center justify-center border transition-colors shrink-0 ${
+                              isChecked
+                                ? "bg-emerald-500 border-emerald-400 text-neutral-950"
+                                : "border-white/20 bg-neutral-900"
+                            }`}
+                          >
+                            {isChecked && <Check className="h-3 w-3 stroke-[3]" />}
+                          </div>
+
+                          <div className="flex-1 min-w-0">
+                            <div className={`font-sans text-xs sm:text-sm font-medium ${isChecked ? "text-white" : "text-neutral-200"}`}>
+                              {opt.label}
+                            </div>
+                            <div className="font-sans text-[11px] text-neutral-500 mt-0.5 leading-snug">
+                              {opt.description}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 3. Conditional Meeting Details (Shown when "Request a Meeting" is selected) */}
+                <AnimatePresence>
+                  {isMeetingSelected && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] p-5 sm:p-6 space-y-4">
+                        <div className="flex items-center gap-2">
+                          <Users className="h-4 w-4 text-emerald-400" />
+                          <h3 className="font-sans text-xs sm:text-sm font-semibold text-white">
+                            Meeting Preferences
+                          </h3>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {/* Preferred Meeting Date */}
+                          <div>
+                            <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                              Preferred Meeting Date
+                            </label>
+                            <div className="relative">
+                              <Calendar className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500 pointer-events-none" strokeWidth={1.4} />
+                              <input
+                                type="date"
+                                value={preferredDate}
+                                onChange={(e) => setPreferredDate(e.target.value)}
+                                className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white focus:border-emerald-500/50 outline-none transition-all scheme-dark"
+                              />
+                            </div>
+                          </div>
+
+                          {/* Preferred Meeting Time */}
+                          <div>
+                            <label className="font-sans text-xs font-medium text-neutral-300 block mb-1.5">
+                              Preferred Meeting Time
+                            </label>
+                            <div className="relative">
+                              <Clock className="absolute left-3.5 top-3.5 h-4 w-4 text-neutral-500 pointer-events-none" strokeWidth={1.4} />
+                              <input
+                                type="time"
+                                value={preferredTime}
+                                onChange={(e) => setPreferredTime(e.target.value)}
+                                className="w-full bg-neutral-950 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-xs sm:text-sm text-white focus:border-emerald-500/50 outline-none transition-all scheme-dark"
+                              />
+                            </div>
                           </div>
                         </div>
 
-                        {/* Anticipated Monthly Volume */}
-                        <div>
-                          <label className="font-mono text-[10px] uppercase text-neutral-500 block mb-1.5">Anticipated Monthly Sourcing Volume</label>
-                          <select
-                            value={volume}
-                            onChange={(e) => setVolume(e.target.value)}
-                            className="w-full bg-neutral-950 border border-white/5 rounded-xl py-3.5 px-4 text-xs text-white focus:border-emerald-500/40 outline-none transition-all appearance-none cursor-pointer"
-                          >
-                            <option>Vial Batches (&lt;50 units / month)</option>
-                            <option>Mid-Scale Bulk Procurement (50 - 500 units / month)</option>
-                            <option>Industrial Enterprise Sourcing (500+ units / month)</option>
-                            <option>Custom Sequence Synthesis Contracts</option>
-                          </select>
+                        {/* Visitor's Timezone */}
+                        <div className="flex flex-wrap items-center justify-between gap-2 pt-1 font-sans text-xs text-neutral-400">
+                          <div className="flex items-center gap-1.5">
+                            <Globe2 className="h-3.5 w-3.5 text-emerald-400" />
+                            <span>Your Detected Timezone:</span>
+                            <span className="font-mono text-white bg-neutral-950 px-2 py-0.5 rounded border border-white/10 text-[11px]">
+                              {userTimezone || "UTC"}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Required Meeting notice display */}
+                        <div className="pt-2 border-t border-white/5 font-sans text-xs text-emerald-300/90 leading-relaxed">
+                          We'll contact you to confirm the exact meeting time by email, WhatsApp or Telegram.
                         </div>
                       </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                {/* 4. Approximate Monthly Requirement (optional) */}
+                <div className="space-y-3">
+                  <div className="border-b border-white/5 pb-2">
+                    <h2 className="font-sans text-base font-semibold text-white">
+                      3. Approximate Monthly Requirement <span className="text-neutral-500 text-xs font-normal">(optional)</span>
+                    </h2>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {MONTHLY_REQUIREMENTS.map((req) => {
+                      const isSelected = monthlyRequirement === req;
+                      return (
+                        <button
+                          key={req}
+                          type="button"
+                          onClick={() => setMonthlyRequirement(isSelected ? "" : req)}
+                          className={`px-4 py-2 rounded-lg text-xs font-medium border transition-all duration-200 ${
+                            isSelected
+                              ? "border-emerald-500/50 bg-emerald-500/15 text-emerald-300 font-semibold"
+                              : "border-white/10 bg-neutral-950/60 text-neutral-400 hover:border-white/20 hover:text-white"
+                          }`}
+                        >
+                          {req}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* 5. Message */}
+                <div className="space-y-2">
+                  <div className="border-b border-white/5 pb-2">
+                    <label htmlFor="enquiry-message" className="font-sans text-base font-semibold text-white">
+                      4. Message / Requirements
+                    </label>
+                  </div>
+                  
+                  <textarea
+                    id="enquiry-message"
+                    rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Tell us what you're looking for, including any products, quantities or other requirements."
+                    className="w-full bg-neutral-950 border border-white/10 rounded-xl p-4 text-xs sm:text-sm text-white placeholder:text-neutral-600 focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 outline-none transition-all resize-y min-h-[110px]"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full group relative overflow-hidden rounded-xl bg-white py-4 px-6 font-sans text-xs sm:text-sm font-bold uppercase tracking-wider text-neutral-950 hover:bg-neutral-200 transition-all duration-200 flex items-center justify-center gap-2 shadow-lg disabled:opacity-75"
+                  >
+                    {submitting ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-neutral-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Submitting Enquiry...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Submit Enquiry</span>
+                        <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </>
                     )}
+                  </button>
+                </div>
 
-                    {/* TYPE 2: Catalog request specifics */}
-                    {inquiryType === "catalog" && (
-                      <div className="bg-white/5 rounded-xl border border-white/5 p-4 flex gap-3">
-                        <FileDown className="h-10 w-10 text-emerald-400 shrink-0" />
-                        <div>
-                          <div className="font-sans text-xs font-bold text-white">Automated Digital Delivery Enabled</div>
-                          <p className="font-sans text-[11px] text-neutral-400 mt-1">
-                            The latest 2026 Volume 2 Catalog (including chiral safety matrices, bulk tier rates, and residual-solvent declarations) will be delivered immediately to your corporate inbox as an encrypted PDF.
-                          </p>
-                        </div>
-                      </div>
-                    )}
+                {/* Confidentiality & Security footer */}
+                <div className="flex items-center justify-center gap-2 font-sans text-[11px] text-neutral-500 text-center pt-2">
+                  <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>All inquiries are confidential. For verified research, clinical, and institutional use only.</span>
+                </div>
 
-                    {/* TYPE 3: Consultation scheduler */}
-                    {inquiryType === "consultation" && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="font-mono text-[10px] uppercase text-neutral-500 block mb-1.5">Preferred Date</label>
-                          <select
-                            value={selectedDate}
-                            onChange={(e) => setSelectedDate(e.target.value)}
-                            className="w-full bg-neutral-950 border border-white/5 rounded-xl py-3.5 px-4 text-xs text-white focus:border-emerald-500/40 outline-none cursor-pointer"
-                          >
-                            {availableDates.map((d) => (
-                              <option key={d}>{d}</option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="font-mono text-[10px] uppercase text-neutral-500 block mb-1.5">Preferred Slot / Lead Specialist</label>
-                          <select
-                            value={selectedTime}
-                            onChange={(e) => setSelectedTime(e.target.value)}
-                            className="w-full bg-neutral-950 border border-white/5 rounded-xl py-3.5 px-4 text-xs text-white focus:border-emerald-500/40 outline-none cursor-pointer"
-                          >
-                            {availableSlots.map((s) => (
-                              <option key={s}>{s}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* General Text area notes field */}
-                    <div>
-                      <label className="font-mono text-[10px] uppercase text-neutral-500 block mb-1.5">Research Objectives & Sequence Requirements</label>
-                      <textarea
-                        rows={3}
-                        placeholder={inquiryType === "consultation" ? "Please detail what sequences or compounds you wish to review during the video consultation..." : "Please list target purities, packaging specifications, or research targets..."}
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        className="w-full bg-neutral-950 border border-white/5 rounded-xl py-3.5 px-4 text-xs text-white focus:border-emerald-500/40 outline-none transition-all resize-none"
-                      />
-                    </div>
-
-                    {/* Submit Button */}
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="group relative overflow-hidden rounded-full bg-white w-full py-4 font-sans text-xs font-bold uppercase tracking-[0.2em] text-neutral-950 hover:bg-neutral-200 transition-all duration-300 flex items-center justify-center gap-2"
-                    >
-                      {submitting ? (
-                        <>
-                          <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-neutral-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                          </svg>
-                          <span>Transmitting Securely...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Submit Secure B2B Request</span>
-                          <ArrowRight className="h-4 w-4 text-neutral-950 group-hover:translate-x-1 transition-transform" strokeWidth={1.2} />
-                        </>
-                      )}
-                    </button>
-                  </motion.form>
-                )}
-              </AnimatePresence>
-
-            </div>
-          </div>
-
+              </motion.form>
+            )}
+          </AnimatePresence>
         </div>
+
       </div>
-    </section>
+    </article>
   );
 }

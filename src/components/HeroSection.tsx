@@ -29,7 +29,7 @@ const SCIENTIFIC_METRICS = [
   { label: "Purity Assay", value: "99.2%", detail: "HPLC Standard Verified" },
   { label: "Protein Stability", value: "98.7%", detail: "Conformational Integrity" },
   { label: "Batch Traceability", value: "100%", detail: "LC-MS Mass Spectrometry" },
-  { label: "Distribution", value: "Global", detail: "Cold-Chain Logistics" },
+  { label: "Distribution", value: "Global", detail: "Global Delivery Solutions" },
 ];
 
 export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
@@ -257,11 +257,8 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                   : "bg-teal-50/95 border-teal-600/40 text-teal-900 shadow-[0_4px_16px_rgba(13,148,136,0.18)] ring-1 ring-teal-600/20"
               }`}
             >
-              <span className="relative flex h-2.5 w-2.5 shrink-0">
-                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                  isDark ? "bg-emerald-400" : "bg-teal-600"
-                }`} />
-                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className={`inline-flex rounded-full h-2 w-2 ${
                   isDark ? "bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,1)]" : "bg-teal-600 shadow-[0_0_8px_rgba(13,148,136,0.8)]"
                 }`} />
               </span>
@@ -280,7 +277,7 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
               className="space-y-2"
             >
               <h1 className={`font-sans text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.08] ${
-                isDark ? "text-white" : "text-slate-900"
+                isDark ? "text-white" : "text-[#0B1B3D]"
               }`}>
                 For Global Research & Commercial Partnerships
               </h1>
@@ -361,25 +358,18 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                 {/* Holographic Specular Lighting Edge */}
                 <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-emerald-400/20 via-transparent to-teal-500/20 z-0" />
 
-                {/* Top Badge Overlay */}
-                <div className="relative z-10 flex justify-between items-center">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border backdrop-blur-xl bg-black/50 border-emerald-500/30 text-emerald-400 font-mono text-[9px] uppercase tracking-widest font-extrabold">
-                    <Dna className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: "12s" }} />
-                    <span>B2B-SYNTHESIS v4.2</span>
-                  </div>
-                </div>
-
               </div>
 
               {/* -------------------------------------------------------------
-                  LAYER 3: DESKTOP FLOATING SCIENTIFIC LIQUID GLASS WIDGETS (Hidden on mobile)
+                  LAYER 3: DESKTOP FLOATING COMMERCIAL LIQUID GLASS WIDGETS (Hidden on mobile)
+                  Static positioning with subtle hover animations only
                   ------------------------------------------------------------- */}
 
-              {/* Widget 1: Top Right - HPLC Verified (Desktop) */}
+              {/* Widget 1: Top Right - Independent Testing Support (Desktop) */}
               <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className={`hidden md:flex absolute -top-6 -right-4 sm:right-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 items-center gap-3.5 max-w-xs ${
+                whileHover={{ y: -3, scale: 1.02 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className={`hidden md:flex absolute -top-6 -right-4 sm:right-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 items-center gap-3.5 max-w-xs transition-shadow duration-300 hover:shadow-emerald-500/10 cursor-default select-none ${
                   isDark ? "bg-neutral-900/90 border-emerald-500/30 text-white" : "bg-white/95 border-teal-500/40 text-slate-900"
                 }`}
               >
@@ -387,16 +377,16 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                   <ShieldCheck className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div>
-                  <div className="font-mono text-xs font-bold text-emerald-400">HPLC VERIFIED</div>
-                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Research-Grade Quality</div>
+                  <div className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wider">Independent Testing Support</div>
+                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Verified Quality Assurance</div>
                 </div>
               </motion.div>
 
-              {/* Widget 2: Bottom Left - Global Cold Chain (Desktop) */}
+              {/* Widget 2: Bottom Left - Competitive Wholesale Pricing (Desktop) */}
               <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className={`hidden md:flex absolute -bottom-6 -left-4 sm:left-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 items-center gap-3.5 max-w-xs ${
+                whileHover={{ y: -3, scale: 1.02 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className={`hidden md:flex absolute -bottom-6 -left-4 sm:left-2 p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl z-20 items-center gap-3.5 max-w-xs transition-shadow duration-300 hover:shadow-teal-500/10 cursor-default select-none ${
                   isDark ? "bg-neutral-900/90 border-teal-500/30 text-white" : "bg-white/95 border-slate-300 text-slate-900"
                 }`}
               >
@@ -404,19 +394,9 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                   <Globe className="h-5 w-5 text-teal-400" />
                 </div>
                 <div>
-                  <div className="font-mono text-xs font-bold text-teal-400">GLOBAL SUPPLY</div>
-                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Express Cold-Chain Logistics</div>
+                  <div className="font-mono text-xs font-bold text-teal-400 uppercase tracking-wider">Competitive Wholesale Pricing</div>
+                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">International Fulfilment</div>
                 </div>
-              </motion.div>
-
-              {/* Widget 3: Floating Micro Panel - LC-MS Spectrometry (Desktop) */}
-              <motion.div 
-                animate={{ x: [0, 8, 0] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-                className="absolute top-1/2 -left-8 hidden lg:flex items-center gap-2.5 px-3.5 py-2 rounded-xl border backdrop-blur-2xl bg-black/60 border-white/15 text-white shadow-xl z-20 font-mono text-[9px]"
-              >
-                <div className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-neutral-300">LC-MS CONFIRMED</span>
               </motion.div>
 
             </motion.div>
@@ -432,8 +412,8 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                   <ShieldCheck className="h-4.5 w-4.5 text-emerald-400" />
                 </div>
                 <div>
-                  <div className="font-mono text-xs font-bold text-emerald-400">HPLC VERIFIED</div>
-                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Research-Grade Quality</div>
+                  <div className="font-mono text-xs font-bold text-emerald-400 uppercase tracking-wider">Independent Testing Support</div>
+                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Verified Quality Assurance</div>
                 </div>
               </div>
 
@@ -446,8 +426,8 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                   <Globe className="h-4.5 w-4.5 text-teal-400" />
                 </div>
                 <div>
-                  <div className="font-mono text-xs font-bold text-teal-400">GLOBAL SUPPLY</div>
-                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">Express Cold-Chain Logistics</div>
+                  <div className="font-mono text-xs font-bold text-teal-400 uppercase tracking-wider">Competitive Wholesale Pricing</div>
+                  <div className="font-sans text-[10px] text-neutral-400 uppercase tracking-wider">International Fulfilment</div>
                 </div>
               </div>
 

@@ -22,7 +22,7 @@ const CATEGORY_MEDIA_MAP: Record<
   }
 > = {
   "weight-management": {
-    title: "Weight Management & Metabolic Research",
+    title: "Weight Management & Metabolic",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Adipose_cells_glowing_microscopi__202608221913_stedur.jpg",
     code: "METABOLIC-SYS v9.1",
     metric: "GLUCOSE REGULATION"
@@ -34,34 +34,34 @@ const CATEGORY_MEDIA_MAP: Record<
     metric: "TISSUE REPAIR ASSAY"
   },
   "longevity": {
-    title: "Longevity",
+    title: "Longevity & Cellular Health",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406360/Mitochondria_and_DNA_cellular_ag__202608221915_plb22x.jpg",
     code: "CELLULAR-REJ v4.4",
     metric: "TELOMERE ASSAY"
   },
-  "aesthetics": {
-    title: "Aesthetics",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
-    code: "DERMA-COLLAGEN v3.8",
-    metric: "EPIDERMAL MATRIX"
-  },
   "growth-hormone": {
-    title: "Growth Hormone",
+    title: "Growth Hormone & Performance",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Molecules_interacting_with_hormo__202608221914_g8apqb.jpg",
     code: "GH-SOMATO v6.1",
     metric: "SOMATOTROPE PATH"
   },
-  "hormonal-health": {
-    title: "Hormonal Health",
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
-    code: "ENDOCRINE-MOD v5.5",
-    metric: "HOMEOSTASIS PROFILE"
-  },
   "cognitive-health": {
-    title: "Cognitive Health",
+    title: "Cognitive Health & Neurobiology",
     image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
     code: "NEURO-SYNAPSE v8.3",
     metric: "SYNAPTIC DENSITY"
+  },
+  "aesthetics": {
+    title: "Aesthetics, Skin & Hair",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
+    code: "DERMA-COLLAGEN v3.8",
+    metric: "EPIDERMAL MATRIX"
+  },
+  "hormonal-health": {
+    title: "Hormonal & Sexual Health",
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
+    code: "ENDOCRINE-MOD v5.5",
+    metric: "HOMEOSTASIS PROFILE"
   },
   "research-support": {
     title: "Research Support",

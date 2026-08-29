@@ -224,7 +224,9 @@ export default function ProductDetails({
                 </div>
               </div>
 
-              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight">
+              <h1 className={`font-display text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight ${
+                isDark ? "text-slate-100" : "text-[#0B1B3D]"
+              }`}>
                 {peptide.name}
               </h1>
 
@@ -441,7 +443,7 @@ export default function ProductDetails({
                 }`}>
                   <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold uppercase">
                     <Thermometer className="h-4 w-4" />
-                    <span>Cold-Chain Storage & Stability</span>
+                    <span>Storage & Stability Guidelines</span>
                   </div>
                   <p className="font-sans text-xs font-light leading-relaxed opacity-85">
                     Lyophilized powder remains stable for up to 36 months when stored desiccated at -20°C in amber glass vials protected from UV light. Once reconstituted, solution should be maintained at 2-8°C and used within 21 days.
@@ -569,15 +571,17 @@ export default function ProductDetails({
           }`}
         >
           <div className="max-w-2xl mx-auto space-y-3">
-            <span className="font-mono text-[10px] uppercase tracking-widest text-emerald-400 font-bold block">
-              ENTERPRISE B2B SUPPLY
-            </span>
-            <h2 className="font-display text-2xl sm:text-3xl font-semibold">
-              Ready to Order or Request Volume Pricing?
+            <h2 className="font-sans text-2xl sm:text-4xl font-bold tracking-tight">
+              Looking for Pricing?
             </h2>
-            <p className="text-xs sm:text-sm opacity-80 font-light leading-relaxed">
-              Contact our scientific procurement team to discuss wholesale supply tiers, custom batch formulation, delivery lead times, and tailored payment terms.
-            </p>
+            <div className="space-y-1">
+              <p className="text-sm sm:text-base opacity-90 font-light leading-relaxed">
+                Tell us what you're sourcing and the quantities you require.
+              </p>
+              <p className="text-sm sm:text-base opacity-90 font-light leading-relaxed">
+                We'll prepare a quotation.
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -589,7 +593,7 @@ export default function ProductDetails({
                   : "bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/20"
               }`}
             >
-              <span>Speak With Our Team</span>
+              <span>Request a Quote</span>
               <ArrowRight className="h-4 w-4" />
             </button>
 

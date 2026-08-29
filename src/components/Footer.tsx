@@ -119,13 +119,13 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
             <div className="flex flex-wrap gap-2.5 w-full sm:w-auto">
               {/* Email */}
               <a
-                href="mailto:contact@b2bpeps.com"
+                href="mailto:info@b2bpeps.com"
                 className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-medium border transition-all cursor-pointer min-h-[44px] ${
                   isDark
                     ? "border-white/10 bg-neutral-900/60 text-slate-300 hover:bg-neutral-800 hover:text-white hover:border-emerald-500/30"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 hover:border-teal-500/40 shadow-xs"
                 }`}
-                title="Send Email"
+                title="Send Email to info@b2bpeps.com"
               >
                 <Mail className="h-3.5 w-3.5" />
                 <span>Email</span>
@@ -133,7 +133,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
 
               {/* WhatsApp */}
               <a
-                href="https://wa.me/18005557377"
+                href="https://wa.me/447414219888"
                 target="_blank"
                 rel="noreferrer"
                 className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-xs font-medium border transition-all cursor-pointer min-h-[44px] ${
@@ -141,7 +141,7 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
                     ? "border-white/10 bg-neutral-900/60 text-slate-300 hover:bg-emerald-950/40 hover:text-emerald-300 hover:border-emerald-500/30"
                     : "border-slate-300 bg-white text-slate-700 hover:bg-teal-50 hover:text-teal-800 hover:border-teal-500/40 shadow-xs"
                 }`}
-                title="WhatsApp Direct Channel"
+                title="WhatsApp Direct Channel (+44 7414 219888)"
               >
                 <MessageCircle className="h-3.5 w-3.5 text-emerald-500" />
                 <span>WhatsApp</span>

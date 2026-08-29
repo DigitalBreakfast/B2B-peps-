@@ -405,7 +405,7 @@ export default function TrustSection({ theme }: TrustSectionProps) {
                   </div>
                 </motion.div>
 
-                {/* CARD 3: Global Supply */}
+                {/* CARD 3: Global Delivery Solutions */}
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -422,7 +422,7 @@ export default function TrustSection({ theme }: TrustSectionProps) {
                     <Globe className="h-4 w-4 text-cyan-400" />
                   </div>
                   <div>
-                    <div className="font-sans text-xs font-bold text-white">Global Supply</div>
+                    <div className="font-sans text-xs font-bold text-white">Global Delivery Solutions</div>
                     <div className="font-mono text-[9px] text-cyan-400">Secure. Reliable. Fast.</div>
                   </div>
                 </motion.div>

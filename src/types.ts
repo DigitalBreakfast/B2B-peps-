@@ -4,12 +4,15 @@
  */
 
 export enum ResearchCategory {
-  WeightManagement = "Weight Management",
-  Longevity = "Longevity & Cellular Repair",
-  Recovery = "Tissue Recovery & Repair",
-  Aesthetics = "Dermatology & Aesthetics",
-  HormoneOptimisation = "Hormone Optimization",
-  CognitiveHealth = "Neuro & Cognitive Health"
+  WeightManagement = "Weight Management & Metabolic",
+  Recovery = "Recovery & Regeneration",
+  Longevity = "Longevity & Cellular Health",
+  GrowthHormone = "Growth Hormone & Performance",
+  CognitiveHealth = "Cognitive Health & Neurobiology",
+  Aesthetics = "Aesthetics, Skin & Hair",
+  HormonalHealth = "Hormonal & Sexual Health",
+  HormoneOptimisation = "Hormonal & Sexual Health",
+  ResearchSupport = "Research Support"
 }
 
 export interface Peptide {

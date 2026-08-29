@@ -189,7 +189,9 @@ export default function ProductCatalog({
             </span>
           </div>
 
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.15]">
+          <h1 className={`font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.15] ${
+            isDark ? "text-slate-100" : "text-[#0B1B3D]"
+          }`}>
             Precision Research Peptides. <br className="hidden sm:inline" />
             <span className={isDark ? "text-emerald-400" : "text-teal-700"}>
               Verified Quality & Direct Supply.
