@@ -62,7 +62,7 @@ const FEATURED_PRODUCTS: ProductCardData[] = [
     categoryId: "recovery",
     product: "BPC-157 Acetate",
     code: "AP-1571",
-    expandedContent: "Stable gastric pentadecapeptide synthesized under strict clean-room protocols.",
+    expandedContent: "Stable gastric pentadecapeptide synthesized under rigorous synthesis standards.",
     icon: Zap,
     molWeight: "1419.53 Da",
     purity: "≥ 99.5%",
@@ -265,8 +265,8 @@ export default function FeaturedProducts({ onNavigate, onSelectProduct, theme: t
                 <Atom className="h-7 w-7 text-emerald-400 animate-spin" style={{ animationDuration: "16s" }} />
               </div>
               <div className="text-left font-mono">
-                <div className="text-[10px] font-bold text-white uppercase tracking-wider">AURA-SYNTH MATRIX</div>
-                <div className="text-[9px] text-emerald-400">HPLC VERIFIED ≥99.5%</div>
+                <div className="text-[10px] font-bold text-white uppercase tracking-wider">QUALITY PROFILE</div>
+                <div className="text-[9px] text-emerald-400">PURITY SPECIFICATION ≥99.0%</div>
               </div>
             </div>
           </div>
@@ -511,7 +511,7 @@ export default function FeaturedProducts({ onNavigate, onSelectProduct, theme: t
                                 <span className="text-white font-semibold">{card.molWeight}</span>
                               </div>
                               <div>
-                                <span className="text-neutral-500 block">Purity (HPLC)</span>
+                                <span className="text-neutral-500 block">Purity Standard</span>
                                 <span className="text-emerald-400 font-semibold">{card.purity}</span>
                               </div>
                               <div className="col-span-2 pt-1 border-t border-white/5 flex justify-between">

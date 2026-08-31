@@ -51,7 +51,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
       "Our Weight Management portfolio includes a carefully selected range of research peptides currently being investigated for their potential roles in metabolic signalling, appetite regulation, fat metabolism and energy homeostasis. Together, they provide researchers, clinics and commercial partners with access to a comprehensive suite of products supporting a broad spectrum of metabolic research applications."
     ],
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Adipose_cells_glowing_microscopi__202608221913_stedur.jpg",
-    code: "METABOLIC-SYS v9.1",
+    code: "METABOLIC-RESEARCH",
     metric: "GLUCOSE REGULATION",
     visualDirectionSummary: [
       "Appetite Regulation",
@@ -118,7 +118,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Recovery & Regeneration",
     intro: "Peptides supporting tissue repair, recovery, healing, and regenerative biology.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Regenerating_muscle_fibres_repai__202608221913_p9mg4g.jpg",
-    code: "REGEN-MATRIX v8.2",
+    code: "RECOVERY-RESEARCH",
     metric: "TISSUE REPAIR ASSAY",
     visualDirectionSummary: [
       "Muscle fibres",
@@ -266,7 +266,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Longevity & Cellular Health",
     intro: "Peptides centred on healthy ageing, cellular function, mitochondrial health, and longevity.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406360/Mitochondria_and_DNA_cellular_ag__202608221915_plb22x.jpg",
-    code: "CELLULAR-REJ v4.4",
+    code: "LONGEVITY-RESEARCH",
     metric: "TELOMERE ASSAY",
     visualDirectionSummary: [
       "DNA strands",
@@ -413,7 +413,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Aesthetics, Skin & Hair",
     intro: "Peptides for skin health, collagen production, pigmentation, hair biology, and cosmetic applications.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406359/Skin_cross-section_revealing_der__202608221914_ydssbg.jpg",
-    code: "DERMA-COLLAGEN v3.8",
+    code: "AESTHETICS-RESEARCH",
     metric: "EPIDERMAL MATRIX",
     visualDirectionSummary: [
       "Skin microscopy",
@@ -567,7 +567,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Growth Hormone & Performance",
     intro: "Peptides involved in growth hormone pathways, muscle physiology, performance, and recovery.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Molecules_interacting_with_hormo__202608221914_g8apqb.jpg",
-    code: "GH-SOMATO v6.1",
+    code: "SOMATOTROPHIC-RESEARCH",
     metric: "SOMATOTROPE PATH",
     visualDirectionSummary: [
       "Muscle physiology",
@@ -722,7 +722,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Hormonal & Sexual Health",
     intro: "Peptides supporting endocrine function, reproductive health, hormone balance, and fertility.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Electrical_impulses_traveling_ne__202608221914_ki1dq3.jpg",
-    code: "ENDOCRINE-MOD v5.5",
+    code: "ENDOCRINE-RESEARCH",
     metric: "HOMEOSTASIS PROFILE",
     visualDirectionSummary: [
       "Endocrine glands",
@@ -871,7 +871,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Cognitive Health & Neurobiology",
     intro: "Peptides related to memory, learning, neuroprotection, sleep, and brain function.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Immune_cells_communicating_via_p__202608221914_r6hakf.jpg",
-    code: "NEURO-SYNAPSE v8.3",
+    code: "NEURO-RESEARCH",
     metric: "SYNAPTIC DENSITY",
     visualDirectionSummary: [
       "Neurons",
@@ -1020,7 +1020,7 @@ export const RESEARCH_CATEGORIES_DATA: Record<string, ResearchCategoryDoc> = {
     title: "Research Support",
     intro: "Essential laboratory solutions and supporting products for peptide preparation and handling.",
     heroImage: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787406358/Red_blood_cells_flowing_vessel_202608221914_zu9htw.jpg",
-    code: "LAB-PRECISION v2.4",
+    code: "LAB-SUPPORT",
     metric: "RECONSTITUTION MATRIX",
     visualDirectionSummary: [
       "Laboratory glassware",

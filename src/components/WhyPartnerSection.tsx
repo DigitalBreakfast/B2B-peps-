@@ -7,7 +7,7 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
   ArrowRight, ShieldCheck, FileCheck2, Globe2, PackageCheck, 
-  Atom, Handshake, Sparkles, Activity, Dna, Layers, CheckCircle2,
+  Atom, Handshake, Sparkles, Activity, Dna, Layers,
   ChevronLeft, ChevronRight
 } from "lucide-react";
 
@@ -23,8 +23,7 @@ const PILLARS = [
     title: "Research-Grade Supply",
     description: "Products sourced to high manufacturing standards with an emphasis on purity, consistency, and reliability.",
     icon: ShieldCheck,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg",
-    badges: ["Broad Product Range", "Flexible Order Volumes"]
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg"
   },
   {
     number: "02",
@@ -32,8 +31,7 @@ const PILLARS = [
     title: "Global Supply",
     description: "Supporting commercial partners through dependable international sourcing, fulfilment, and logistics.",
     icon: Globe2,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Professionals_inspecting_pharmac__202608231645_fhynxm.jpg",
-    badges: ["International Markets", "Flexible Fulfilment"]
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Professionals_inspecting_pharmac__202608231645_fhynxm.jpg"
   },
   {
     number: "03",
@@ -41,8 +39,7 @@ const PILLARS = [
     title: "Product Knowledge",
     description: "A technically informed approach to peptide sourcing, documentation, and product support.",
     icon: Atom,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Engineers_inspecting_pharmaceuti__202608231646_xjish6.jpg",
-    badges: ["Growing Product Range", "Responsive Support"]
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Engineers_inspecting_pharmaceuti__202608231646_xjish6.jpg"
   },
   {
     number: "04",
@@ -50,8 +47,7 @@ const PILLARS = [
     title: "Long-Term Partnerships",
     description: "Focused on building lasting commercial relationships through responsiveness, transparency, and dependable service.",
     icon: Handshake,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Researchers_reviewing_technical___202608231645_kpdre3.jpg",
-    badges: ["Reliable Communication", "Built to Scale"]
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Researchers_reviewing_technical___202608231645_kpdre3.jpg"
   },
   {
     number: "05",
@@ -59,8 +55,7 @@ const PILLARS = [
     title: "Commercial Solutions",
     description: "Private label programmes, branding, packaging, and scalable supply solutions designed for research-focused businesses.",
     icon: PackageCheck,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Clever_Peps_peptide_manufacturin__202608231645_ut6wmc.jpg",
-    badges: ["Industry-Leading Pricing", "Volume Pricing"]
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Clever_Peps_peptide_manufacturin__202608231645_ut6wmc.jpg"
   },
   {
     number: "06",
@@ -68,8 +63,7 @@ const PILLARS = [
     title: "Quality & Testing",
     description: "Batch-specific analytical documentation, independent testing support, and Certificates of Analysis, where available.",
     icon: FileCheck2,
-    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Pharmaceutical_quality_control_d__202608231645_pritv6.jpg",
-    badges: ["Independent Testing Support", "Documentation Available"]
+    image: "https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Pharmaceutical_quality_control_d__202608231645_pritv6.jpg"
   }
 ];
 
@@ -530,16 +524,6 @@ export default function WhyPartnerSection({ onNavigate, theme }: WhyPartnerSecti
                     }`}>
                       {activePillar.description}
                     </p>
-                  </div>
-
-                  {/* Supporting Badges List */}
-                  <div className="pt-4 border-t border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[10.5px] text-neutral-300">
-                    {activePillar.badges.map((badge, bIdx) => (
-                      <div key={bIdx} className="flex items-center gap-2">
-                        <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 ${bIdx === 0 ? "text-emerald-400" : "text-teal-400"}`} />
-                        <span className="uppercase tracking-wider font-semibold">{badge}</span>
-                      </div>
-                    ))}
                   </div>
 
                 </motion.div>

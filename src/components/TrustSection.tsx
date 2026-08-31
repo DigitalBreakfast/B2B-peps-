@@ -361,7 +361,7 @@ export default function TrustSection({ theme }: TrustSectionProps) {
                   --------------------------------------------------- */}
               <div className="absolute bottom-6 right-0 w-[52%] sm:w-[48%] space-y-2.5 z-40">
                 
-                {/* CARD 1: HPLC Verified */}
+                {/* CARD 1: Purity Assayed */}
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -378,12 +378,12 @@ export default function TrustSection({ theme }: TrustSectionProps) {
                     <Activity className="h-4 w-4 text-emerald-400 animate-pulse" />
                   </div>
                   <div>
-                    <div className="font-sans text-xs font-bold text-white">HPLC Verified</div>
+                    <div className="font-sans text-xs font-bold text-white">Purity Assayed</div>
                     <div className="font-mono text-[9px] text-emerald-400">Purity ≥ 99.2%</div>
                   </div>
                 </motion.div>
 
-                {/* CARD 2: LC-MS Confirmed */}
+                {/* CARD 2: Analytical Documentation */}
                 <motion.div 
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -400,8 +400,8 @@ export default function TrustSection({ theme }: TrustSectionProps) {
                     <Activity className="h-4 w-4 text-teal-400" />
                   </div>
                   <div>
-                    <div className="font-sans text-xs font-bold text-white">LC-MS Confirmed</div>
-                    <div className="font-mono text-[9px] text-teal-400">Mass Spec Assay</div>
+                    <div className="font-sans text-xs font-bold text-white">Analytical Records</div>
+                    <div className="font-mono text-[9px] text-teal-400">Batch Lot CoA</div>
                   </div>
                 </motion.div>
 

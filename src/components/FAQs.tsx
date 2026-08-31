@@ -6,8 +6,11 @@
 import React, { useState } from "react";
 import { HelpCircle, ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { useTheme } from "../context/ThemeContext";
 
 export default function FAQs() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [searchQuery, setSearchQuery] = useState("");
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -15,32 +18,32 @@ export default function FAQs() {
     {
       category: "Procurement & RFQ Workflow",
       question: "How do I request a bulk pricing quote or submit an RFQ?",
-      answer: "You can assemble your desired items in our RFQ Workspace (click 'Add to RFQ Workspace' on any product page) and submit the form directly from the Portal tab. Alternatively, you can contact our clinical chemistry advisors via email to submit sequence specifications."
+      answer: "You can assemble your desired items in our RFQ Workspace (click 'Add to RFQ Workspace' on any product page) and submit the form directly from the Portal tab. Alternatively, you can contact our B2B support team via email to discuss your requirements."
     },
     {
       category: "Quality & Testing",
-      question: "Are your chromatogram reports linked to individual batches?",
-      answer: "Yes, absolutely. We maintain full traceability. The Certificate of Analysis (CoA) you inspect inside our Quality Console is generated directly from the specific manufacturing batch, verifying the exact HPLC purity value and quadrupole mass spectrometry spectrum of the compound vial you receive."
+      question: "Are Certificates of Analysis (CoA) available for your products?",
+      answer: "Yes. Certificates of Analysis and analytical documentation are available for our product catalogue, detailing purity specifications and batch details to support your research verification."
     },
     {
       category: "Shipping & Logistics",
       question: "How are international research shipments protected during transit?",
-      answer: "We utilize specialized protective packaging and dedicated global air cargo routes. All bulk and enterprise orders include milestone tracking and priority customs pre-clearance to ensure fast, dependable international delivery."
+      answer: "We utilize specialized protective packaging and reliable global air freight routes. All bulk and enterprise orders include tracking to ensure dependable international delivery."
     },
     {
-      category: "Custom Formulations",
-      question: "Can you supply peptides in custom salt forms (e.g. acetate instead of TFA)?",
-      answer: "Yes. Many of our clients use delicate cell cultures where standard trifluoroacetate (TFA) salts could trigger cytotoxicity. We offer extensive counter-ion exchange services, converting synthesized sequences to premium acetate or hydrochloride salt structures, ensuring a verified residual TFA value of less than 1.0%."
+      category: "Formulation Options",
+      question: "Can you supply peptides in specific salt forms (e.g. acetate vs TFA)?",
+      answer: "Yes. Peptides are available in common salt forms including acetate and trifluoroacetate (TFA) salts, with detailed specification profiles available to match your specific laboratory requirements."
     },
     {
       category: "Storage Protocols",
       question: "What are the recommended storage conditions for lyophilized peptide powders?",
-      answer: "Lyophilized peptide vials should be kept desiccated at -20°C for optimal long-term preservation (up to 36 months). Once reconstituted in a sterile biological buffer, store at 2-8°C and use within 7 to 14 days. Avoid repeated freeze-thaw cycles and protect from direct solar UV index."
+      answer: "Lyophilized peptide vials should be kept desiccated at -20°C for optimal long-term preservation. Once reconstituted in a sterile biological buffer, store at 2-8°C and use promptly. Avoid repeated freeze-thaw cycles and protect from direct light."
     },
     {
       category: "Legal & Compliance",
       question: "Are your compound products intended for research use only?",
-      answer: "Yes. All peptide compounds synthesized and catalogued by B2B Peps are distributed strictly for in-vitro laboratory research, assays, and diagnostic studies. They are not approved or cleared for personal therapeutic, dietary, cosmetic, or direct therapeutic use in humans."
+      answer: "Yes. All peptide compounds catalogued by B2B Peps are distributed strictly for in-vitro laboratory research, assays, and diagnostic studies. They are not approved or cleared for personal therapeutic, dietary, cosmetic, or direct therapeutic use in humans."
     }
   ];
 
@@ -64,7 +67,9 @@ export default function FAQs() {
           <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-emerald-400">
             Support Center
           </span>
-          <h1 className="font-display text-4xl font-semibold tracking-tight text-white mt-4 mb-6">
+          <h1 className={`font-display text-4xl font-semibold tracking-tight mt-4 mb-6 ${
+            isDark ? "text-white" : "text-[#0B1B3D]"
+          }`}>
             Scientific & Sourcing FAQs
           </h1>
           <p className="font-sans text-sm text-neutral-400 font-light leading-relaxed max-w-2xl mx-auto">

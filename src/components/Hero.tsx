@@ -58,7 +58,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="mt-6 max-w-sm font-sans text-sm md:text-base leading-relaxed text-neutral-400 font-light"
             >
-              Verified stereochemical integrity. Formulated for the world’s most demanding clinical research networks.
+              Verified compound quality. Formulated for the world’s most demanding clinical research networks.
             </motion.p>
 
             {/* CTAs */}
@@ -116,7 +116,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
                 {/* Minimalist modern luxury label */}
                 <div className="mt-auto w-full bg-neutral-950/90 border border-white/10 rounded-2xl p-3.5 backdrop-blur-sm flex flex-col items-center text-center">
                   <span className="font-mono text-[7px] tracking-[0.25em] text-neutral-400 uppercase">B2B PEPS STANDARD</span>
-                  <span className="font-sans text-[9px] font-medium text-white mt-1 uppercase tracking-wider">STERILITY 100%</span>
+                  <span className="font-sans text-[9px] font-medium text-white mt-1 uppercase tracking-wider">QUALITY TESTED</span>
                   <span className="font-mono text-[7px] text-emerald-400 uppercase tracking-[0.2em] mt-1.5 font-bold">Active Batch</span>
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
               <div className="mt-8 flex items-center gap-2.5 rounded-full border border-white/5 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                 <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-neutral-400">
-                  99.8% STEREOCHEMICAL ACCURACY
+                  HIGH PURITY SPECIFICATIONS
                 </span>
               </div>
             </motion.div>
@@ -139,24 +139,24 @@ export default function Hero({ onCtaclick }: HeroProps) {
             <div className="flex items-center gap-2 text-neutral-400">
               <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">Purity Standard</span>
             </div>
-            <span className="font-sans text-lg font-medium text-white">&gt;99.0% Guaranteed</span>
-            <span className="font-sans text-xs text-neutral-400 font-light">HPLC validated, batch-specific analysis.</span>
+            <span className="font-sans text-lg font-medium text-white">&gt;99.0% Purity</span>
+            <span className="font-sans text-xs text-neutral-400 font-light">Batch-specific analytical documentation.</span>
           </div>
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 text-neutral-400">
               <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">Formulation Specs</span>
             </div>
-            <span className="font-sans text-lg font-medium text-white">USP & EP Grade</span>
-            <span className="font-sans text-xs text-neutral-400 font-light">Synthesized inside sterile cleanrooms.</span>
+            <span className="font-sans text-lg font-medium text-white">Research Grade</span>
+            <span className="font-sans text-xs text-neutral-400 font-light">Synthesized under rigorous quality standards.</span>
           </div>
 
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2 text-neutral-400">
               <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">Global Logistics</span>
             </div>
-            <span className="font-sans text-lg font-medium text-white">Cryo-freight Cargo</span>
-            <span className="font-sans text-xs text-neutral-400 font-light">Constant active temperature telemetry.</span>
+            <span className="font-sans text-lg font-medium text-white">Protected Logistics</span>
+            <span className="font-sans text-xs text-neutral-400 font-light">Temperature-monitored secure delivery.</span>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -164,7 +164,7 @@ export default function Hero({ onCtaclick }: HeroProps) {
               <span className="font-sans text-[9px] font-semibold uppercase tracking-[0.2em] text-neutral-500">Compliance Audit</span>
             </div>
             <span className="font-sans text-lg font-medium text-white">Molecular Fidelity</span>
-            <span className="font-sans text-xs text-neutral-400 font-light">Mass spectrometry sequencing verified.</span>
+            <span className="font-sans text-xs text-neutral-400 font-light">Comprehensive identity & purity checks.</span>
           </div>
         </div>
 

@@ -19,55 +19,55 @@ export default function WorkflowStepper() {
       id: "step-raw-verification",
       icon: <ClipboardCheck className="h-5 w-5" strokeWidth={1.2} />,
       title: "Raw Material Verification",
-      subTitle: "Pre-Synthesis Assays",
-      description: "Incoming amino acid derivatives, resin linkers, and coupling reagents undergo strict nuclear magnetic resonance (NMR) verification and stereochemical trace-impurity checks to ensure 100% material authenticity before synthesis begins.",
+      subTitle: "Pre-Synthesis Quality Controls",
+      description: "Incoming amino acid derivatives and starting reagents undergo verification and purity checks to ensure material authenticity before synthesis begins.",
       duration: "On-Entry Check",
-      authority: "Spectroscopy Lab"
+      authority: "Quality Control Lab"
     },
     {
       id: "step-manufacturing",
       icon: <FlaskConical className="h-5 w-5" strokeWidth={1.2} />,
       title: "Synthesis & Assembly",
-      subTitle: "Solid Phase Peptide Synthesis",
-      description: "The targeted peptide sequence is assembled step-by-step using modern, microwave-assisted Solid Phase Peptide Synthesis (SPPS) inside Class 100 cleanroom environments. High coupling yields and thermal precision eliminate truncated chains.",
+      subTitle: "Solid Phase Synthesis",
+      description: "The targeted peptide sequence is assembled using modern solid-phase synthesis techniques within controlled environments to optimize chain length accuracy and overall batch yield.",
       duration: "2-5 Days Run",
-      authority: "PhD Lead Chemist"
+      authority: "Synthesis Specialists"
     },
     {
       id: "step-purification",
       icon: <Filter className="h-5 w-5" strokeWidth={1.2} />,
       title: "Chromatographic Purification",
-      subTitle: "Preparative Reverse-Phase HPLC",
-      description: "The crude peptide is processed using multi-stage Preparative HPLC. Eluted fractions are collected and immediately pooled under refrigerated sub-ambient conditions to preserve stereochemical integrity and isolate single monomers.",
+      subTitle: "Preparative Separation",
+      description: "The crude peptide is processed using multi-stage preparative chromatography to isolate the target molecule and ensure a high purity profile.",
       duration: "1-2 Days Run",
-      authority: "Purification Lab"
+      authority: "Purification Team"
     },
     {
       id: "step-analytical",
       icon: <Microscope className="h-5 w-5" strokeWidth={1.2} />,
-      title: "Analytical Testing",
-      subTitle: "HPLC & Mass Spectrometry",
-      description: "Each purified lot is run through analytical HPLC columns to verify steric purity, and Electrospray Ionization Mass Spectrometry (ESI-MS) to check sequence molecular weight alignment. We accept zero molecular variance.",
+      title: "Quality Verification",
+      subTitle: "Purity & Identity Testing",
+      description: "Each purified lot undergoes analytical testing to confirm molecular identity, target mass, and purity specifications according to stringent acceptance criteria.",
       duration: "24 Hours Assay",
-      authority: "QC Analyst Team"
+      authority: "Analytical Team"
     },
     {
       id: "step-documentation",
       icon: <FileText className="h-5 w-5" strokeWidth={1.2} />,
       title: "Quality Documentation",
       subTitle: "Certificate of Analysis",
-      description: "We compile batch-specific, digitally authenticated Certificates of Analysis (CoA) containing physical properties, moisture metrics, residual solvent indexes, reverse-phase HPLC chromatograms, and mass spec plots.",
+      description: "We issue batch-specific Certificates of Analysis (CoA) providing detailed documentation of product specifications, physical appearance, and analytical findings.",
       duration: "Immediate Issue",
-      authority: "Quality Director"
+      authority: "Quality Assurance"
     },
     {
       id: "step-distribution",
       icon: <Truck className="h-5 w-5" strokeWidth={1.2} />,
       title: "Global Delivery Solutions",
       subTitle: "Worldwide Cargo Logistics",
-      description: "Finished lyophilized powder is hermetically sealed in borosilicate glass vials, securely packaged, and delivered worldwide with end-to-end cargo tracking.",
+      description: "Finished lyophilized powder is sealed in secure glass vials, packaged with temperature protection, and dispatched worldwide with tracked freight.",
       duration: "Express Freight",
-      authority: "Logistics Lead"
+      authority: "Logistics Team"
     }
   ];
 

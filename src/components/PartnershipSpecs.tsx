@@ -11,9 +11,9 @@ export default function PartnershipSpecs() {
     {
       id: "manufacturing",
       icon: <Building2 className="h-5 w-5 text-emerald-400" strokeWidth={1.2} />,
-      title: "GMP Manufacturing Partners",
-      description: "Our syntheses are performed exclusively in certified cGMP-compliant state-of-the-art facilities. We operate strict sterile cleanrooms under the direct daily oversight of senior PhD synthesis directors.",
-      metric: "cGMP Certified"
+      title: "Rigorous Synthesis Standards",
+      description: "Our syntheses are performed in specialized facilities under strict quality oversight and controlled synthesis parameters.",
+      metric: "High Quality Standards"
     },
     {
       id: "supply-chain",
@@ -26,7 +26,7 @@ export default function PartnershipSpecs() {
       id: "documentation",
       icon: <FileCheck className="h-5 w-5 text-emerald-400" strokeWidth={1.2} />,
       title: "Reliable Documentation",
-      description: "Every batch is accompanied by authenticated reverse-phase HPLC spectra, mass spectrometry reports, and an official digital CoA. Complete lot traceability is fully cataloged.",
+      description: "Every batch is accompanied by comprehensive analytical documentation and an official Certificate of Analysis. Complete lot traceability is fully cataloged.",
       metric: "100% Traceable"
     },
     {
@@ -47,7 +47,7 @@ export default function PartnershipSpecs() {
       id: "procurement",
       icon: <ClipboardCheck className="h-5 w-5 text-emerald-400" strokeWidth={1.2} />,
       title: "Easy Procurement Process",
-      description: "A simple, highly structured secure procurement workflow. Submit specifications, complete a PhD consultation, receive validated documents, and track active logistics.",
+      description: "A simple, highly structured secure procurement workflow. Submit specifications, complete a dedicated consultation, receive documentation, and track active logistics.",
       metric: "6-Step Workflow"
     }
   ];
@@ -105,32 +105,32 @@ export default function PartnershipSpecs() {
                   <div className="h-8 w-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
                     <ShieldCheck className="h-4 w-4 text-emerald-400" strokeWidth={1.2} />
                   </div>
-                  <span className="font-mono text-[7px] tracking-[0.2em] uppercase text-neutral-500">SYSTEM 99.8%</span>
+                  <span className="font-mono text-[7px] tracking-[0.2em] uppercase text-neutral-500">PURITY PROFILE</span>
                 </div>
                 <div>
-                  <span className="font-mono text-[8px] uppercase tracking-widest text-emerald-400 block mb-1">Purity Spectrum</span>
-                  <div className="font-sans text-base font-semibold text-white">Chiral Alignment</div>
-                  <p className="font-sans text-[10px] text-neutral-400 mt-1 font-light leading-normal">Zero detectable diastereomers or truncated sequences.</p>
+                  <span className="font-mono text-[8px] uppercase tracking-widest text-emerald-400 block mb-1">Quality Assurance</span>
+                  <div className="font-sans text-base font-semibold text-white">Consistent Purity</div>
+                  <p className="font-sans text-[10px] text-neutral-400 mt-1 font-light leading-normal">Synthesized to stringent purity benchmarks and batch standards.</p>
                 </div>
               </div>
 
               <div className="absolute h-56 w-72 rounded-3xl border border-white/5 bg-neutral-900/20 shadow-2xl backdrop-blur-sm transform rotate-6 flex flex-col justify-between p-6 translate-x-4 translate-y-4 hover:translate-x-1 hover:translate-y-1 transition-transform duration-700">
                 <div className="flex justify-between items-start">
                   <div className="font-sans text-xs font-bold text-white uppercase tracking-[0.15em]">B2B Peps™ Lab</div>
-                  <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-emerald-400 font-bold">L-Enantiomer pure</span>
+                  <span className="font-mono text-[7px] uppercase tracking-[0.2em] text-emerald-400 font-bold">Quality Verified</span>
                 </div>
                 <div className="space-y-2 mt-4 font-mono text-[8px] tracking-wider text-neutral-400">
                   <div className="flex justify-between border-b border-white/5 pb-1">
-                    <span>Acetonitrile Residual</span>
-                    <span className="text-white">&lt;50 ppm</span>
+                    <span>Batch Traceability</span>
+                    <span className="text-white">Full Lot Records</span>
                   </div>
                   <div className="flex justify-between border-b border-white/5 pb-1">
-                    <span>Water Content</span>
-                    <span className="text-white">&lt;2.1%</span>
+                    <span>Purity Standard</span>
+                    <span className="text-white">&ge;99% Profile</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Counter-Ion Salt</span>
-                    <span className="text-emerald-400">Perfect Equilibrium</span>
+                    <span>Documentation</span>
+                    <span className="text-emerald-400">CoA Included</span>
                   </div>
                 </div>
               </div>

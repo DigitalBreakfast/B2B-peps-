@@ -18,7 +18,7 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     description: "Premium synthetic GLP-1 analogue featuring highly uniform lipophilic side-chain conjugation. Engineered specifically for metabolic pathway analysis, receptor-binding affinity metrics, and advanced endocrine study models.",
     category: ResearchCategory.WeightManagement,
     benefits: [
-      "Ultra-high purity profiling ensuring baseline reproducibility",
+      "High purity profiling ensuring baseline reproducibility",
       "Stabilized side-chain linker resisting non-specific enzymatic cleavage",
       "Exceptional solubility profile in standard sterile biological buffers",
       "Ideal for comparative receptor saturation assays"
@@ -35,8 +35,8 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     documentationAvailable: [
       "HPLC Purity Chromatogram",
       "Mass Spectrometry (MS) Report",
-      "Digitally Authenticated Certificate of Analysis (CoA)",
-      "OSHA-Compliant Safety Data Sheet (SDS)"
+      "Certificate of Analysis (CoA)",
+      "Safety Data Sheet (SDS)"
     ],
     relatedProducts: ["AP-5510", "AP-8820"]
   },
@@ -47,15 +47,15 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     casNumber: "137525-51-0",
     formula: "C62H98N16O22",
     molecularWeight: 1419.5,
-    purity: ">99.4% (HPLC Verified)",
+    purity: ">99.4% Purity",
     sequence: "Gly-Glu-Pro-Pro-Pro-Gly-Lys-Pro-Ala-Asp-Asp-Ala-Gly-Leu-Val",
-    description: "Stable gastric pentadecapeptide synthesized under strict clean-room protocols. Widely investigated for its potent tissue-remodeling, angiogenic acceleration, and cellular migration dynamics in organ systems.",
+    description: "Stable gastric pentadecapeptide synthesized under rigorous quality standards. Widely investigated for its tissue-remodeling, angiogenic, and cellular migration dynamics in organ systems.",
     category: ResearchCategory.Recovery,
     benefits: [
-      "Zero residual synthetic solvents or counter-ion toxicities",
+      "Minimal residual synthetic solvents and controlled salt profiles",
       "Excellent stability in acidic aqueous environments",
-      "Strict sequence verification via high-resolution MS/MS analysis",
-      "Highly stable lyophilized cake structure with 36-month shelf life"
+      "Identity confirmation via mass spectrometry analysis",
+      "Highly stable lyophilized cake structure"
     ],
     recommendedStorage: "-20°C desiccated (long-term), 2-8°C (short-term reconstituted)",
     vialSizes: ["5.0 mg", "10.0 mg"],
@@ -67,8 +67,8 @@ export const PEPTIDES_CATALOG: Peptide[] = [
       "Gastric cytoprotection and mucosal tissue cell line validation."
     ],
     documentationAvailable: [
-      "Reverse-Phase HPLC Spec Analysis",
-      "Quadrupole Time-of-Flight (Q-TOF) MS Analysis",
+      "HPLC Purity Report",
+      "Mass Spectrometry (MS) Report",
       "Certificate of Analysis (CoA)",
       "Safety Data Sheet (SDS)"
     ],
@@ -86,10 +86,10 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     description: "Synthetic tetrapeptide bioregulator engineered to mimic natural epithalamin. Extensively studied as a primary model for cellular lifespan expansion, telomeric chromatin regulation, and pineal-gland neuroendocrine restoration.",
     category: ResearchCategory.Longevity,
     benefits: [
-      "Absolute monomer purity eliminating synthetic aggregate interference",
+      "High purity eliminating synthetic aggregate interference",
       "Exceptional biological membrane permeability parameters",
-      "Ultra-low molecular weight ensuring robust molecular diffusion",
-      "Independently verified telomerase-associated cell line viability"
+      "Low molecular weight ensuring robust molecular diffusion",
+      "Consistent batch-to-batch reproducibility"
     ],
     recommendedStorage: "-20°C dry powder, store in hermetically sealed amber vials",
     vialSizes: ["10.0 mg", "50.0 mg", "100.0 mg Bulk"],
@@ -101,10 +101,10 @@ export const PEPTIDES_CATALOG: Peptide[] = [
       "Pineal neurosecretion of endogenous biomolecules."
     ],
     documentationAvailable: [
-      "Ultra-Performance HPLC Chromatogram",
-      "High-Resolution Mass Spec (HRMS)",
+      "HPLC Purity Chromatogram",
+      "Mass Spectrometry (MS) Report",
       "Certificate of Analysis (CoA)",
-      "Standard SDS Declaration"
+      "Safety Data Sheet (SDS)"
     ],
     relatedProducts: ["AP-3304", "AP-7022"]
   },
@@ -115,15 +115,15 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     casNumber: "49557-75-7",
     formula: "C14H22CuN6O4",
     molecularWeight: 340.4,
-    purity: ">99.2% (Chelation Verified)",
+    purity: ">99.2% Purity",
     sequence: "Gly-His-Lys [Complexed with Cu2+ in 1:1 ratio]",
-    description: "Highly purified tripeptide chelated with divalent copper ions at a precise stoichiometric 1:1 ratio. Optimized for dermal matrix remodeling researches, collagen/elastin transcription assays, and microvascular tissue repair pathways.",
+    description: "Highly purified tripeptide chelated with divalent copper ions at a stoichiometric 1:1 ratio. Optimized for dermal matrix remodeling researches, collagen/elastin transcription assays, and microvascular tissue repair pathways.",
     category: ResearchCategory.Aesthetics,
     benefits: [
-      "Fully saturated copper chelation with zero free toxic copper ions",
-      "Vibrant sapphire blue crystalline structure indicating high molecular purity",
-      "Excellent radical-scavenging and anti-inflammatory research metrics",
-      "Optimized dermal absorption and cellular uptake profiling"
+      "Saturated copper chelation with stable complexation",
+      "Vibrant sapphire blue appearance indicating uniform preparation",
+      "Excellent research metrics for cellular assays",
+      "Optimized cellular uptake profiling in dermal models"
     ],
     recommendedStorage: "2-8°C, dry environment, protect from light and heavy metals",
     vialSizes: ["20.0 mg", "100.0 mg", "500.0 mg Enterprise"],
@@ -135,10 +135,10 @@ export const PEPTIDES_CATALOG: Peptide[] = [
       "Superoxide dismutase activation and oxidative stress assays."
     ],
     documentationAvailable: [
-      "Stoichiometric ICP-OES Chelation Check",
-      "Standard HPLC Profile",
-      "CoA Validation Document",
-      "Product Safety Sheet"
+      "Stoichiometric Chelation Analysis",
+      "HPLC Purity Report",
+      "Certificate of Analysis (CoA)",
+      "Safety Data Sheet (SDS)"
     ],
     relatedProducts: ["AP-1571", "AP-8820"]
   },
@@ -149,15 +149,15 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     casNumber: "170851-70-4",
     formula: "C38H49N9O5",
     molecularWeight: 711.9,
-    purity: ">99.5% (HPLC Verified)",
+    purity: ">99.5% Purity",
     sequence: "Aib-His-D-2-Nal-D-Phe-Lys-NH2",
-    description: "Highly selective Pentapeptide Growth Hormone Secretagogue (GHS) of extreme chemical stability. Stimulates somatotrophic cells without altering plasma ACTH, cortisol, prolactin, or thyroid-stimulating hormone levels.",
+    description: "Selective Pentapeptide Growth Hormone Secretagogue (GHS). Stimulates somatotrophic pathways for focused in-vitro endocrine research models.",
     category: ResearchCategory.HormoneOptimisation,
     benefits: [
-      "Pure secretagogue selectivity with zero hypothalamic-pituitary-adrenal axis distress",
-      "Optimized biological half-life for metabolic study windows",
-      "Highly purified salt content with minimal acetate counter-ions",
-      "Verified peptide content density (>85.0% pure net peptide weight)"
+      "High secretagogue selectivity in research models",
+      "Optimized stability for metabolic study windows",
+      "Purified salt content with minimal acetate counter-ions",
+      "High net peptide content"
     ],
     recommendedStorage: "-20°C, dry powder, avoid repeated freeze-thaw cycles",
     vialSizes: ["2.0 mg", "5.0 mg"],
@@ -169,10 +169,10 @@ export const PEPTIDES_CATALOG: Peptide[] = [
       "Somatotropic cell binding assays."
     ],
     documentationAvailable: [
-      "Analytical HPLC Quality Report",
-      "MALDI-TOF Mass Spectrum Profile",
+      "HPLC Purity Report",
+      "Mass Spectrometry (MS) Report",
       "Certificate of Analysis (CoA)",
-      "Regulatory SDS Statement"
+      "Safety Data Sheet (SDS)"
     ],
     relatedProducts: ["AP-3304", "AP-1571"]
   },
@@ -183,15 +183,15 @@ export const PEPTIDES_CATALOG: Peptide[] = [
     casNumber: "129954-34-3",
     formula: "C33H57N11O9",
     molecularWeight: 751.9,
-    purity: ">99.4% (Mass Spec Verified)",
+    purity: ">99.4% Purity",
     sequence: "Thr-Lys-Pro-Arg-Pro-Gly-Pro",
-    description: "Synthetic heptapeptide analogue of the endogenous immunomodulatory peptide tuftsin. Designed for deep neurobiological research, anxiolytic modulation pathway exploration, and brain-derived neurotrophic factor (BDNF) evaluation.",
+    description: "Synthetic heptapeptide analogue of the endogenous immunomodulatory peptide tuftsin. Designed for neurobiological research, anxiolytic modulation pathway exploration, and brain-derived neurotrophic factor (BDNF) evaluation.",
     category: ResearchCategory.CognitiveHealth,
     benefits: [
-      "Zero psychoactive degradation products or racemized d-amino acid impurities",
-      "Unmatched neuro-receptor binding reproducibility",
-      "Highly soluble peptide format suited for delicate in-vitro neural culture perfusion",
-      "High-grade filtration under sterile Class 100 clean-room barriers"
+      "High chemical purity and stability",
+      "Consistent neuro-receptor binding reproducibility",
+      "Soluble peptide format suited for neural culture perfusion",
+      "High-grade filtration and protective packaging"
     ],
     recommendedStorage: "-20°C, dry environment, protect from biological contamination",
     vialSizes: ["5.0 mg", "10.0 mg"],
@@ -203,10 +203,10 @@ export const PEPTIDES_CATALOG: Peptide[] = [
       "Neuro-immunological response pathways in neural cultures."
     ],
     documentationAvailable: [
-      "High-Performance HPLC Chromatogram",
-      "MS Molecular Peak Analysis Report",
+      "HPLC Purity Chromatogram",
+      "Mass Spectrometry (MS) Report",
       "Certificate of Analysis (CoA)",
-      "SDS Safety Dossier"
+      "Safety Data Sheet (SDS)"
     ],
     relatedProducts: ["AP-8820", "AP-1571"]
   }
@@ -279,7 +279,7 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     content: [
       "In the world of B2B peptide manufacturing, the single greatest threat to therapeutic efficacy and scientific repeatability is stereochemical impurity. During Solid Phase Peptide Synthesis (SPPS), individual amino acids are bound sequentially to a solid resin. However, the activation of the carboxyl group on the incoming amino acid introduces the critical risk of racemization—the unintended inversion of the L-amino acid into its D-enantiomer.",
       "A peptide chain with even one racemized residue can exhibit vastly different folding patterns, lower binding affinities, and anomalous regulatory behaviors in target essays. This article details the chemical pathways of racemization, specifically oxazolone formation and base-catalyzed direct alpha-proton abstraction.",
-      "To combat this, B2B Peps utilizes a proprietary sub-ambient coupling technique. By reducing reaction temperatures to 4°C during active coupling phases and deploying ultra-pure Oxyma Pure and DIC activation mixtures, we suppress chiral inversion to less than 0.04%. Learn how these premium manufacturing methodologies ensure that every batch matches its structural blueprints with mathematical perfection."
+      "To address this, optimized coupling methodologies are utilized. By controlling reaction temperatures during coupling phases and deploying high-grade Oxyma Pure and DIC activation mixtures, chiral inversion is significantly minimized to ensure high stereochemical purity across research batches."
     ],
     imageUrl: "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=800&auto=format&fit=crop"
   },
@@ -294,7 +294,7 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     content: [
       "Securing high-purity peptides is only half the battle. For global pharmaceutical companies, clinical research institutions, and large-scale distributors, the logistics of biological cargo transport represent a critical factor. A single customs delay or missing compliance documentation can hold up vital scientific programs.",
       "Different countries maintain highly variable customs environments for synthetic amino acid chains. The European Medicines Agency (EMA), the US Food and Drug Administration (FDA), and Asian regulatory authorities require distinct documentation structures, including precise CAS Registry declarations, material safety datasheets (MSDS), and strict non-therapeutic declarations for research reagents.",
-      "At B2B Peps, we facilitate seamless customs clearance by operating as an authorized economic partner. We utilize specialized protective packaging and pre-file digitally authenticated dossiers with global customs authorities. By maintaining direct partnerships with premium air freight carriers, we achieve a 99.8% on-time global delivery rate."
+      "At B2B Peps, we facilitate smooth customs clearance by providing comprehensive export documentation. We utilize specialized protective packaging and clear documentation dossiers to support dependable international delivery for research partners worldwide."
     ],
     imageUrl: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=800&auto=format&fit=crop"
   },
@@ -309,7 +309,7 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     content: [
       "BPC-157 (Body Protection Compound 157) remains one of the most highly requested research peptides in regenerative medicine. Unlike standard unstable growth factors, this 15-amino acid sequence demonstrates remarkable resilience against gastric fluids, making its molecular pathways highly interesting for researchers globally.",
       "The primary mechanism of action centers on its ability to trigger angiogenesis—the formation of new blood vessels from pre-existing ones. This process is mediated primarily via the upregulation of Vascular Endothelial Growth Factor Receptor 2 (VEGFR2) and the activation of the downstream MAPK/ERK cell signaling pathways.",
-      "This scientific breakdown reviews a series of cell-scratch assays and tube-formation experiments where cells treated with B2B Peps-supplied BPC-157 showed a 34% increase in migration speed and significantly more stable endothelial capillary tube formations compared to control groups. These findings underline the necessity of using high-purity peptides free of truncated synthetic truncations, which act as competitive inhibitors and skew research outcomes."
+      "This scientific breakdown reviews cellular models and tube-formation experiments evaluating endothelial migration speed and capillary tube formations. These findings underline the importance of using high-purity peptides with verified molecular identity in research assays."
     ],
     imageUrl: "https://images.unsplash.com/photo-1532187643603-ba119ca4109e?q=80&w=800&auto=format&fit=crop"
   },
@@ -320,11 +320,11 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     publishedDate: "July 10, 2026",
     author: "Dr. Marcus Thorne, Director of Assay Validation",
     readTime: "8 min read",
-    summary: "A meticulous technical guide outlining solubility optimization, choice of reconstituting solvents, and storage aliquoting parameters to maintain long-term peptide stability.",
+    summary: "A technical guide outlining solubility optimization, choice of reconstituting solvents, and storage aliquoting parameters to maintain peptide stability.",
     content: [
-      "To ensure accurate biological assay outcomes, the reconstitution of lyophilized synthetic peptides must follow strict physicochemical protocols. Peptides differ drastically in solubility depending on their amino acid sequence, charges, and hydrophobic side-chains.",
-      "As a standard rule of thumb, peptides containing acidic residues (Asp, Glu) are generally basic-soluble, while peptides with basic residues (Arg, Lys, His) are highly acidic-soluble. Highly hydrophobic sequences (Phe, Tyr, Trp, Leu, Val, Ile) usually require co-solvents like sterile biological-grade DMSO or Acetonitrile at ultra-low percentages prior to aqueous dilution.",
-      "This step-by-step guide details how to perform initial test solubilizations using micro-aliquots, how to execute quick vortexing vs. gentle sonication, and how to aliquot reconstituted peptide solutions for immediate deep-freeze preservation. Following these instructions guarantees consistent baseline metrics across multi-center clinical projects."
+      "To ensure accurate biological assay outcomes, the reconstitution of lyophilized synthetic peptides must follow standard physicochemical protocols. Peptides differ in solubility depending on their amino acid sequence, charges, and hydrophobic side-chains.",
+      "As a standard rule of thumb, peptides containing acidic residues (Asp, Glu) are generally basic-soluble, while peptides with basic residues (Arg, Lys, His) are acidic-soluble. Hydrophobic sequences (Phe, Tyr, Trp, Leu, Val, Ile) may benefit from co-solvents like sterile biological-grade DMSO or Acetonitrile at low percentages prior to aqueous dilution.",
+      "This guide details how to perform initial test solubilizations using micro-aliquots, gentle mixing techniques, and how to aliquot reconstituted solutions for proper preservation."
     ],
     imageUrl: "https://images.unsplash.com/photo-1579154204601-01588f351167?q=80&w=800&auto=format&fit=crop"
   },
@@ -335,11 +335,11 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     publishedDate: "July 15, 2026",
     author: "Quality Management Board",
     readTime: "6 min read",
-    summary: "Answers to critical questions regarding peptide salt forms, moisture analysis, bulk lyophilized cake characteristics, and batch lot reservations.",
+    summary: "Answers to questions regarding peptide salt forms, moisture analysis, bulk lyophilized cake characteristics, and batch supply agreements.",
     content: [
-      "Q: Why does the physical appearance of the lyophilized cake vary between batches?\nA: Lyophilized peptides typically appear as a fluffy, crystalline cake. Minor physical variations (dense cake vs. loose powder) arise from slight adjustments in the freeze-drying cycle, sub-ambient shelf temperatures, and formulation buffers. These do not affect the biological purity or net active peptide concentration.",
+      "Q: Why does the physical appearance of the lyophilized cake vary between batches?\nA: Lyophilized peptides typically appear as a fluffy cake or powder. Minor physical variations arise from freeze-drying conditions, shelf temperatures, and formulation buffers. These do not affect the biological purity or net active peptide concentration.",
       "Q: What is the difference between Peptide Purity and Net Peptide Content?\nA: Peptide Purity represents the percentage of correct amino acid sequence relative to synthetic impurities, measured by HPLC. Net Peptide Content indicates the actual weight percentage of pure peptide relative to counter-ion salts and residual water, which is typically around 80-85%. Recognizing this distinction is vital for accurate molecular calculations.",
-      "Q: How are batch-specific lot reserves managed for multi-year clinical investigations?\nA: We offer B2B lot reservation contracts. After verifying a specific batch's HPLC profile, we can isolate and store your reserved lot under continuous nitrogen monitoring at -80°C, releasing aliquots on demand to ensure continuous experimental parameters."
+      "Q: How are supply agreements managed for multi-year research programs?\nA: We offer structured supply agreements and lot reservation options to ensure dependable supply continuity with consistent specifications throughout your project lifecycle."
     ],
     imageUrl: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=800&auto=format&fit=crop"
   },
@@ -350,11 +350,11 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     publishedDate: "July 05, 2026",
     author: "Dr. Elian Vance, Chief Scientific Officer",
     readTime: "10 min read",
-    summary: "A comparative scientific evaluation of Trifluoroacetic Acid (TFA) and Acetate salts regarding cytotoxicity, cellular viability, and peptide solubility profiles.",
+    summary: "A comparative scientific evaluation of Trifluoroacetic Acid (TFA) and Acetate salts regarding cell culture considerations and peptide solubility profiles.",
     content: [
-      "Peptides synthesized via solid phase synthesis are naturally eluted using TFA as a counter-ion. However, residual TFA salts are known to induce direct cytotoxicity in delicate mammalian cell cultures, nerve tissue systems, and targeted clinical assay lines.",
-      "This technical comparison analyzes the cellular survival curves of human neural stem cells treated with GHK-Cu in TFA vs. Acetate salt forms. The results demonstrate that while TFA-salt formulations exhibit robust peptide solubility, the Acetate-form equivalent preserves cellular viability and yields un-skewed transcriptomic profiles.",
-      "For in-vitro assays where microvascular or neural health is actively monitored, transitioning to high-purity Acetate-salt peptides is strongly recommended. B2B Peps provides comprehensive, automated counter-ion exchange services, dropping residual TFA to less than 1.0% by weight."
+      "Peptides synthesized via solid phase synthesis are commonly eluted using TFA as a counter-ion. However, certain sensitive cell culture systems may benefit from acetate salt forms.",
+      "This technical comparison analyzes the characteristics of peptide preparations in TFA vs. Acetate salt forms. While TFA formulations exhibit robust solubility, acetate forms provide an alternative for research requiring specific counter-ion profiles.",
+      "For in-vitro assays where specific counter-ions are required, B2B Peps provides acetate and TFA formulation options with detailed analytical specifications."
     ],
     imageUrl: "https://images.unsplash.com/photo-1541185933-ef5d8ed016c2?q=80&w=800&auto=format&fit=crop"
   },

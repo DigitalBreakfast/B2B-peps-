@@ -11,6 +11,7 @@ import {
   FileText, DollarSign, Users, HelpCircle, ArrowRight,
   Sparkles, Check, MessageCircle
 } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 interface PartnerInquiryFormProps {
   prefilledPeptideName?: string | null;
@@ -26,19 +27,19 @@ const HELP_OPTIONS = [
   {
     id: "catalogue",
     label: "Request Product Catalogue",
-    description: "Complete analytical dossier & chemical specifications",
+    description: "Complete product catalogue & specifications",
     icon: FileText,
   },
   {
     id: "meeting",
     label: "Request a Meeting",
-    description: "Direct video or phone consultation with technical leads",
+    description: "Direct video or phone consultation with our team",
     icon: Users,
   },
   {
     id: "general",
     label: "General Enquiry / Other",
-    description: "Custom synthesis, synthesis protocols & logistics questions",
+    description: "Volume supply, private label & logistics questions",
     icon: HelpCircle,
   },
 ];
@@ -52,6 +53,8 @@ const MONTHLY_REQUIREMENTS = [
 ];
 
 export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInquiryFormProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -156,11 +159,13 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
             <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-emerald-400 font-bold block mb-3">
               Direct Contact & Procurement
             </span>
-            <h1 className="font-sans text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white leading-tight">
+            <h1 className={`font-sans text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight ${
+              isDark ? "text-white" : "text-[#0B1B3D]"
+            }`}>
               Get in Touch with Our Team
             </h1>
             <p className="mt-4 font-sans text-sm sm:text-base text-neutral-400 leading-relaxed max-w-xl mx-auto">
-              Submit your inquiry below for wholesale pricing, full analytical catalogues, custom synthesis specifications, or meeting requests.
+              Submit your inquiry below for wholesale pricing, full analytical catalogues, custom peptide specifications, or meeting requests.
             </p>
 
             {/* Direct Quick Contact Buttons */}
@@ -183,17 +188,6 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
               >
                 <MessageCircle className="h-4 w-4 text-emerald-400" />
                 <span>WhatsApp: +44 7414 219888</span>
-              </a>
-
-              <a
-                href="https://t.me/b2bpeps"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-sky-500/30 bg-sky-950/20 hover:bg-sky-950/40 hover:border-sky-400/50 text-sky-300 transition-all text-xs font-mono min-h-[44px] cursor-pointer"
-                title="Telegram: @b2bpeps"
-              >
-                <Send className="h-4 w-4 text-sky-400" />
-                <span>Telegram: @b2bpeps</span>
               </a>
             </div>
           </motion.div>

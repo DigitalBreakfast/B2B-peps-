@@ -8,36 +8,40 @@ import {
   Settings, Layers, Shield, HelpCircle, Activity, 
   ChevronRight, RefreshCw, Server, ArrowRight
 } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 interface ServicesProps {
   onContactClick: (prefilledService?: string) => void;
 }
 
 export default function Services({ onContactClick }: ServicesProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const services = [
     {
-      id: "custom-synthesis",
-      title: "B2B Scale-Up & Custom Peptide Synthesis",
-      desc: "High-yield solid-phase and liquid-phase peptide assembly. We handle sequences from simple tetrapeptides to complex di-disulfide bridged conjugates up to 60 amino acids. Scalable from milligram research batches to multi-gram bulk production runs.",
-      spec: "Purity up to >99.8% | Salt forms: Acetate, TFA, or Hydrochloride | Quantity: 10mg to 10kg"
+      id: "bulk-supply",
+      title: "Wholesale & Volume Supply Solutions",
+      desc: "Scalable supply solutions tailored for commercial partners, research institutions, and distributors. We provide flexible order quantities ranging from standard research packs to high-volume bulk supply.",
+      spec: "Flexible Order Volumes | High-Purity Research Standards | Multi-Pack & Bulk Options"
     },
     {
-      id: "counter-ion",
-      title: "Counter-Ion Exchange & TFA Elimination",
-      desc: "Trifluoroacetate (TFA) salts are a common byproduct of standard peptide synthesis but can cause cytotoxic reactions in biological assays. We provide exhaustive counter-ion replacement, converting TFA salts to acetate or hydrochloride forms to protect delicate cell lines.",
-      spec: "Residual TFA <1.0% (Verified via Fluorine-19 NMR) | Lyophilization standard"
+      id: "formulation-options",
+      title: "Salt Form & Formulation Options",
+      desc: "Peptide formulations are available in common salt forms (such as acetate and trifluoroacetate) with detailed specification profiles to match your specific laboratory protocols.",
+      spec: "Acetate & TFA Options | High Purity Specifications | Detailed CoAs"
     },
     {
-      id: "formulation",
-      title: "Custom Lyophilization & Buffer Formulations",
-      desc: "Protect molecular configurations during transit and storage. Our PhD technicians configure customized lyophilization cakes with standard cryoprotectants (e.g. Mannitol, Trehalose) or prepare pre-buffered, sterile aqueous solutions for high-throughput testing.",
-      spec: "Buffered in PBS, sterile water, or custom saline matrices | Argon gas vial backfilling"
+      id: "lyophilization",
+      title: "Lyophilized Formats & Reconstitution Solutions",
+      desc: "Lyophilized peptides engineered for stable shelf-life and straightforward reconstitution. We also supply sterile reconstitution vehicles including bacteriostatic water, saline, and specialist buffers.",
+      spec: "Lyophilized Powder Formats | Reconstitution Vehicles | Long-Term Stability"
     },
     {
       id: "packaging",
-      title: "Aliquoting, Labeling & Custom Packaging",
-      desc: "Save laboratory preparation time. We divide large batches into precise, single-use aliquots (e.g. 1.0mg, 5.0mg, 10.0mg), package them in premium amber vials to shield from ultraviolet light, and apply custom, serialized barcoding linked to your internal LIMS.",
-      spec: "Custom micro-vials | ISO-compliant labels | Serialization"
+      title: "Private Label & Custom Packaging Solutions",
+      desc: "Comprehensive white-label and custom packaging solutions for distributors and research brands. We provide customized vial sizing, bespoke labeling, and secure multi-vial boxing.",
+      spec: "White-Label Packaging | Custom Vials & Boxes | Serialized Batch Numbers"
     }
   ];
 
@@ -53,11 +57,13 @@ export default function Services({ onContactClick }: ServicesProps) {
           <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-emerald-400">
             B2B Peps Services
           </span>
-          <h1 className="font-display text-3xl sm:text-5xl font-semibold tracking-tight text-white mt-3 sm:mt-4 mb-4 sm:mb-6">
-            B2B Synthesis & Technical Formulation Solutions
+          <h1 className={`font-display text-3xl sm:text-5xl font-semibold tracking-tight mt-3 sm:mt-4 mb-4 sm:mb-6 ${
+            isDark ? "text-white" : "text-[#0B1B3D]"
+          }`}>
+            B2B Supply & Commercial Peptide Solutions
           </h1>
           <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-            Beyond standard catalog compounds, we offer custom scientific manufacturing services to adapt molecular structures and configurations to the specific demands of your laboratory assays and clinical models.
+            We support commercial partners, institutions, and distributors with flexible order volumes, private label options, and dependable global delivery solutions.
           </p>
         </div>
 
@@ -109,32 +115,32 @@ export default function Services({ onContactClick }: ServicesProps) {
               Advanced Sourcing & Brand Scalability
             </h2>
             <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed">
-              We extend beyond material synthesis to provide complete commercial launch structures. Secure your clinical pipeline with customized finishes and priority reactor access.
+              We provide comprehensive commercial solutions to support your research supply requirements and distribution channels.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="border border-white/5 bg-neutral-900/10 p-6 rounded-[24px] backdrop-blur-sm space-y-4">
               <span className="font-mono text-[10px] text-emerald-400 font-extrabold uppercase">Vial Sizing & Lyophilization</span>
-              <h3 className="font-sans text-sm font-semibold text-white">Sterile Vial Customization</h3>
+              <h3 className="font-sans text-sm font-semibold text-white">Vial Sizing & Packaging Options</h3>
               <p className="font-sans text-[11px] text-neutral-400 leading-relaxed font-light">
-                We aliquot compounds into Type I borosilicate glass vials under Class 100 sterile conditions. Sealed with premium chlorobutyl rubber stoppers and color-coded aluminum flip-off caps, with standard weights of 2.0mg, 5.0mg, 10.0mg, and customizable bulk loads.
+                We provide standard and customized vial allocations in durable Type I borosilicate glass with secure closures, with standard quantities of 2.0mg, 5.0mg, 10.0mg, and bulk multi-vial trays.
               </p>
             </div>
 
             <div className="border border-white/5 bg-neutral-900/10 p-6 rounded-[24px] backdrop-blur-sm space-y-4">
               <span className="font-mono text-[10px] text-emerald-400 font-extrabold uppercase">Private Label Solutions</span>
-              <h3 className="font-sans text-sm font-semibold text-white">Turnkey Brand Execution</h3>
+              <h3 className="font-sans text-sm font-semibold text-white">Private Label & White-Label Execution</h3>
               <p className="font-sans text-[11px] text-neutral-400 leading-relaxed font-light">
-                For research distributors and specialized clinics, we provide full private labeling. This includes synthetic chemical-resistant serialized labels, custom-designed premium packaging/boxes, and direct integrations with LIMS databases.
+                For research distributors and wellness brands, we offer full white-label packaging. This includes customized labeling, branded multi-pack boxes, and batch traceability.
               </p>
             </div>
 
             <div className="border border-white/5 bg-neutral-900/10 p-6 rounded-[24px] backdrop-blur-sm space-y-4">
               <span className="font-mono text-[10px] text-emerald-400 font-extrabold uppercase">Priority Sourcing Contracts</span>
-              <h3 className="font-sans text-sm font-semibold text-white">Guaranteed Reactor Booking</h3>
+              <h3 className="font-sans text-sm font-semibold text-white">Volume Supply Agreements</h3>
               <p className="font-sans text-[11px] text-neutral-400 leading-relaxed font-light">
-                Protect your development timelines from queue delay. Long-term contract agreements unlock dedicated chemical reactor cycle allocations, securing monthly synthesis quotas with fixed 12-month priced index protections.
+                Protect your supply continuity with structured supply agreements, competitive wholesale tier discounts, and prioritized order fulfillment.
               </p>
             </div>
           </div>
@@ -146,10 +152,10 @@ export default function Services({ onContactClick }: ServicesProps) {
 
           <div className="flex flex-col md:flex-row gap-6 justify-between items-start md:items-center">
             <div>
-              <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-teal-400">HPLC VERIFICATION ASSURED</span>
-              <h3 className="font-sans text-base font-semibold text-white mt-1.5 mb-2">Have a custom sequence or specific salt requirement?</h3>
+              <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-teal-400">DOCUMENTATION AVAILABLE</span>
+              <h3 className="font-sans text-base font-semibold text-white mt-1.5 mb-2">Looking for specific peptide formats or bulk quantities?</h3>
               <p className="font-sans text-xs text-neutral-400 font-light max-w-xl leading-relaxed">
-                Our synthesis teams review sequences for solubility profiles, steric hindrance risks, and aggregation thresholds before launching production. All custom orders include full HPLC chromatography & MS deconvolution traces.
+                Our support team is ready to assist with specification details, volume discount tiers, and documentation packages for your research requirements.
               </p>
             </div>
             
@@ -157,7 +163,7 @@ export default function Services({ onContactClick }: ServicesProps) {
               onClick={() => onContactClick()}
               className="rounded-full border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3 font-sans text-[10px] font-bold tracking-wider uppercase transition-all shrink-0 text-white"
             >
-              Consult a PhD Chemist
+              Speak with Our B2B Team
             </button>
           </div>
         </div>

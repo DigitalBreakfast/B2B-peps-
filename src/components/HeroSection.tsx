@@ -26,9 +26,9 @@ const TRUST_PARTNERS = [
 ];
 
 const SCIENTIFIC_METRICS = [
-  { label: "Purity Assay", value: "99.2%", detail: "HPLC Standard Verified" },
-  { label: "Protein Stability", value: "98.7%", detail: "Conformational Integrity" },
-  { label: "Batch Traceability", value: "100%", detail: "LC-MS Mass Spectrometry" },
+  { label: "Purity Assay", value: "99.2%", detail: "Analytical Documentation" },
+  { label: "Compound Stability", value: "98.7%", detail: "Formulation Integrity" },
+  { label: "Batch Traceability", value: "100%", detail: "Lot Records & CoA" },
   { label: "Distribution", value: "Global", detail: "Global Delivery Solutions" },
 ];
 

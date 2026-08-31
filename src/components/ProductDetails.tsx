@@ -133,7 +133,7 @@ export default function ProductDetails({
                   <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
                   <span className="font-mono font-bold text-white text-xs">{peptide.purity}</span>
                 </div>
-                <span className="font-mono text-[10px] uppercase text-emerald-400/90 tracking-wider">HPLC Certified</span>
+                <span className="font-mono text-[10px] uppercase text-emerald-400/90 tracking-wider">Research Grade</span>
               </div>
             </div>
 
@@ -338,7 +338,7 @@ export default function ProductDetails({
           <div className="flex border-b border-white/10 overflow-x-auto no-scrollbar gap-2">
             {[
               { id: "pathways", label: "Biological Pathways & Research", icon: Microscope },
-              { id: "quality", label: "Analytical HPLC & Purity", icon: FileSpreadsheet },
+              { id: "quality", label: "Quality & Testing Documentation", icon: FileSpreadsheet },
               { id: "handling", label: "Handling & Storage Safety", icon: ShieldCheck },
               { id: "formats", label: "Packaging & Delivery Solutions", icon: Box },
             ].map((tab) => {
@@ -416,9 +416,9 @@ export default function ProductDetails({
               }`}
             >
               <div className="space-y-2">
-                <h3 className="font-display text-xl font-semibold">Analytical Quality Verification</h3>
+                <h3 className="font-display text-xl font-semibold">Analytical Quality Documentation</h3>
                 <p className="text-xs font-light opacity-80 leading-relaxed max-w-3xl">
-                  Every peptide synthesized in our partner network undergoes rigorous Reverse-Phase High-Performance Liquid Chromatography (RP-HPLC) and Quadrupole Mass Spectrometry (MS) to verify exact sequence structure and eliminate truncated fragments.
+                  Peptides in our catalogue are tested to verify high purity standards and confirm molecular identity. Analytical documentation and batch-specific Certificates of Analysis are available upon request.
                 </p>
               </div>
 

@@ -31,7 +31,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "2023788-19-2",
       formula: "C225H348N48O68",
       molecularWeight: "4813.5 Da",
-      purity: "≥99.4% (RP-HPLC Verified)",
+      purity: "≥99.4% Purity",
       sequence: "Tyr-Aib-Glu-Gly-Thr-Phe-Thr-Ser-Asp-Tyr-Ser-Ile-Aib-Leu-Asp-Lys-Ile-Ala-Gln-Lys(AEEAc-AEEAc-gGlu-Eicosanedioyl)-Ala-Phe-Val-Gln-Trp-Leu-Ile-Ala-Gly-Gly-Pro-Ser-Ser-Gly-Ala-Pro-Pro-Pro-Ser-NH2",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated, shield from light",
@@ -49,7 +49,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Evaluation of hypothalamic POMC/NPY neuronal activity and appetite signalling pathways."
       ],
       reconstitutionProtocol: "Reconstitute with sterile bacteriostatic water (0.9% benzyl alcohol) or 0.9% NaCl. Direct diluent slowly down the vial wall and swirl gently. Store aliquots at -20°C or -80°C.",
-      documentationAvailable: ["HPLC Purity Chromatogram", "High-Resolution MS Report", "ISO 9001 Certificate of Analysis (CoA)", "SDS Safety Data Sheet"]
+      documentationAvailable: ["HPLC Purity Chromatogram", "High-Resolution MS Report", "Certificate of Analysis (CoA)", "SDS Safety Data Sheet"]
     },
     {
       id: "AP-WM-02",
@@ -58,7 +58,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "2381089-83-2",
       formula: "C221H342N46O68",
       molecularWeight: "4731.3 Da",
-      purity: "≥99.2% (RP-HPLC Verified)",
+      purity: "≥99.2% Purity",
       sequence: "Tyr-Aib-Gln-Gly-Thr-Phe-Thr-Ser-Asp-Tyr-Ser-Ile-alpha-Me-Leu-Leu-Asp-Lys-Lys(AEEAc-AEEAc-gGlu-Eicosanedioyl)-Ala-Gln-Ala-Ala-Phe-Ile-Glu-Tyr-Leu-Leu-Glu-Gly-Gly-Pro-Ser-Ser-Gly-Ala-Pro-Pro-Pro-Ser-NH2",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated, protect from moisture",
@@ -85,7 +85,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "910463-68-2",
       formula: "C187H291N45O59",
       molecularWeight: "4113.6 Da",
-      purity: "≥99.5% (RP-HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "His-Aib-Glu-Gly-Thr-Phe-Thr-Ser-Asp-Val-Ser-Ser-Tyr-Leu-Glu-Gly-Gln-Ala-Ala-Lys(AEEAc-AEEAc-gGlu-Octadecanedioyl)-Glu-Phe-Ile-Ala-Trp-Leu-Val-Arg-Gly-Arg-Gly",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated, shield from direct light",
@@ -112,7 +112,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "1415456-99-3",
       formula: "C180H286N48O54",
       molecularWeight: "4094.6 Da",
-      purity: "≥99.3% (RP-HPLC Verified)",
+      purity: "≥99.3% Purity",
       form: "Lyophilized White Powder",
       storage: "-20°C desiccated, shield from moisture",
       researchAreas: [
@@ -129,7 +129,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Analysis of neuroendocrine satiation signalling in dorsal vagal complex models."
       ],
       reconstitutionProtocol: "Reconstitute in sterile bacteriostatic water. Gently swirl until fully clear. Store stock solution at -20°C.",
-      documentationAvailable: ["HPLC Chromatogram", "ESI-MS Report", "Certified CoA", "SDS"]
+      documentationAvailable: ["HPLC Chromatogram", "ESI-MS Report", "Analytical CoA", "SDS"]
     },
     {
       id: "AP-WM-05",
@@ -138,7 +138,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "1415456-99-3 / 910463-68-2",
       formula: "C180H286N48O54 + C187H291N45O59",
       molecularWeight: "4094.6 Da + 4113.6 Da",
-      purity: "≥99.4% (Combined HPLC Purity)",
+      purity: "≥99.4% Purity",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated",
       researchAreas: [
@@ -164,7 +164,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "221231-10-3",
       formula: "C78H123N23O23S2",
       molecularWeight: "1815.1 Da",
-      purity: "≥99.1% (RP-HPLC Verified)",
+      purity: "≥99.1% Purity",
       sequence: "Tyr-Leu-Arg-Ile-Val-Gln-Cys-Arg-Ser-Val-Glu-Gly-Ser-Cys-Gly-Phe (Disulfide bridge Cys7-Cys14)",
       form: "Lyophilized Powder",
       storage: "-20°C desiccated, shield from light",
@@ -191,7 +191,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "137525-51-0 / 920014-72-8",
       formula: "C111H206N36O28S2",
       molecularWeight: "2555.2 Da",
-      purity: "≥98.8% (RP-HPLC Verified)",
+      purity: "≥98.8% Purity",
       sequence: "H-Cys-Lys-Gly-Gly-Arg-Ala-Lys-Asp-Cys-Gly-Gly-D(Lys-Leu-Ala-Lys-Leu-Ala-Lys)2-NH2",
       form: "Lyophilized White Powder",
       storage: "-20°C desiccated",
@@ -218,7 +218,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "541-15-1",
       formula: "C7H15NO3",
       molecularWeight: "161.20 Da",
-      purity: "≥99.0% (USP / Analytical Grade)",
+      purity: "≥99.0% Purity",
       form: "Crystalline White Powder",
       storage: "Room temperature (15-25°C) desiccated or 2-8°C",
       researchAreas: [
@@ -244,7 +244,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "1627580-64-6",
       formula: "C101H152N28O22S2",
       molecularWeight: "2174.6 Da",
-      purity: "≥99.1% (RP-HPLC Verified)",
+      purity: "≥99.1% Purity",
       sequence: "Met-Arg-Trp-Gln-Glu-Met-Gly-Tyr-Ile-Phe-Tyr-Pro-Arg-Lys-Leu-Arg",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated, shield from light",
@@ -274,7 +274,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "137525-51-0",
       formula: "C62H98N16O22",
       molecularWeight: "1419.5 Da",
-      purity: "≥99.4% (HPLC Verified)",
+      purity: "≥99.4% Purity",
       sequence: "Gly-Glu-Pro-Pro-Pro-Gly-Lys-Pro-Ala-Asp-Asp-Ala-Gly-Leu-Val",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated (long-term), 2-8°C short-term reconstituted",
@@ -296,7 +296,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "137525-51-0 (Arg)",
       formula: "C62H98N16O22 · xArg",
       molecularWeight: "1593.7 Da",
-      purity: "≥99.2% (HPLC Verified)",
+      purity: "≥99.2% Purity",
       sequence: "Gly-Glu-Pro-Pro-Pro-Gly-Lys-Pro-Ala-Asp-Asp-Ala-Gly-Leu-Val (Arginate)",
       form: "Lyophilized White Powder",
       storage: "-20°C dry powder, hermetically sealed",
@@ -318,7 +318,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "77591-33-4",
       formula: "C212H350N56O78S",
       molecularWeight: "4963.5 Da",
-      purity: "≥99.3% (HPLC Verified)",
+      purity: "≥99.3% Purity",
       sequence: "Ac-Ser-Asp-Lys-Pro-Asp-Met-Ala-Glu-Ile-Glu-Lys-Phe-Asp-Lys-Ser-Lys-Leu-Lys-Lys-Thr-Glu-Thr-Gln-Glu-Lys-Asn-Pro-Leu-Pro-Ser-Lys-Glu-Thr-Ile-Glu-Gln-Glu-Lys-Gln-Ala-Gly-Glu-Ser",
       form: "Lyophilized Cake",
       storage: "-20°C desiccated, shield from light",
@@ -340,7 +340,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "49557-75-7 (Base)",
       formula: "C14H24N6O4",
       molecularWeight: "340.4 Da",
-      purity: "≥99.5% (HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "Gly-His-Lys",
       form: "Lyophilized Powder",
       storage: "-20°C, dry and sealed",
@@ -362,7 +362,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "67727-97-3",
       formula: "C16H30N4O4",
       molecularWeight: "342.4 Da",
-      purity: "≥99.1% (HPLC Verified)",
+      purity: "≥99.1% Purity",
       sequence: "Lys-Pro-Val",
       form: "Lyophilized White Powder",
       storage: "-20°C",
@@ -387,7 +387,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "307297-39-8",
       formula: "C14H22N4O9",
       molecularWeight: "390.4 Da",
-      purity: "≥99.8% (HPLC Verified)",
+      purity: "≥99.8% Purity",
       sequence: "Ala-Glu-Asp-Gly",
       form: "Lyophilized Powder",
       storage: "-20°C dry powder, hermetically sealed amber vials",
@@ -400,7 +400,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Circadian melatonin rhythm modulation in pineal gland explants."
       ],
       reconstitutionProtocol: "Dissolve in sterile bacteriostatic water or PBS (pH 7.2). Store stock at -80°C.",
-      documentationAvailable: ["HPLC Purity Chromatogram", "Q-TOF MS Report", "Certified CoA", "SDS"]
+      documentationAvailable: ["HPLC Purity Chromatogram", "Q-TOF MS Report", "Certificate of Analysis", "SDS"]
     },
     {
       id: "AP-8821",
@@ -409,7 +409,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "1627580-64-6",
       formula: "C101H152N28O22S2",
       molecularWeight: "2174.6 Da",
-      purity: "≥99.3% (HPLC Verified)",
+      purity: "≥99.3% Purity",
       sequence: "Met-Arg-Trp-Gln-Glu-Met-Gly-Tyr-Ile-Phe-Tyr-Pro-Arg-Lys-Leu-Arg",
       form: "Lyophilized Powder",
       storage: "-20°C or -80°C, protect from oxygen and light",
@@ -431,7 +431,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "736992-21-5",
       formula: "C32H49N9O5",
       molecularWeight: "639.8 Da",
-      purity: "≥99.5% (HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "D-Arg-2,6-dimethylTyr-Lys-Phe-NH2",
       form: "Lyophilized Powder",
       storage: "-20°C desiccated",
@@ -453,7 +453,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "330942-05-7",
       formula: "C119H204N34O32S2",
       molecularWeight: "2687.3 Da",
-      purity: "≥99.1% (HPLC Verified)",
+      purity: "≥99.1% Purity",
       sequence: "Met-Ala-Pro-Arg-Gly-Phe-Ser-Cys-Leu-Leu-Leu-Leu-Thr-Ser-Glu-Ile-Asp-Leu-Pro-Val-Lys-Arg-Arg-Ala",
       form: "Lyophilized Cake",
       storage: "-80°C recommended, avoid oxidation",
@@ -475,7 +475,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "2095488-84-2",
       formula: "C228H388N86O64",
       molecularWeight: "5358.1 Da",
-      purity: "≥99.2% (HPLC Verified)",
+      purity: "≥99.2% Purity",
       form: "Lyophilized Powder",
       storage: "-20°C desiccated, light shielded",
       researchAreas: ["Targeted Senolysis", "p53-FOXO4 Disruption", "Senescence-Associated Secretory Phenotype (SASP)"],
@@ -487,7 +487,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Tissue rejuvenation and renal fitness models in aged cellular systems."
       ],
       reconstitutionProtocol: "Reconstitute with sterile degassed water or physiological buffer.",
-      documentationAvailable: ["HPLC Purity Assay", "High-Resolution MS", "Certified CoA", "SDS"]
+      documentationAvailable: ["HPLC Purity Assay", "High-Resolution MS", "Certificate of Analysis", "SDS"]
     }
   ],
 
@@ -499,7 +499,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "49557-75-7 (Cu)",
       formula: "C14H22CuN6O4",
       molecularWeight: "340.4 Da + 63.5 Da Cu",
-      purity: "≥99.2% (HPLC Verified)",
+      purity: "≥99.2% Purity",
       sequence: "Gly-His-Lys:Cu(II)",
       form: "Lyophilized Deep Blue Powder",
       storage: "-20°C, dark amber vials, protect from acidic buffers",
@@ -521,7 +521,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "214047-00-4 / 221227-05-0",
       formula: "C39H75N7O10 / C34H62N8O8",
       molecularWeight: "802.1 Da / 694.9 Da",
-      purity: "≥99.3% (HPLC Verified)",
+      purity: "≥99.3% Purity",
       form: "Lyophilized Powder",
       storage: "-20°C, desiccated",
       researchAreas: ["Matrikine Extracellular Remodeling", "Interleukin-6 Suppression", "Dermal Density Augmentation"],
@@ -542,7 +542,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "616204-22-9",
       formula: "C34H60N14O12",
       molecularWeight: "888.9 Da",
-      purity: "≥99.5% (HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "Ac-Glu-Glu-Met-Gln-Arg-Arg-NH2",
       form: "Lyophilized Powder",
       storage: "-20°C, protect from moisture",
@@ -564,7 +564,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "868844-74-0",
       formula: "C41H70N16O16S",
       molecularWeight: "1075.2 Da",
-      purity: "≥99.1% (HPLC Verified)",
+      purity: "≥99.1% Purity",
       sequence: "Ac-Glu-Glu-Met-Gln-Arg-Arg-Ala-Asp-NH2",
       form: "Lyophilized White Powder",
       storage: "-20°C desiccated",
@@ -586,7 +586,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "121062-08-6",
       formula: "C50H69N15O9",
       molecularWeight: "1024.2 Da",
-      purity: "≥99.4% (HPLC Verified)",
+      purity: "≥99.4% Purity",
       sequence: "Ac-Nle-cyclo[Asp-His-D-Phe-Arg-Trp-Lys]-NH2",
       form: "Lyophilized White Cake",
       storage: "-20°C, keep dry",
@@ -611,7 +611,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "170851-70-4",
       formula: "C38H49N9O5",
       molecularWeight: "711.9 Da",
-      purity: "≥99.5% (HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "Aib-His-D-2-Nal-D-Phe-Lys-NH2",
       form: "Lyophilized White Cake",
       storage: "-20°C desiccated (long-term), 2-8°C short-term reconstituted",
@@ -633,7 +633,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "863288-34-0",
       formula: "C152H252N44O42",
       molecularWeight: "3367.9 Da",
-      purity: "≥99.4% (HPLC Verified)",
+      purity: "≥99.4% Purity",
       sequence: "Tyr-D-Ala-Asp-Ala-Ile-Phe-Thr-Gln-Ser-Tyr-Arg-Lys-Val-Leu-Ala-Gln-Leu-Ser-Ala-Arg-Lys-Leu-Leu-Gln-Asp-Ile-Leu-Ser-Arg-NH2",
       form: "Lyophilized White Cake",
       storage: "-20°C dry powder",
@@ -646,7 +646,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Hepatic IGF-1 mRNA transcription profiling in primary hepatocyte cultures."
       ],
       reconstitutionProtocol: "Add sterile saline or bacteriostatic water down vial wall. Store aliquots at -20°C.",
-      documentationAvailable: ["HPLC Purity Report", "Q-TOF MS Profile", "Certified CoA", "SDS"]
+      documentationAvailable: ["HPLC Purity Report", "Q-TOF MS Profile", "Certificate of Analysis", "SDS"]
     },
     {
       id: "AP-5512",
@@ -655,7 +655,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "446262-90-4",
       formula: "C165H271N47O46",
       molecularWeight: "3649.3 Da",
-      purity: "≥99.1% (HPLC Verified)",
+      purity: "≥99.1% Purity",
       form: "Lyophilized Powder",
       storage: "-20°C, shield from moisture",
       researchAreas: ["Bioconjugation Chemistry", "Endogenous Albumin Binding", "Extended Pharmacokinetic Modeling"],
@@ -676,7 +676,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "86168-78-7",
       formula: "C149H246N44O42S",
       molecularWeight: "3357.9 Da",
-      purity: "≥99.3% (HPLC Verified)",
+      purity: "≥99.3% Purity",
       sequence: "Tyr-Ala-Asp-Ala-Ile-Phe-Thr-Asn-Ser-Tyr-Arg-Lys-Val-Leu-Gly-Gln-Leu-Ser-Ala-Arg-Lys-Leu-Leu-Gln-Asp-Ile-Met-Ser-Arg-NH2",
       form: "Lyophilized Powder",
       storage: "-20°C desiccated",
@@ -698,7 +698,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "158861-67-7",
       formula: "C45H55N9O6",
       molecularWeight: "817.9 Da",
-      purity: "≥99.2% (HPLC Verified)",
+      purity: "≥99.2% Purity",
       sequence: "D-Ala-D-2-Nal-Ala-Trp-D-Phe-Lys-NH2",
       form: "Lyophilized Cake",
       storage: "-20°C, keep dark and dry",
@@ -723,7 +723,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "374675-21-5",
       formula: "C63H83N17O14",
       molecularWeight: "1302.4 Da",
-      purity: "≥99.3% (HPLC Verified)",
+      purity: "≥99.3% Purity",
       sequence: "Tyr-Asn-Trp-Asn-Ser-Phe-Gly-Leu-Arg-Phe-NH2",
       form: "Lyophilized White Powder",
       storage: "-20°C desiccated, shield from direct light",
@@ -736,7 +736,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Steroidogenic enzyme (CYP11A1, 3β-HSD, aromatase) expression in gonadal cell lines."
       ],
       reconstitutionProtocol: "Dissolve in sterile water or PBS (pH 7.2). Aliquot and freeze at -80°C.",
-      documentationAvailable: ["HPLC Chromatogram", "High-Resolution MS Report", "Certified CoA", "SDS"]
+      documentationAvailable: ["HPLC Chromatogram", "High-Resolution MS Report", "Certificate of Analysis", "SDS"]
     },
     {
       id: "AP-6612",
@@ -745,7 +745,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "50-56-6",
       formula: "C43H66N12O12S2",
       molecularWeight: "1007.2 Da",
-      purity: "≥99.6% (HPLC Verified)",
+      purity: "≥99.6% Purity",
       sequence: "Cys-Tyr-Ile-Gln-Asn-Cys-Pro-Leu-Gly-NH2 (Disulfide Cys1-Cys6)",
       form: "Lyophilized White Cake",
       storage: "-20°C, protect from reducing agents and light",
@@ -767,7 +767,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "189745-56-8",
       formula: "C50H68N14O10",
       molecularWeight: "1025.2 Da",
-      purity: "≥99.3% (HPLC Verified)",
+      purity: "≥99.3% Purity",
       sequence: "Ac-Nle-cyclo[Asp-His-D-Phe-Arg-Trp-Lys]-OH",
       form: "Lyophilized Powder",
       storage: "-20°C, keep dry",
@@ -789,7 +789,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "57773-63-4",
       formula: "C64H82N18O13",
       molecularWeight: "1311.5 Da",
-      purity: "≥99.5% (HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "pGlu-His-Trp-Ser-Tyr-D-Trp-Leu-Arg-Pro-Gly-NH2",
       form: "Lyophilized Powder",
       storage: "-20°C desiccated",
@@ -814,7 +814,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "80714-61-0",
       formula: "C37H51N9O10S",
       molecularWeight: "813.9 Da",
-      purity: "≥99.4% (HPLC Verified)",
+      purity: "≥99.4% Purity",
       sequence: "Met-Glu-His-Phe-Pro-Gly-Pro",
       form: "Lyophilized White Powder",
       storage: "-20°C desiccated, protect from moisture",
@@ -827,7 +827,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Primary cortical neuron survival assays under glutamate and hypoxia toxicity."
       ],
       reconstitutionProtocol: "Dissolve in sterile bacteriostatic water or saline. Aliquot and store at -80°C.",
-      documentationAvailable: ["RP-HPLC Purity Chromatogram", "Q-TOF MS Report", "Certified CoA", "Safety Sheet"]
+      documentationAvailable: ["RP-HPLC Purity Chromatogram", "Q-TOF MS Report", "Certificate of Analysis", "Safety Sheet"]
     },
     {
       id: "AP-9911",
@@ -836,7 +836,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "129954-34-3",
       formula: "C33H57N11O9",
       molecularWeight: "751.9 Da",
-      purity: "≥99.4% (HPLC Verified)",
+      purity: "≥99.4% Purity",
       sequence: "Thr-Lys-Pro-Arg-Pro-Gly-Pro",
       form: "Lyophilized Powder",
       storage: "-20°C, keep dry",
@@ -858,7 +858,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "80714-61-0 (Mod)",
       formula: "C41H63N11O12S",
       molecularWeight: "934.1 Da",
-      purity: "≥99.5% (HPLC Verified)",
+      purity: "≥99.5% Purity",
       sequence: "Ac-Met-Glu-His-Phe-Pro-Gly-Pro-NH2",
       form: "Lyophilized Cake",
       storage: "-20°C or -80°C",
@@ -880,7 +880,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
       casNumber: "62568-57-4",
       formula: "C35H48N10O15",
       molecularWeight: "848.8 Da",
-      purity: "≥99.2% (HPLC Verified)",
+      purity: "≥99.2% Purity",
       sequence: "Trp-Ala-Gly-Gly-Asp-Ala-Ser-Gly-Glu",
       form: "Lyophilized White Powder",
       storage: "-20°C desiccated, light shielded",
@@ -893,7 +893,7 @@ export const RESEARCH_PRODUCTS_DATA: Record<string, CategoryProductItem[]> = {
         "Antioxidant enzyme activity and lipid peroxidation prevention in brain tissues."
       ],
       reconstitutionProtocol: "Dissolve in sterile deoxygenated water or PBS.",
-      documentationAvailable: ["HPLC Report", "Mass Spectrum", "Certified CoA", "SDS"]
+      documentationAvailable: ["HPLC Report", "Mass Spectrum", "Certificate of Analysis", "SDS"]
     }
   ],
 

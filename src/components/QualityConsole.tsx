@@ -275,13 +275,13 @@ export default function QualityConsole({ preselectedPeptideId }: QualityConsoleP
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-4">
           <div className="max-w-lg">
             <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-emerald-400">
-              Analytical Verification
+              Analytical Documentation
             </span>
             <h2 className="mt-3 font-sans text-3xl font-semibold tracking-tight text-white sm:text-4xl">
               Integrity confirmed at the molecular level.
             </h2>
             <p className="mt-4 font-sans text-xs text-neutral-400 leading-relaxed font-light">
-              An open-access testing registry. Sourcing agents can inspect real HPLC spectrum charts, mass spectrograms, and download authenticated certified documents.
+              Analytical documentation registry. Commercial partners can review illustrative HPLC profiles, mass spectra data, and documentation samples.
             </p>
           </div>
 
@@ -290,8 +290,8 @@ export default function QualityConsole({ preselectedPeptideId }: QualityConsoleP
             <FileCheck className="h-8 w-8 text-emerald-400" strokeWidth={1.2} />
             <div>
               <div className="font-mono text-[8px] tracking-wider text-neutral-500 uppercase">Registry Status</div>
-              <div className="font-sans text-xs font-semibold text-white">1,248 Verified Batches</div>
-              <p className="font-sans text-[9px] text-emerald-400 font-light">Fully USP & EP Compliant</p>
+              <div className="font-sans text-xs font-semibold text-white">Batch Documentation Available</div>
+              <p className="font-sans text-[9px] text-emerald-400 font-light">Research Grade Standards</p>
             </div>
           </div>
         </div>
@@ -498,7 +498,7 @@ export default function QualityConsole({ preselectedPeptideId }: QualityConsoleP
                         </div>
                         <div>
                           <div className="font-mono text-[9px] uppercase text-neutral-500">Assay Chromatography Method</div>
-                          <div className="font-sans text-sm text-neutral-300">Isocratic & Gradient RP-HPLC Method AP-204</div>
+                          <div className="font-sans text-sm text-neutral-300">Analytical Reverse-Phase HPLC</div>
                         </div>
                         <div>
                           <div className="font-mono text-[9px] uppercase text-neutral-500">Manufacture / Validation Date</div>
@@ -520,18 +520,18 @@ export default function QualityConsole({ preselectedPeptideId }: QualityConsoleP
                           <div className="font-sans text-sm text-neutral-300">1.82% Acetate / TFA Net</div>
                         </div>
                         <div>
-                          <div className="font-mono text-[9px] uppercase text-neutral-500">Sterility Clearance</div>
+                          <div className="font-mono text-[9px] uppercase text-neutral-500">Quality Inspection</div>
                           <div className="font-sans text-sm text-emerald-400 font-semibold flex items-center gap-1.5">
                             <CheckCircle className="h-4 w-4 shrink-0" />
-                            <span>Passed Bioburden Limits (Class-100)</span>
+                            <span>Passed Quality Inspection Criteria</span>
                           </div>
                         </div>
                         <div>
-                          <div className="font-mono text-[9px] uppercase text-neutral-500">Regulatory Certifications</div>
+                          <div className="font-mono text-[9px] uppercase text-neutral-500">Compliance & Standards</div>
                           <div className="font-sans text-xs text-neutral-300 flex flex-wrap gap-1 mt-1">
-                            <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5 font-mono">USP-43</span>
-                            <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5 font-mono">EP-10.0</span>
-                            <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5 font-mono">GMP-Validated</span>
+                            <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5 font-mono">Research Grade</span>
+                            <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5 font-mono">High Purity</span>
+                            <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5 font-mono">CoA Available</span>
                           </div>
                         </div>
                       </div>
@@ -549,7 +549,7 @@ export default function QualityConsole({ preselectedPeptideId }: QualityConsoleP
                   <div>
                     <div className="font-sans text-[11px] text-neutral-400 leading-none">Purity Validation Grade</div>
                     <div className="font-sans text-base font-bold text-white mt-1">
-                      {purityValue.toFixed(2)}% Pure <span className="text-xs font-mono font-medium text-emerald-400">(B2BCertified)</span>
+                      {purityValue.toFixed(2)}% Pure <span className="text-xs font-mono font-medium text-emerald-400">(Research Grade)</span>
                     </div>
                   </div>
                 </div>

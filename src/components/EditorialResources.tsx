@@ -9,8 +9,11 @@ import { EditorialArticle } from "../types";
 import { motion, AnimatePresence } from "motion/react";
 import { BookOpen, Calendar, Clock, User, X, FileText, ArrowRight } from "lucide-react";
 import FAQs from "./FAQs";
+import { useTheme } from "../context/ThemeContext";
 
 export default function EditorialResources() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
@@ -36,12 +39,12 @@ export default function EditorialResources() {
               Scientific Editorial & Sourcing Intelligence
             </h2>
             <p className="mt-4 font-sans text-xs text-neutral-400 leading-relaxed font-light">
-              Scientific insights, clinical trial profiles, and international pharmaceutical compliance reports.
+              Articles, research overviews, and industry insights across peptide science.
             </p>
           </div>
 
           <div className="shrink-0">
-            <span className="font-mono text-xs text-neutral-500">Curated by our CSO & Regulatory Counsel</span>
+            <span className="font-mono text-xs text-neutral-500">Research Articles & Industry Insights</span>
           </div>
         </div>
 
@@ -167,7 +170,9 @@ export default function EditorialResources() {
               <span className="font-mono text-xs uppercase tracking-widest text-emerald-400">
                 {activeArticle.category}
               </span>
-              <h1 className="mt-3 font-sans text-2xl md:text-3xl font-semibold tracking-tight text-white leading-tight">
+              <h1 className={`mt-3 font-sans text-2xl md:text-3xl font-semibold tracking-tight leading-tight ${
+                isDark ? "text-white" : "text-[#0B1B3D]"
+              }`}>
                 {activeArticle.title}
               </h1>
 

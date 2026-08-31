@@ -199,16 +199,16 @@ export default function ProductCatalog({
           </h1>
 
           <p className="text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-3xl opacity-85">
-            Explore our analytical-grade peptide catalogue engineered for rigorous laboratory research, institutional studies, and enterprise-scale B2B supply. Every batch includes full HPLC chromatograms and Mass Spectrometry validation.
+            Explore our research peptide catalogue supporting laboratory research, institutional studies, and enterprise-scale B2B supply. Batch-specific analytical documentation and Certificates of Analysis are available upon request.
           </p>
 
           {/* Quick Quality Metrics Bar */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             {[
-              { label: "Purity Threshold", value: "≥ 99.0% Certified" },
-              { label: "Batch Traceability", value: "HPLC & MS Verified" },
+              { label: "Purity Threshold", value: "High Purity Research Grade" },
+              { label: "Batch Traceability", value: "Documentation Available" },
               { label: "Physical Form", value: "Lyophilized Powder" },
-              { label: "Supply Formats", value: "Vials & Bulk Custom" },
+              { label: "Supply Formats", value: "Flexible Order Volumes" },
             ].map((stat, i) => (
               <div 
                 key={i} 
