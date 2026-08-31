@@ -184,6 +184,17 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
                 <MessageCircle className="h-4 w-4 text-emerald-400" />
                 <span>WhatsApp: +44 7414 219888</span>
               </a>
+
+              <a
+                href="https://t.me/b2bpeps"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-sky-500/30 bg-sky-950/20 hover:bg-sky-950/40 hover:border-sky-400/50 text-sky-300 transition-all text-xs font-mono min-h-[44px] cursor-pointer"
+                title="Telegram: @b2bpeps"
+              >
+                <Send className="h-4 w-4 text-sky-400" />
+                <span>Telegram: @b2bpeps</span>
+              </a>
             </div>
           </motion.div>
         </div>

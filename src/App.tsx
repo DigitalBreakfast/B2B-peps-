@@ -35,9 +35,26 @@ function MainApp() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+  // Initialize selected product if deep-linked to product URL
+  const getInitialProduct = (): Peptide | null => {
+    const path = window.location.pathname.replace(/^\/+/, "");
+    if (path.startsWith("product/")) {
+      const id = path.split("/")[1];
+      return PEPTIDES_CATALOG.find((p) => p.id === id) || null;
+    }
+    return null;
+  };
+
   // Initialize activePage from pathname if present
   const getInitialPage = () => {
     const path = window.location.pathname.replace(/^\/+/, "");
+    if (path.startsWith("product/")) {
+      const id = path.split("/")[1];
+      const found = PEPTIDES_CATALOG.find((p) => p.id === id);
+      if (found) {
+        return "product-details";
+      }
+    }
     if (path.startsWith("research/")) {
       return path;
     }
@@ -73,37 +90,73 @@ function MainApp() {
   const [legalModal, setLegalModal] = useState<LegalModalType>(getInitialLegalModal);
   const [selectedPeptideIdForCoA, setSelectedPeptideIdForCoA] = useState<string | null>(null);
   const [prefilledPeptideName, setPrefilledPeptideName] = useState<string | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<Peptide | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Peptide | null>(getInitialProduct);
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [rfqPeptides, setRfqPeptides] = useState<string[]>([]);
 
-  // Listen to browser Back/Forward popstate
+  // Synchronize route state with browser pathname (used on popstate, wake, and tab restore)
+  const syncRouteFromPathname = () => {
+    const path = window.location.pathname.replace(/^\/+/, "");
+    if (path === "disclaimer" || path === "legal-disclaimer") {
+      setLegalModal("disclaimer");
+      return;
+    }
+    if (path === "terms" || path === "terms-conditions") {
+      setLegalModal("terms");
+      return;
+    }
+    if (path.startsWith("product/")) {
+      const id = path.split("/")[1];
+      const found = PEPTIDES_CATALOG.find((p) => p.id === id);
+      if (found) {
+        setSelectedProduct(found);
+        setActivePage("product-details");
+        return;
+      }
+    }
+    if (path.startsWith("research/")) {
+      setActivePage(path);
+      setSelectedProduct(null);
+    } else if (path) {
+      setActivePage(path);
+      setSelectedProduct(null);
+    } else {
+      setActivePage("home");
+      setSelectedProduct(null);
+    }
+  };
+
+  // Listen to browser popstate, page visibility/focus changes, and long-idle restoration
   useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname.replace(/^\/+/, "");
-      if (path === "disclaimer" || path === "legal-disclaimer") {
-        setLegalModal("disclaimer");
-        return;
-      }
-      if (path === "terms" || path === "terms-conditions") {
-        setLegalModal("terms");
-        return;
-      }
-      if (path.startsWith("research/")) {
-        setActivePage(path);
-        setSelectedProduct(null);
-      } else if (path) {
-        setActivePage(path);
-        setSelectedProduct(null);
-      } else {
-        setActivePage("home");
-        setSelectedProduct(null);
+    window.addEventListener("popstate", syncRouteFromPathname);
+
+    // Re-verify route state when tab is restored from hibernation / memory freeze
+    const handlePageShow = () => {
+      syncRouteFromPathname();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        syncRouteFromPathname();
       }
     };
 
-    window.addEventListener("popstate", handlePopState);
-    return () => window.removeEventListener("popstate", handlePopState);
+    // Recover gracefully if a dynamic chunk encounters a preload issue after prolonged idle
+    const handlePreloadError = () => {
+      window.location.reload();
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("vite:preloadError", handlePreloadError);
+
+    return () => {
+      window.removeEventListener("popstate", syncRouteFromPathname);
+      window.removeEventListener("pageshow", handlePageShow);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("vite:preloadError", handlePreloadError);
+    };
   }, []);
 
   // Monitor scroll height to show/hide Back to Top button
