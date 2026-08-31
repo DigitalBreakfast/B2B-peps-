@@ -82,8 +82,8 @@ export default function AboutUs({}: AboutUsProps) {
               }`}>
                 <div className="relative rounded-[24px] sm:rounded-[26px] overflow-hidden aspect-[4/3.8]">
                   <img
-                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg"
-                    alt="Precision research peptide vials on laboratory bench"
+                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1788181389/Global_supply_network_map_202608311832_fsbmbz.jpg"
+                    alt="Global supply network map with interconnected international distribution channels"
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
                     loading="eager"
                   />
@@ -164,8 +164,8 @@ export default function AboutUs({}: AboutUsProps) {
               }`}>
                 <div className="relative rounded-[20px] sm:rounded-[22px] overflow-hidden aspect-[16/11]">
                   <img
-                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Professionals_inspecting_pharmac__202608231645_fhynxm.jpg"
-                    alt="International pharmaceutical supply chain professionals inspecting shipments"
+                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1788181242/World_map_with_data_flow_202608311830_v0uhz6.jpg"
+                    alt="World map with data flow and global logistics network"
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
@@ -253,8 +253,8 @@ export default function AboutUs({}: AboutUsProps) {
                 }`}>
                   <div className="relative rounded-[16px] sm:rounded-[20px] overflow-hidden aspect-[4/3.5]">
                     <img
-                      src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Pharmaceutical_quality_control_d__202608231645_pritv6.jpg"
-                      alt="Pharmaceutical quality control director reviewing analytical documentation and compliant packaging"
+                      src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1788181242/Research_peptide_vials_on_workbench_202608311821_akqwcv.jpg"
+                      alt="Research peptide vials on laboratory workbench"
                       className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
                       loading="lazy"
                     />
@@ -315,8 +315,8 @@ export default function AboutUs({}: AboutUsProps) {
               }`}>
                 <div className="relative rounded-[20px] sm:rounded-[22px] overflow-hidden aspect-[16/11]">
                   <img
-                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Researchers_reviewing_technical___202608231645_kpdre3.jpg"
-                    alt="Researchers reviewing technical peptide synthesis and analytical specifications"
+                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1788181242/Cargo_containers_and_logistics_i__202608311829_uf8pgf.jpg"
+                    alt="International cargo containers and logistics infrastructure"
                     className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />

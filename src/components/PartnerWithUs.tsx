@@ -234,14 +234,17 @@ export default function PartnerWithUs({ onNavigate, onContactClick }: PartnerWit
                   ? "bg-neutral-900/60 border-white/15 shadow-black/60" 
                   : "bg-white/90 border-slate-200/90 shadow-slate-200/60"
               }`}>
-                <div className="relative rounded-[26px] sm:rounded-[28px] overflow-hidden aspect-[4/4.2]">
-                  <img
-                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg"
-                    alt="Precision research peptide vials on laboratory bench"
-                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="eager"
+                <div className="relative rounded-[26px] sm:rounded-[28px] overflow-hidden aspect-[4/4.2] bg-black">
+                  <video
+                    src="https://res.cloudinary.com/ds5s7shuo/video/upload/v1785970595/Clever_Peps_vial_and_box_202608060220_fdmfze.mp4"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover object-center"
+                    aria-label="Clever Peps peptide vial and box visual presentation"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                 </div>
               </div>
             </motion.div>
