@@ -168,9 +168,31 @@ function MainApp() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scroll to top on page change for natural multi-page feel
+  // Scroll to top on page change for natural multi-page feel and update document title
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+
+    if (selectedProduct) {
+      document.title = `${selectedProduct.name} | B2B Peps`;
+    } else if (activePage === "about") {
+      document.title = "About Us | B2B Peps";
+    } else if (activePage === "why-partner" || activePage === "partner" || activePage === "partner-with-us") {
+      document.title = "Partner With Us | B2B Peps";
+    } else if (activePage === "products" || activePage === "research-categories" || activePage === "categories" || activePage === "research") {
+      document.title = "Research Peptide Catalog | B2B Peps";
+    } else if (activePage.startsWith("research/")) {
+      document.title = "Research Category | B2B Peps";
+    } else if (activePage === "services") {
+      document.title = "B2B Services & Private Label | B2B Peps";
+    } else if (activePage === "quality") {
+      document.title = "Quality Control & CoA Console | B2B Peps";
+    } else if (activePage === "science" || activePage === "faqs") {
+      document.title = "Editorial & Research Resources | B2B Peps";
+    } else if (activePage === "contact") {
+      document.title = "B2B Inquiry & Partner Application | B2B Peps";
+    } else {
+      document.title = "B2B Peps | Global Research Peptide Supply for Businesses";
+    }
   }, [activePage, selectedProduct]);
 
   const handleNavClick = (pageId: string, filterCategory?: string) => {
