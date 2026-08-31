@@ -169,7 +169,9 @@ export default function PartnerWithUs({ onNavigate, onContactClick }: PartnerWit
                 }`}>
                   More Than a Supplier.
                 </h1>
-                <h2 className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight leading-[1.12] text-teal-600 dark:text-teal-400">
+                <h2 className={`font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight leading-[1.12] ${
+                  isDark ? "text-slate-100" : "text-[#0B1B3D]"
+                }`}>
                   A Partner for a Fast Moving Market.
                 </h2>
               </div>

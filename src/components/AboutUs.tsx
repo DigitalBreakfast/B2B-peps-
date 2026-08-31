@@ -21,7 +21,7 @@ export default function AboutUs({}: AboutUsProps) {
   return (
     <article
       id="about-us-page"
-      className={`min-h-screen pt-24 pb-24 sm:pt-32 sm:pb-36 relative overflow-hidden transition-colors duration-500 ${
+      className={`min-h-screen pt-20 pb-16 sm:pt-24 sm:pb-20 relative overflow-hidden transition-colors duration-500 ${
         isDark
           ? "bg-neutral-950 text-white selection:bg-emerald-500/30 selection:text-emerald-300"
           : "bg-white text-slate-900 selection:bg-teal-500/20 selection:text-teal-800"
@@ -32,27 +32,27 @@ export default function AboutUs({}: AboutUsProps) {
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] rounded-full bg-emerald-500/[0.025] blur-[180px] pointer-events-none" />
       <div className="absolute bottom-20 right-1/4 w-[450px] h-[450px] rounded-full bg-teal-500/[0.025] blur-[180px] pointer-events-none" />
 
-      <div className="site-container relative z-10 space-y-24 sm:space-y-32 md:space-y-40">
+      <div className="site-container relative z-10 space-y-12 sm:space-y-16 md:space-y-20">
 
         {/* ========================================================
             SECTION 01 — HERO
             ======================================================== */}
-        <section id="about-hero" className="relative pt-2 sm:pt-6 md:pt-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
+        <section id="about-hero" className="relative pt-1 sm:pt-3">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
             
             {/* Left Column: Eyebrow, Large Heading, Opening Paragraph */}
             <motion.div
               initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65 }}
-              className="lg:col-span-7 space-y-6 sm:space-y-8"
+              className="lg:col-span-7 space-y-4 sm:space-y-5"
             >
-              <div className="space-y-3 sm:space-y-4">
+              <div className="space-y-2.5 sm:space-y-3">
                 <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-teal-600 dark:text-emerald-400 font-bold block">
                   ABOUT B2B PEPS
                 </span>
                 
-                <h1 className={`font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-bold tracking-tight leading-[1.12] ${
+                <h1 className={`font-sans text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-bold tracking-tight leading-[1.14] ${
                   isDark ? "text-white" : "text-[#0B1B3D]"
                 }`}>
                   We Built the Partner We Wanted to Have
@@ -73,14 +73,14 @@ export default function AboutUs({}: AboutUsProps) {
               transition={{ duration: 0.7, delay: 0.15 }}
               className="lg:col-span-5 relative"
             >
-              <div className="absolute -inset-2 bg-gradient-to-tr from-teal-500/15 to-emerald-400/10 rounded-[36px] blur-xl opacity-60 pointer-events-none" />
+              <div className="absolute -inset-2 bg-gradient-to-tr from-teal-500/15 to-emerald-400/10 rounded-[32px] blur-xl opacity-60 pointer-events-none" />
               
-              <div className={`relative rounded-[32px] sm:rounded-[36px] overflow-hidden border p-2 shadow-xl transition-all duration-500 ${
+              <div className={`relative rounded-[28px] sm:rounded-[32px] overflow-hidden border p-1.5 shadow-xl transition-all duration-500 ${
                 isDark 
                   ? "bg-neutral-900/60 border-white/15 shadow-black/60" 
                   : "bg-white/90 border-slate-200/90 shadow-slate-200/60"
               }`}>
-                <div className="relative rounded-[26px] sm:rounded-[28px] overflow-hidden aspect-[4/4.2]">
+                <div className="relative rounded-[24px] sm:rounded-[26px] overflow-hidden aspect-[4/3.8]">
                   <img
                     src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787484597/Peptide_vials_on_laboratory_bench_202608231659_sbfjag.jpg"
                     alt="Precision research peptide vials on laboratory bench"
@@ -105,7 +105,7 @@ export default function AboutUs({}: AboutUsProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.65 }}
-            className="max-w-4xl mx-auto space-y-10 sm:space-y-12"
+            className="max-w-4xl mx-auto space-y-6 sm:space-y-8"
           >
             {/* Story Paragraph 1 */}
             <p className={`text-base sm:text-lg md:text-xl font-normal leading-relaxed ${
@@ -115,17 +115,17 @@ export default function AboutUs({}: AboutUsProps) {
             </p>
 
             {/* Visual Focal Point: Large Visual Pull Quote */}
-            <div className={`p-8 sm:p-10 md:p-14 rounded-[30px] sm:rounded-[36px] border transition-all duration-500 relative overflow-hidden ${
+            <div className={`p-6 sm:p-8 md:p-10 rounded-[24px] sm:rounded-[30px] border transition-all duration-500 relative overflow-hidden ${
               isDark
                 ? "bg-gradient-to-b from-neutral-900/60 to-neutral-950/80 border-emerald-500/20 shadow-2xl shadow-black/60"
                 : "bg-gradient-to-b from-teal-50/60 to-slate-50/80 border-teal-200/80 shadow-md"
             }`}>
-              <div className="absolute top-6 left-6 opacity-20 pointer-events-none text-teal-600 dark:text-emerald-400">
-                <Quote className="h-16 w-16 -scale-x-100" />
+              <div className="absolute top-4 left-4 opacity-20 pointer-events-none text-teal-600 dark:text-emerald-400">
+                <Quote className="h-12 w-12 -scale-x-100" />
               </div>
 
-              <blockquote className="relative z-10 space-y-4">
-                <p className={`font-sans text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight leading-relaxed italic ${
+              <blockquote className="relative z-10 space-y-3">
+                <p className={`font-sans text-lg sm:text-xl md:text-2xl font-semibold tracking-tight leading-relaxed italic ${
                   isDark ? "text-emerald-300" : "text-teal-900"
                 }`}>
                   &ldquo;Finding reliable sources. Knowing where products came from. Getting clear communication. Maintaining consistency. Navigating changing suppliers and pricing.&rdquo;
@@ -147,7 +147,7 @@ export default function AboutUs({}: AboutUsProps) {
             SECTION 03 — BRIDGING THE GAP
             ======================================================== */}
         <section id="about-bridging-the-gap" className="relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-14 items-center">
             
             {/* Left: Supporting Laboratory / Global Sourcing Image */}
             <motion.div
@@ -157,12 +157,12 @@ export default function AboutUs({}: AboutUsProps) {
               transition={{ duration: 0.65 }}
               className="lg:col-span-6"
             >
-              <div className={`relative rounded-[28px] sm:rounded-[32px] overflow-hidden border p-2 shadow-xl ${
+              <div className={`relative rounded-[24px] sm:rounded-[28px] overflow-hidden border p-1.5 shadow-xl ${
                 isDark 
                   ? "bg-neutral-900/40 border-white/10 shadow-black/40" 
                   : "bg-white border-slate-200 shadow-slate-200/60"
               }`}>
-                <div className="relative rounded-[22px] sm:rounded-[24px] overflow-hidden aspect-[16/11]">
+                <div className="relative rounded-[20px] sm:rounded-[22px] overflow-hidden aspect-[16/11]">
                   <img
                     src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Professionals_inspecting_pharmac__202608231645_fhynxm.jpg"
                     alt="International pharmaceutical supply chain professionals inspecting shipments"
@@ -180,7 +180,7 @@ export default function AboutUs({}: AboutUsProps) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.65 }}
-              className="lg:col-span-6 space-y-6 sm:space-y-8"
+              className="lg:col-span-6 space-y-4 sm:space-y-5"
             >
               <h2 className={`font-sans text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight ${
                 isDark ? "text-white" : "text-[#0B1B3D]"
@@ -188,7 +188,7 @@ export default function AboutUs({}: AboutUsProps) {
                 Bridging the Gap
               </h2>
 
-              <div className={`space-y-5 sm:space-y-6 text-base sm:text-lg leading-relaxed ${
+              <div className={`space-y-3.5 sm:space-y-4 text-base sm:text-lg leading-relaxed ${
                 isDark ? "text-neutral-300" : "text-slate-600"
               }`}>
                 <p>
@@ -213,23 +213,23 @@ export default function AboutUs({}: AboutUsProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.65 }}
-            className={`p-7 sm:p-10 md:p-14 rounded-[32px] sm:rounded-[40px] border transition-all duration-500 ${
+            className={`p-6 sm:p-8 md:p-10 rounded-[28px] sm:rounded-[34px] border transition-all duration-500 ${
               isDark
                 ? "bg-gradient-to-b from-neutral-900/70 to-neutral-950/80 border-white/10 shadow-2xl"
                 : "bg-slate-50 border-slate-200 shadow-md"
             }`}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
               
               {/* Content Column */}
-              <div className="lg:col-span-7 space-y-6 sm:space-y-7">
+              <div className="lg:col-span-7 space-y-4 sm:space-y-5">
                 <h2 className={`font-sans text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight ${
                   isDark ? "text-white" : "text-[#0B1B3D]"
                 }`}>
                   Built Around Reliability
                 </h2>
 
-                <div className={`space-y-4 sm:space-y-5 text-base sm:text-lg leading-relaxed ${
+                <div className={`space-y-3 sm:space-y-4 text-base sm:text-lg leading-relaxed ${
                   isDark ? "text-neutral-300" : "text-slate-600"
                 }`}>
                   <p>
@@ -246,12 +246,12 @@ export default function AboutUs({}: AboutUsProps) {
 
               {/* Supporting Laboratory & Commercial Packaging Image */}
               <div className="lg:col-span-5">
-                <div className={`relative rounded-[24px] sm:rounded-[28px] overflow-hidden border p-1.5 shadow-lg ${
+                <div className={`relative rounded-[20px] sm:rounded-[24px] overflow-hidden border p-1 shadow-md ${
                   isDark 
                     ? "bg-black/50 border-white/10 shadow-black/50" 
                     : "bg-white border-slate-200/90 shadow-slate-200/50"
                 }`}>
-                  <div className="relative rounded-[20px] sm:rounded-[22px] overflow-hidden aspect-[4/3.8]">
+                  <div className="relative rounded-[16px] sm:rounded-[20px] overflow-hidden aspect-[4/3.5]">
                     <img
                       src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483821/Pharmaceutical_quality_control_d__202608231645_pritv6.jpg"
                       alt="Pharmaceutical quality control director reviewing analytical documentation and compliant packaging"
@@ -272,7 +272,7 @@ export default function AboutUs({}: AboutUsProps) {
             SECTION 05 — SUPPORTING AN INDUSTRY WITH ENORMOUS POTENTIAL
             ======================================================== */}
         <section id="about-supporting-industry" className="relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-14 items-center">
             
             {/* Left Content */}
             <motion.div
@@ -280,7 +280,7 @@ export default function AboutUs({}: AboutUsProps) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.65 }}
-              className="lg:col-span-6 space-y-6 sm:space-y-8"
+              className="lg:col-span-6 space-y-4 sm:space-y-5"
             >
               <h2 className={`font-sans text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight ${
                 isDark ? "text-white" : "text-[#0B1B3D]"
@@ -288,7 +288,7 @@ export default function AboutUs({}: AboutUsProps) {
                 Supporting an Industry With Enormous Potential
               </h2>
 
-              <div className={`space-y-5 sm:space-y-6 text-base sm:text-lg leading-relaxed ${
+              <div className={`space-y-3.5 sm:space-y-4 text-base sm:text-lg leading-relaxed ${
                 isDark ? "text-neutral-300" : "text-slate-600"
               }`}>
                 <p>
@@ -308,12 +308,12 @@ export default function AboutUs({}: AboutUsProps) {
               transition={{ duration: 0.65 }}
               className="lg:col-span-6"
             >
-              <div className={`relative rounded-[28px] sm:rounded-[32px] overflow-hidden border p-2 shadow-xl ${
+              <div className={`relative rounded-[24px] sm:rounded-[28px] overflow-hidden border p-1.5 shadow-xl ${
                 isDark 
                   ? "bg-neutral-900/40 border-white/10 shadow-black/40" 
                   : "bg-white border-slate-200 shadow-slate-200/60"
               }`}>
-                <div className="relative rounded-[22px] sm:rounded-[24px] overflow-hidden aspect-[16/11]">
+                <div className="relative rounded-[20px] sm:rounded-[22px] overflow-hidden aspect-[16/11]">
                   <img
                     src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787483822/Researchers_reviewing_technical___202608231645_kpdre3.jpg"
                     alt="Researchers reviewing technical peptide synthesis and analytical specifications"
@@ -332,13 +332,13 @@ export default function AboutUs({}: AboutUsProps) {
         {/* ========================================================
             SECTION 06 — CLOSING STATEMENT
             ======================================================== */}
-        <section id="about-closing-statement" className="relative pt-6 sm:pt-10">
+        <section id="about-closing-statement" className="relative pt-2 sm:pt-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.65 }}
-            className={`p-10 sm:p-16 md:p-20 rounded-[32px] sm:rounded-[44px] border relative overflow-hidden text-center max-w-4xl mx-auto ${
+            className={`p-8 sm:p-10 md:p-12 rounded-[28px] sm:rounded-[36px] border relative overflow-hidden text-center max-w-4xl mx-auto ${
               isDark
                 ? "bg-gradient-to-b from-neutral-900/90 to-neutral-950 border-emerald-500/20 shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
                 : "bg-gradient-to-b from-teal-50/80 to-slate-50 border-teal-200/90 shadow-xl"
@@ -347,7 +347,7 @@ export default function AboutUs({}: AboutUsProps) {
             {/* Ambient soft glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[360px] bg-emerald-500/10 rounded-full blur-[110px] pointer-events-none" />
 
-            <div className="relative z-10 space-y-4 sm:space-y-6">
+            <div className="relative z-10 space-y-3 sm:space-y-4">
               <h2 className={`font-sans text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight ${
                 isDark ? "text-emerald-400" : "text-teal-900"
               }`}>
