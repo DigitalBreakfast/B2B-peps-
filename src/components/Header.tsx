@@ -165,8 +165,13 @@ export default function Header({ onNavClick, activePage }: HeaderProps) {
             id="brand-logo"
           >
             <img
-              src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787945763/PEPES_logo_png_didjyy.png"
+              src="https://res.cloudinary.com/ds5s7shuo/image/upload/f_auto,q_auto,w_240/v1787945763/PEPES_logo_png_didjyy.png"
               alt="B2B Peps"
+              width={180}
+              height={36}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
               className="h-8 sm:h-9 md:h-10 w-auto max-w-[170px] sm:max-w-[200px] object-contain transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.3)]"
               referrerPolicy="no-referrer"
             />

@@ -3,11 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { Activity, Mail, MessageCircle, Send, ChevronDown, ShieldAlert } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTheme } from "../context/ThemeContext";
-import LegalModal, { LegalModalType } from "./LegalModal";
+import type { LegalModalType } from "./LegalModal";
+
+const LegalModal = lazy(() => import("./LegalModal"));
 
 interface FooterProps {
   onNavClick: (sectionId: string) => void;
@@ -55,8 +57,12 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
               id="footer-brand"
             >
               <img
-                src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787945763/PEPES_logo_png_didjyy.png"
+                src="https://res.cloudinary.com/ds5s7shuo/image/upload/f_auto,q_auto,w_240/v1787945763/PEPES_logo_png_didjyy.png"
                 alt="B2B Peps"
+                width={180}
+                height={36}
+                loading="lazy"
+                decoding="async"
                 className="h-8 sm:h-9 w-auto max-w-[180px] object-contain transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_12px_rgba(52,211,153,0.3)]"
                 referrerPolicy="no-referrer"
               />
@@ -275,11 +281,13 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
 
       {/* Internal Legal Modal if managed directly */}
       {!onOpenLegalModal && (
-        <LegalModal
-          type={internalLegalModal}
-          onClose={() => setInternalLegalModal(null)}
-          onSwitchType={(type) => setInternalLegalModal(type)}
-        />
+        <Suspense fallback={null}>
+          <LegalModal
+            type={internalLegalModal}
+            onClose={() => setInternalLegalModal(null)}
+            onSwitchType={(type) => setInternalLegalModal(type)}
+          />
+        </Suspense>
       )}
     </footer>
   );

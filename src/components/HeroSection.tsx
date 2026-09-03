@@ -37,19 +37,30 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Mouse coordinate state for dynamic specular parallax
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Mouse coordinate state for dynamic specular parallax (desktop only)
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
+    if (isMobile || !containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     setMousePos({ x, y });
   };
 
-  // Canvas particle simulation for molecular background
+  // Efficient canvas particle simulation for molecular background
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -57,6 +68,8 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
     if (!ctx) return;
 
     let animationFrameId: number;
+    let isRendering = false;
+    let isHeroInView = true;
     let width = (canvas.width = canvas.offsetWidth);
     let height = (canvas.height = canvas.offsetHeight);
 
@@ -66,20 +79,25 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
       height = canvas.height = canvas.offsetHeight;
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
 
-    // Particle nodes
-    const nodeCount = 38;
+    // Adaptive particle node count: reduced on mobile to eliminate main thread blocking
+    const isMobileDevice = typeof window !== "undefined" && window.innerWidth < 768;
+    const nodeCount = isMobileDevice ? 14 : 32;
     const nodes = Array.from({ length: nodeCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      radius: Math.random() * 2 + 1,
-      alpha: Math.random() * 0.5 + 0.2,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      radius: Math.random() * 1.8 + 1,
+      alpha: Math.random() * 0.4 + 0.2,
     }));
 
     const render = () => {
+      if (!isHeroInView || document.hidden) {
+        isRendering = false;
+        return;
+      }
       ctx.clearRect(0, 0, width, height);
 
       // Draw connection lines
@@ -89,11 +107,11 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 140) {
+          if (dist < 130) {
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
-            const opacity = (1 - dist / 140) * 0.15;
+            const opacity = (1 - dist / 130) * 0.14;
             ctx.strokeStyle = isDark ? `rgba(52, 211, 153, ${opacity})` : `rgba(13, 148, 136, ${opacity})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
@@ -118,24 +136,57 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    const startAnimation = () => {
+      if (!isRendering && isHeroInView && !document.hidden) {
+        isRendering = true;
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const stopAnimation = () => {
+      isRendering = false;
+      cancelAnimationFrame(animationFrameId);
+    };
+
+    // Pause animation when tab is inactive or hero is scrolled away
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        stopAnimation();
+      } else {
+        startAnimation();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Observer to pause canvas when offscreen
+    const heroObserver = new IntersectionObserver(
+      ([entry]) => {
+        isHeroInView = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          startAnimation();
+        } else {
+          stopAnimation();
+        }
+      },
+      { threshold: 0.05 }
+    );
+    if (containerRef.current) {
+      heroObserver.observe(containerRef.current);
+    }
+
+    // Delay start until after first paint to keep FCP instant
+    const idleTimer = setTimeout(() => {
+      startAnimation();
+    }, 150);
 
     return () => {
+      clearTimeout(idleTimer);
       window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      heroObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
     };
   }, [isDark]);
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   // Scroll parallax effects (applied only on desktop to allow natural flow on mobile)
   const { scrollYProgress } = useScroll({
@@ -167,6 +218,8 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
           loop 
           muted 
           playsInline 
+          preload="metadata"
+          poster="https://res.cloudinary.com/ds5s7shuo/video/upload/so_0,f_auto,q_auto:good,w_600/v1785967322/Change_bottle_to_Clevver_Peps_202608060237_n6vexp.jpg"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
             isDark ? "opacity-65 mix-blend-screen filter brightness-95 contrast-115" : "opacity-55 mix-blend-multiply filter contrast-110"
           }`}
@@ -218,16 +271,12 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
           <rect width="100%" height="100%" fill="url(#hero-blueprint)" />
         </svg>
 
-        {/* Rotating Orbital Vectors */}
-        <motion.div 
-          animate={{ rotate: 360 }}
-          transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/4 right-[10%] w-[550px] h-[550px] border border-emerald-500/10 rounded-full border-dashed pointer-events-none"
+        {/* Rotating Orbital Vectors - hardware compositor accelerated */}
+        <div 
+          className="absolute top-1/4 right-[10%] w-[550px] h-[550px] border border-emerald-500/10 rounded-full border-dashed pointer-events-none animate-spin-slow"
         />
-        <motion.div 
-          animate={{ rotate: -360 }}
-          transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/3 right-[15%] w-[420px] h-[420px] border border-teal-500/10 rounded-full pointer-events-none"
+        <div 
+          className="absolute top-1/3 right-[15%] w-[420px] h-[420px] border border-teal-500/10 rounded-full pointer-events-none animate-spin-reverse-slow"
         />
       </div>
 
@@ -343,8 +392,12 @@ export default function HeroSection({ onNavigate, theme }: HeroSectionProps) {
                 {/* Background Artwork & Laboratory Peptide Visual Layer */}
                 <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
                   <img 
-                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/v1787600572/Replace_bottle_with_peps_bottle_202608250112_z6buhk.jpg"
+                    src="https://res.cloudinary.com/ds5s7shuo/image/upload/f_auto,q_auto:good,w_800/v1787600572/Replace_bottle_with_peps_bottle_202608250112_z6buhk.jpg"
                     alt="B2B Peps Pharmaceutical Grade Peptide Bottle"
+                    width={512}
+                    height={512}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover object-center filter brightness-105 contrast-110 opacity-90 scale-105 transition-transform duration-1000 hover:scale-110"
                   />

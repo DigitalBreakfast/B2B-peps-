@@ -8,28 +8,31 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import HomeView from "./components/HomeView";
-import ProductCatalog from "./components/ProductCatalog";
-import AboutUs from "./components/AboutUs";
-import PartnerWithUs from "./components/PartnerWithUs";
-import Services from "./components/Services";
-import FAQs from "./components/FAQs";
-import ProductDetails from "./components/ProductDetails";
-import QualityConsole from "./components/QualityConsole";
-import EditorialResources from "./components/EditorialResources";
-import PartnerInquiryForm from "./components/PartnerInquiryForm";
-import ResearchCategoryDetail from "./components/ResearchCategoryDetail";
-import ResearchCategoriesPage from "./components/ResearchCategoriesPage";
-import LegalModal, { LegalModalType } from "./components/LegalModal";
 import AgeVerificationModal from "./components/AgeVerificationModal";
 import { ArrowUp } from "lucide-react";
 import { motion } from "motion/react";
 import { PEPTIDES_CATALOG } from "./data";
 import { Peptide } from "./types";
 import { ThemeProvider, useTheme } from "./context/ThemeContext";
+import type { LegalModalType } from "./components/LegalModal";
+
+// Dynamic imports for all secondary routes and modals to optimize mobile initial bundle
+const ProductCatalog = lazy(() => import("./components/ProductCatalog"));
+const AboutUs = lazy(() => import("./components/AboutUs"));
+const PartnerWithUs = lazy(() => import("./components/PartnerWithUs"));
+const Services = lazy(() => import("./components/Services"));
+const FAQs = lazy(() => import("./components/FAQs"));
+const ProductDetails = lazy(() => import("./components/ProductDetails"));
+const QualityConsole = lazy(() => import("./components/QualityConsole"));
+const EditorialResources = lazy(() => import("./components/EditorialResources"));
+const PartnerInquiryForm = lazy(() => import("./components/PartnerInquiryForm"));
+const ResearchCategoryDetail = lazy(() => import("./components/ResearchCategoryDetail"));
+const ResearchCategoriesPage = lazy(() => import("./components/ResearchCategoriesPage"));
+const LegalModal = lazy(() => import("./components/LegalModal"));
 
 function MainApp() {
   const { theme } = useTheme();
@@ -369,7 +372,11 @@ function MainApp() {
         <Header onNavClick={handleNavClick} activePage={activePage} />
 
         {/* Main Content Areas */}
-        <main>{renderContent()}</main>
+        <main>
+          <Suspense fallback={<div className="min-h-[60vh] flex items-center justify-center"><div className="w-8 h-8 rounded-full border-2 border-emerald-500/20 border-t-emerald-400 animate-spin" /></div>}>
+            {renderContent()}
+          </Suspense>
+        </main>
       </div>
 
       {/* Website Footer */}
@@ -379,11 +386,15 @@ function MainApp() {
       />
 
       {/* Premium Full-Screen Legal Modal Popup */}
-      <LegalModal
-        type={legalModal}
-        onClose={() => setLegalModal(null)}
-        onSwitchType={(type) => setLegalModal(type)}
-      />
+      <Suspense fallback={null}>
+        {legalModal && (
+          <LegalModal
+            type={legalModal}
+            onClose={() => setLegalModal(null)}
+            onSwitchType={(type) => setLegalModal(type)}
+          />
+        )}
+      </Suspense>
 
       {/* Immediate On-Load 21+ Age Verification Popup Modal */}
       <AgeVerificationModal />
