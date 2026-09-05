@@ -160,6 +160,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 6. Check Resend API Key
     const apiKey = process.env.RESEND_API_KEY;
+    const toEmail = process.env.CONTACT_TO_EMAIL || "info@b2bpeps.com";
+    const fromEmail = process.env.CONTACT_FROM_EMAIL || "B2B Peps Inquiries <inquiries@b2bpeps.com>";
+
+    // Temporary debug logging (never logs complete API key)
+    const hasApiKey = Boolean(apiKey);
+    const apiKeyLength = apiKey ? apiKey.length : 0;
+    const apiKeyPrefix = apiKey ? `${apiKey.slice(0, 6)}...` : "not set";
+
+    console.info("[Contact API Debug]", {
+      hasResendApiKey: hasApiKey,
+      apiKeyLength,
+      apiKeyPrefix,
+      contactFromEmail: fromEmail,
+      contactToEmail: toEmail,
+      rawEnvFromEmail: process.env.CONTACT_FROM_EMAIL ?? "(undefined - using fallback)",
+      rawEnvToEmail: process.env.CONTACT_TO_EMAIL ?? "(undefined - using fallback)",
+    });
 
     if (!apiKey) {
       console.error("[Contact API Error] RESEND_API_KEY is not defined in environment variables.");
@@ -182,9 +199,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 7. Initialize Resend SDK
     const resend = new Resend(apiKey);
-
-    const toEmail = process.env.CONTACT_TO_EMAIL || "info@b2bpeps.com";
-    const fromEmail = process.env.CONTACT_FROM_EMAIL || "B2B Peps Inquiries <inquiries@b2bpeps.com>";
     const subjectCompany = sanitizedCompany ? `${sanitizedCompany} - ` : "";
     const emailSubject = `[B2B Inquiry ${reference}] ${subjectCompany}${sanitizedName} (${serviceSummary})`;
 
