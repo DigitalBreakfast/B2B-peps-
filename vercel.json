@@ -4,7 +4,7 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/|assets/|images/|icons/|fonts/|\\.well-known/|favicon\\.ico|robots\\.txt|sitemap\\.xml|manifest\\.json|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }
   ],

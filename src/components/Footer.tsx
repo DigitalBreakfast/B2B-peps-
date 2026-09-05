@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, lazy, Suspense } from "react";
+import { useState, Suspense } from "react";
 import { Activity, Mail, MessageCircle, Send, ChevronDown, ShieldAlert } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTheme } from "../context/ThemeContext";
 import type { LegalModalType } from "./LegalModal";
+import { lazyWithRetry, ChunkErrorBoundary } from "../lib/lazyWithRetry.tsx";
 
-const LegalModal = lazy(() => import("./LegalModal"));
+const LegalModal = lazyWithRetry(() => import("./LegalModal"));
 
 interface FooterProps {
   onNavClick: (sectionId: string) => void;
@@ -281,13 +282,15 @@ export default function Footer({ onNavClick, onOpenLegalModal }: FooterProps) {
 
       {/* Internal Legal Modal if managed directly */}
       {!onOpenLegalModal && (
-        <Suspense fallback={null}>
-          <LegalModal
-            type={internalLegalModal}
-            onClose={() => setInternalLegalModal(null)}
-            onSwitchType={(type) => setInternalLegalModal(type)}
-          />
-        </Suspense>
+        <ChunkErrorBoundary>
+          <Suspense fallback={null}>
+            <LegalModal
+              type={internalLegalModal}
+              onClose={() => setInternalLegalModal(null)}
+              onSwitchType={(type) => setInternalLegalModal(type)}
+            />
+          </Suspense>
+        </ChunkErrorBoundary>
       )}
     </footer>
   );

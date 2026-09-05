@@ -9,9 +9,10 @@ import {
   Building2, Mail, Phone, Calendar, Clock, Globe2, 
   Send, ShieldCheck, CheckCircle2, MessageSquare, 
   FileText, DollarSign, Users, HelpCircle, ArrowRight,
-  Sparkles, Check, MessageCircle
+  Sparkles, Check, MessageCircle, AlertCircle
 } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
+import type { ContactInquiryPayload, ContactApiResponse } from "../lib/contactTypes";
 
 interface PartnerInquiryFormProps {
   prefilledPeptideName?: string | null;
@@ -57,6 +58,9 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
   const isDark = theme === "dark";
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submittedRef, setSubmittedRef] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState<string>("");
 
   // Form Fields
   const [name, setName] = useState("");
@@ -118,19 +122,77 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
 
   const isMeetingSelected = selectedHelp.includes("meeting");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitting(true);
+    setErrorMessage(null);
 
-    setTimeout(() => {
-      setSubmitting(false);
+    // Client-side validation
+    if (!name.trim() || name.trim().length < 2) {
+      setErrorMessage("Please provide your contact name (at least 2 characters).");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim() || !emailRegex.test(email.trim())) {
+      setErrorMessage("Please enter a valid business email address.");
+      return;
+    }
+
+    setSubmitting(true);
+    const localRef = `ENQ-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    try {
+      const payload: ContactInquiryPayload = {
+        name: name.trim(),
+        company: company.trim() || undefined,
+        email: email.trim(),
+        whatsapp: whatsapp.trim() || undefined,
+        telegram: telegram.trim() || undefined,
+        selectedHelp,
+        monthlyRequirement: monthlyRequirement || undefined,
+        message: message.trim() || undefined,
+        preferredDate: isMeetingSelected ? preferredDate : undefined,
+        preferredTime: isMeetingSelected ? preferredTime : undefined,
+        userTimezone,
+        reference: localRef,
+        b2b_website_hp: honeypot,
+      };
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data: ContactApiResponse = await res.json().catch(() => ({
+        success: false,
+        error: "Unable to parse server response.",
+      }));
+
+      if (!res.ok || !data.success) {
+        throw new Error(
+          data.error || "We could not transmit your enquiry. Please reach out directly to info@b2bpeps.com."
+        );
+      }
+
+      setSubmittedRef(data.reference || localRef);
       setSuccess(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 1200);
+    } catch (err: unknown) {
+      const error = err as Error;
+      setErrorMessage(error?.message || "An error occurred while submitting. Please email info@b2bpeps.com directly.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleReset = () => {
     setSuccess(false);
+    setErrorMessage(null);
+    setSubmittedRef("");
+    setHoneypot("");
     setName("");
     setCompany("");
     setEmail("");
@@ -223,7 +285,7 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
                   <div className="flex justify-between border-b border-white/5 pb-2.5">
                     <span className="text-neutral-500 font-mono">Reference</span>
                     <span className="text-emerald-400 font-mono font-semibold">
-                      ENQ-{Math.floor(100000 + Math.random() * 900000)}
+                      {submittedRef || "ENQ-CONFIRMED"}
                     </span>
                   </div>
 
@@ -303,6 +365,34 @@ export default function PartnerInquiryForm({ prefilledPeptideName }: PartnerInqu
                 onSubmit={handleSubmit}
                 className="rounded-2xl border border-white/10 bg-neutral-900/30 p-6 sm:p-8 md:p-10 backdrop-blur-md shadow-2xl space-y-8"
               >
+                {/* Anti-spam honeypot (hidden from real users, caught if filled by bots) */}
+                <div className="hidden" aria-hidden="true" style={{ display: "none" }}>
+                  <label htmlFor="b2b_website_hp">Do not fill this field</label>
+                  <input
+                    id="b2b_website_hp"
+                    name="b2b_website_hp"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
+
+                {/* Submission Error Banner */}
+                {errorMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-xl border border-rose-500/30 bg-rose-950/40 p-4 text-xs font-sans text-rose-200 flex items-start gap-3"
+                  >
+                    <AlertCircle className="h-5 w-5 text-rose-400 shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <p className="font-semibold text-rose-100 mb-0.5">Enquiry Submission Notice</p>
+                      <p className="text-rose-200/90 leading-relaxed">{errorMessage}</p>
+                    </div>
+                  </motion.div>
+                )}
                 
                 {/* 1. Contact Information */}
                 <div className="space-y-4">

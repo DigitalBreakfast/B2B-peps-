@@ -5,7 +5,60 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [
+      react(),
+      tailwindcss(),
+      {
+        name: 'dev-api-contact-handler',
+        configureServer(server) {
+          server.middlewares.use(async (req, res, next) => {
+            if (req.url === '/api/contact' && req.method === 'POST') {
+              let body = '';
+              req.on('data', (chunk: Buffer) => {
+                body += chunk.toString();
+              });
+              req.on('end', async () => {
+                try {
+                  const parsedBody = body ? JSON.parse(body) : {};
+                  const mockReq: any = {
+                    ...req,
+                    method: 'POST',
+                    headers: req.headers,
+                    body: parsedBody,
+                    socket: req.socket,
+                  };
+                  const mockRes: any = {
+                    statusCode: 200,
+                    setHeader(name: string, value: string) {
+                      res.setHeader(name, value);
+                      return mockRes;
+                    },
+                    status(code: number) {
+                      res.statusCode = code;
+                      return mockRes;
+                    },
+                    json(data: any) {
+                      res.setHeader('Content-Type', 'application/json');
+                      res.end(JSON.stringify(data));
+                      return mockRes;
+                    },
+                  };
+                  const { default: handler } = await import('./api/contact');
+                  await handler(mockReq, mockRes);
+                } catch (err: any) {
+                  console.error('[Dev API error]', err);
+                  res.statusCode = 500;
+                  res.setHeader('Content-Type', 'application/json');
+                  res.end(JSON.stringify({ success: false, error: err?.message || 'Internal Server Error' }));
+                }
+              });
+            } else {
+              next();
+            }
+          });
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

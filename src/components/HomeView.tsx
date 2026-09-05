@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { lazy, Suspense } from "react";
+import React, { Suspense } from "react";
 import HeroSection from "./HeroSection";
 import LazySection from "./LazySection";
 import { useTheme } from "../context/ThemeContext";
+import { lazyWithRetry, ChunkErrorBoundary } from "../lib/lazyWithRetry.tsx";
 
-// Code-split heavy below-the-fold sections so the mobile browser paints the hero instantly
-const WhyPartnerSection = lazy(() => import("./WhyPartnerSection"));
-const VideoDivider = lazy(() => import("./VideoDivider"));
-const ResearchDirectory = lazy(() => import("./ResearchDirectory"));
+// Code-split heavy below-the-fold sections with automated retry on deployment changes
+const WhyPartnerSection = lazyWithRetry(() => import("./WhyPartnerSection"));
+const VideoDivider = lazyWithRetry(() => import("./VideoDivider"));
+const ResearchDirectory = lazyWithRetry(() => import("./ResearchDirectory"));
 
 interface HomeViewProps {
   onNavigate: (pageId: string, filterCategory?: string) => void;
@@ -33,23 +34,29 @@ export default function HomeView({ onNavigate, onSelectProduct: _onSelectProduct
 
       {/* Section 02: Why Leading Businesses Partner With B2B Peps (Lazy loaded below the fold) */}
       <LazySection minHeight="450px" rootMargin="350px">
-        <Suspense fallback={<div className="min-h-[450px]" />}>
-          <WhyPartnerSection onNavigate={onNavigate} theme={theme} />
-        </Suspense>
+        <ChunkErrorBoundary>
+          <Suspense fallback={<div className="min-h-[450px]" />}>
+            <WhyPartnerSection onNavigate={onNavigate} theme={theme} />
+          </Suspense>
+        </ChunkErrorBoundary>
       </LazySection>
 
       {/* Video Divider: Continuous Automated Production Line Ribbon (Lazy loaded) */}
       <LazySection minHeight="180px" rootMargin="300px">
-        <Suspense fallback={<div className="min-h-[180px]" />}>
-          <VideoDivider />
-        </Suspense>
+        <ChunkErrorBoundary>
+          <Suspense fallback={<div className="min-h-[180px]" />}>
+            <VideoDivider />
+          </Suspense>
+        </ChunkErrorBoundary>
       </LazySection>
 
       {/* Section 03: Research Directory (Placed directly above the footer, lazy loaded) */}
       <LazySection minHeight="600px" rootMargin="350px">
-        <Suspense fallback={<div className="min-h-[600px]" />}>
-          <ResearchDirectory onNavigate={onNavigate} theme={theme} />
-        </Suspense>
+        <ChunkErrorBoundary>
+          <Suspense fallback={<div className="min-h-[600px]" />}>
+            <ResearchDirectory onNavigate={onNavigate} theme={theme} />
+          </Suspense>
+        </ChunkErrorBoundary>
       </LazySection>
     </div>
   );
